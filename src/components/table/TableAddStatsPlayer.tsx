@@ -29,9 +29,9 @@ interface Row {
   startingfive: boolean;
   minutes: null | number;
   points: null | number;
-  "3ptspassed": null | number;
-  "2ptsintpassed": null | number;
-  "2ptsextpassed": null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
   lfpassed: null | number;
   fouls: null | number;
   idStats: number | null;
@@ -47,9 +47,9 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
       startingfive: false,
       minutes: null,
       points: null,
-      "3ptspassed": null,
-      "2ptsintpassed": null,
-      "2ptsextpassed": null,
+      threeptspassed: null,
+      twoptsintpassed: null,
+      twoptsextpassed: null,
       lfpassed: null,
       fouls: null,
       idStats: null,
@@ -140,9 +140,9 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
           startingfive: statsPlayer ? statsPlayer.startingfive : false,
           minutes: statsPlayer ? statsPlayer.minutes : null,
           points: statsPlayer ? statsPlayer.points : null,
-          "3ptspassed": statsPlayer ? statsPlayer["3ptspassed"] : null,
-          "2ptsintpassed": statsPlayer ? statsPlayer["2ptsintpassed"] : null,
-          "2ptsextpassed": statsPlayer ? statsPlayer["2ptsextpassed"] : null,
+          threeptspassed: statsPlayer ? statsPlayer.threeptspassed : null,
+          twoptsintpassed: statsPlayer ? statsPlayer.twoptsintpassed : null,
+          twoptsextpassed: statsPlayer ? statsPlayer.twoptsextpassed : null,
           lfpassed: statsPlayer ? statsPlayer.lfpassed : null,
           fouls: statsPlayer ? statsPlayer.fouls : null,
           idStats: statsPlayer ? statsPlayer.id : null,
@@ -169,9 +169,9 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         startingfive: newRow.startingfive,
         minutes: newRow.minutes,
         points: newRow.points,
-        "3ptspassed": newRow["3ptspassed"],
-        "2ptsintpassed": newRow["2ptsintpassed"],
-        "2ptsextpassed": newRow["2ptsextpassed"],
+        threeptspassed: newRow.threeptspassed,
+        twoptsintpassed: newRow.twoptsintpassed,
+        twoptsextpassed: newRow.twoptsextpassed,
         lfpassed: newRow.lfpassed,
         fouls: newRow.fouls,
       };
@@ -185,9 +185,9 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         startingfive: newRow.startingfive,
         minutes: newRow.minutes,
         points: newRow.points,
-        "3ptspassed": newRow["3ptspassed"],
-        "2ptsintpassed": newRow["2ptsintpassed"],
-        "2ptsextpassed": newRow["2ptsextpassed"],
+        threeptspassed: newRow.threeptspassed,
+        twoptsintpassed: newRow.twoptsintpassed,
+        twoptsextpassed: newRow.twoptsextpassed,
         lfpassed: newRow.lfpassed,
         fouls: newRow.fouls,
       };

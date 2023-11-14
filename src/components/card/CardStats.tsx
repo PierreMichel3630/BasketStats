@@ -1,5 +1,8 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
+import { Player } from "src/models/Player";
 import { Colors } from "src/style/Colors";
+
+import PersonIcon from "@mui/icons-material/Person";
 
 interface Props {
   label: string;
@@ -47,6 +50,35 @@ export const CardStats = ({ label, value, max, min }: Props) => (
           <Typography variant="body1">{max}</Typography>
         </Grid>
       )}
+    </Grid>
+  </Paper>
+);
+
+interface PropsCardStatsPlayer {
+  player: Player;
+  label: string;
+  value: number;
+}
+
+export const CardStatsPlayer = ({
+  label,
+  value,
+  player,
+}: PropsCardStatsPlayer) => (
+  <Paper sx={{ p: 2 }}>
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <Typography variant="h4">{label}</Typography>
+      </Grid>
+      <Grid item xs={12} sx={{ display: "flex", gap: 2 }}>
+        <Avatar sx={{ width: 50, height: 50 }}>
+          <PersonIcon fontSize="large" />
+        </Avatar>
+        <Box>
+          <Typography variant="body1">{`${player.firstname} ${player.lastname}`}</Typography>
+          <Typography variant="h2">{value}</Typography>
+        </Box>
+      </Grid>
     </Grid>
   </Paper>
 );

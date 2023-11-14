@@ -2,6 +2,19 @@ import { Game } from "./Game";
 import { Player } from "./Player";
 import { Team } from "./Team";
 
+export interface StatsPlayerAvg {
+  player: Player;
+  team: Team;
+  minutes: null | number;
+  points: null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
+  lfpassed: null | number;
+  fouls: null | number;
+  games: number;
+}
+
 export interface StatsPlayer {
   id: number;
   player: Player;
@@ -10,9 +23,9 @@ export interface StatsPlayer {
   minutes: null | number;
   points: null | number;
   number: null | number;
-  "3ptspassed": null | number;
-  "2ptsintpassed": null | number;
-  "2ptsextpassed": null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
   lfpassed: null | number;
   fouls: null | number;
 }
@@ -24,9 +37,9 @@ export interface StatsPlayerInsert {
   minutes: null | number;
   points: null | number;
   number: null | number;
-  "3ptspassed": null | number;
-  "2ptsintpassed": null | number;
-  "2ptsextpassed": null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
   lfpassed: null | number;
   fouls: null | number;
 }
@@ -39,9 +52,9 @@ export interface StatsPlayerUpdate {
   minutes: null | number;
   points: null | number;
   number: null | number;
-  "3ptspassed": null | number;
-  "2ptsintpassed": null | number;
-  "2ptsextpassed": null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
   lfpassed: null | number;
   fouls: null | number;
 }

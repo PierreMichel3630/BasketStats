@@ -1,10 +1,13 @@
 import {
   Button,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   Grid,
   InputLabel,
   OutlinedInput,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
@@ -29,11 +32,13 @@ export const GameForm = ({ teamId, onValid }: Props) => {
     opponent: string;
     team_score: null;
     opponent_score: null;
+    is_outside: boolean;
   } = {
     date: null,
     opponent: "",
     team_score: null,
     opponent_score: null,
+    is_outside: false,
   };
 
   const validationSchema = Yup.object().shape({
@@ -111,6 +116,28 @@ export const GameForm = ({ teamId, onValid }: Props) => {
                 {formik.errors.opponent}
               </FormHelperText>
             )}
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+          <FormControl>
+            <RadioGroup
+              row
+              name="is_outside"
+              value={formik.values.is_outside}
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            >
+              <FormControlLabel
+                value={false}
+                control={<Radio />}
+                label="Domicile"
+              />
+              <FormControlLabel
+                value={true}
+                control={<Radio />}
+                label="Extérieur"
+              />
+            </RadioGroup>
           </FormControl>
         </Grid>
         <Grid item xs={12}>

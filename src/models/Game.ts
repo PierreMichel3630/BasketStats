@@ -7,6 +7,7 @@ export interface Game {
   team_score: null | number;
   opponent_score: null | number;
   team: Team;
+  is_outside: boolean;
 }
 
 export interface GameInsert {
@@ -15,4 +16,5 @@ export interface GameInsert {
   team_score: null;
   opponent_score: null;
   team: number;
+  is_outside: boolean;
 }

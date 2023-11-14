@@ -7,7 +7,11 @@ export const insertGame = (value: GameInsert) =>
   supabase.from(SUPABASE_GAME_TABLE).insert(value).select().single();
 
 export const getGamesByTeamId = (id: string) =>
-  supabase.from(SUPABASE_GAME_TABLE).select("*").eq("team", id);
+  supabase
+    .from(SUPABASE_GAME_TABLE)
+    .select("*, team(*)")
+    .not("team", "is", null)
+    .eq("team.id", id);
 
 export const getGamesById = (id: string) =>
   supabase

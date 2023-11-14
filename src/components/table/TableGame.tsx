@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -7,15 +8,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridRowParams } from "@mui/x-data-grid";
 import moment from "moment";
+import { Link, useNavigate } from "react-router-dom";
 import { Game } from "src/models/Game";
+import { Colors } from "src/style/Colors";
 
 import AddchartIcon from "@mui/icons-material/Addchart";
-import { useNavigate } from "react-router-dom";
-import { Colors } from "src/style/Colors";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import { sortByDateDesc } from "src/utils/sort";
 
 interface Props {
   games: Array<Game>;
@@ -36,10 +40,11 @@ export const TableGame = ({ games }: Props) => {
             <TableCell>
               <Typography variant="h4">Result</Typography>
             </TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {games.map((game) => (
+          {games.sort(sortByDateDesc).map((game) => (
             <TableRow key={game.id}>
               <TableCell>
                 <Typography variant="body1">
@@ -47,7 +52,9 @@ export const TableGame = ({ games }: Props) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="body1">{game.opponent}</Typography>
+                <Typography variant="body1">
+                  {`${game.is_outside ? "à" : "contre"} ${game.opponent}`}
+                </Typography>
               </TableCell>
               <TableCell>
                 {game.opponent_score && game.team_score ? (
@@ -68,6 +75,22 @@ export const TableGame = ({ games }: Props) => {
                 ) : (
                   <Typography variant="body1">Non renseigné</Typography>
                 )}
+              </TableCell>
+              <TableCell sx={{ display: "flex", gap: 2 }}>
+                <Link to={`/game/${game.id}/addstats`}>
+                  <Tooltip title="Ajouter / Modifier les statistiques">
+                    <IconButton size="small">
+                      <AddchartIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+                <Link to={`/game/${game.id}/stats`}>
+                  <Tooltip title="Voir les statistiques">
+                    <IconButton>
+                      <QueryStatsIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Link>
               </TableCell>
             </TableRow>
           ))}

@@ -2,13 +2,17 @@ import { Button, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlayersByEquipeId } from "src/api/player";
+import { getStatsPlayerAvgByTeamId } from "src/api/statistique";
 import { CreatePlayerDialog } from "src/components/dialog/CreatePlayerDialog";
-import { TablePlayer } from "src/components/table/TablePlayer";
+import { PlayerLeaderBlock } from "src/components/statistique/PlayerLeaderBlock";
+import { TablePlayerStats } from "src/components/table/TablePlayer";
 import { Player } from "src/models/Player";
+import { StatsPlayerAvg } from "src/models/Statistique";
 
 export const PlayersTeamPage = () => {
   const { id } = useParams();
   const [players, setPlayers] = useState<Array<Player>>([]);
+  const [stats, setStats] = useState<Array<StatsPlayerAvg>>([]);
   const [open, setOpen] = useState(false);
 
   const getPlayers = () => {
@@ -19,14 +23,26 @@ export const PlayersTeamPage = () => {
     }
   };
 
+  const getStats = () => {
+    if (id) {
+      getStatsPlayerAvgByTeamId(Number(id)).then((res) => {
+        setStats(res.data as Array<StatsPlayerAvg>);
+      });
+    }
+  };
+
   useEffect(() => {
     getPlayers();
+    getStats();
   }, [id]);
 
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <TablePlayer players={players} />
+        <PlayerLeaderBlock stats={stats} />
+      </Grid>
+      <Grid item xs={12}>
+        <TablePlayerStats players={players} stats={stats} />
       </Grid>
       <Grid item xs={12}>
         <Button

@@ -8,6 +8,8 @@ import { BASEDATABASE, supabase } from "./supabaseClient";
 
 export const SUPABASE_STATSPLAYER_TABLE = BASEDATABASE + "statsplayer";
 export const SUPABASE_STATSTEAM_TABLE = BASEDATABASE + "statsteam";
+export const SUPABASE_STATSPLAYERAVG_TABLE =
+  BASEDATABASE + "avgstatsplayerbyteam";
 
 export const insertStatsPlayer = (value: StatsPlayerInsert) =>
   supabase.from(SUPABASE_STATSPLAYER_TABLE).insert(value).select().single();
@@ -19,6 +21,12 @@ export const updateStatsPlayer = (value: StatsPlayerUpdate) =>
     .eq("id", value.id)
     .select()
     .single();
+
+export const getStatsPlayerAvgByTeamId = (id: number) =>
+  supabase
+    .from(SUPABASE_STATSPLAYERAVG_TABLE)
+    .select("*, player(*)")
+    .eq("team", id);
 
 export const getStatsPlayerByGameId = (id: number) =>
   supabase
