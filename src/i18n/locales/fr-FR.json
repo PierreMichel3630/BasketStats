@@ -1,0 +1,109 @@
+{
+  "header": {
+    "account": {
+      "hi": "Bonjour",
+      "ranking": "Mes classements",
+      "parameter": "Mes paramètres",
+      "logout": "Déconnexion"
+    },
+    "login": "Se Connecter"
+  },
+  "commun": {
+    "create": "Créer",
+    "createteam": "Créer une équipe",
+    "creatematch": "Créer un match",
+    "createplayer": "Créer un joueur",
+    "search": "Rechercher une équipe",
+    "error": "Oups une erreur est survenue. Veuillez ressayer",
+    "or": "Ou",
+    "validate": "Valider"
+  },
+  "pages": {
+    "login": {
+      "hi": "Bienvenue",
+      "credential": "Entrez vos identifiants pour continuer"
+    },
+    "parameters": {
+      "infoemail": "Une confirmation sur l'ancienne et nouvelle adresse mail est nécessaire. Vérifiez vos spams."
+    }
+  },
+  "input": {
+    "dragdrop": {
+      "drophere": "Déposer ici",
+      "text": "Cliquer ou Glisser pour ajouter une image"
+    }
+  },
+  "form": {
+    "login": {
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "rememberme": "Se souvenir de moi",
+      "createaccount": "Créer un compte",
+      "forgotpassword": "Mot de passe oublié ?",
+      "connect": "Se connecter",
+      "connectgoogle": "Se connecter via Google",
+      "connectmail": "Se connecter via adresse mail",
+      "haveaccount": "Vous n'avez pas de compte ?",
+      "requiredpassword": "Veuillez saisir un mot de passe",
+      "requiredmail": "Veuillez saisir une adresse mail",
+      "formatmail": "Veuillez saisir une adresse mail valide",
+      "errorconnect": "L'adresse email ou le mot de passe est erroné"
+    },
+    "register": {
+      "username": "Nom d'utilisateur *",
+      "email": "Adresse email *",
+      "password": "Mot de passe *",
+      "createaccount": "Créer un compte",
+      "createaccountemail": "Créer un compte via adresse mail",
+      "createaccountgoogle": "Créer un compte via Google",
+      "continue": "Continuer",
+      "requiredusername": "Veuillez saisir un nom d'utilisateur",
+      "uniqueusername": "Nom d'utilisateur déjà pris",
+      "requiredpassword": "Veuillez saisir un mot de passe",
+      "minpassword": "Veuillez saisir un mot de passe de plus de 6 caractères",
+      "requiredmail": "Veuillez saisir une adresse mail",
+      "formatmail": "Veuillez saisir une adresse mail valide",
+      "alreadyaccount": "Déjà un compte ?",
+      "connect": "Connectez-vous"
+    },
+    "forgotpassword": {
+      "forgotpassword": "Mot de passe oublié ?",
+      "email": "Adresse email *",
+      "createaccount": "Créer un compte",
+      "continue": "Continuer",
+      "requiredmail": "Veuillez saisir une adresse mail",
+      "formatmail": "Veuillez saisir une adresse mail valide",
+      "modality": "Veuillez saisir l'adresse e-mail utilisée lors de votre inscription. Vous recevrez un e-mail contenant les instructions à suivre pour réinitialiser votre mot de passe.",
+      "connection": "Connexion",
+      "notforget": "Se souvenir de votre mot de passe ?",
+      "successsendmail": "Email envoyé",
+      "limitsendemail": "Veuillez attendre 60s avant de renvoyer un email"
+    },
+    "resetpassword": {
+      "resetpassword": "Réinitialiser votre mot de passe",
+      "password": "Mot de passe *",
+      "confirmpassword": "Confirmation du mot de passe *",
+      "continue": "Continuer",
+      "passwordmatch": "Les mots de passe doivent correspondre",
+      "requiredpassword": "Veuillez saisir un mot de passe",
+      "minpassword": "Veuillez saisir un mot de passe de plus de 6 caractères"
+    },
+    "createplayer": {
+      "licence": "Licence *",
+      "firstname": "Prénom *",
+      "lastname": "Nom *",
+      "requiredfirstname": "Veuillez saisir un prénom",
+      "requiredlastname": "Veuillez saisir un nom",
+      "requiredlicence": "Veuillez saisir une licence"
+    },
+    "createteam": {
+      "name": "Nom *",
+      "club": "Club",
+      "requiredname": "Veuillez saisir un nom d'équipe"
+    }
+  },
+  "alert": {
+    "updateusernamesuccess": "Votre modification de nom d'utilisateur à été pris en compte.",
+    "updateemailsuccess": "Votre modification d'addresse mail est en cours. Veuillez confirmer sur votre ancien et nouveau email."
+  }
+}
