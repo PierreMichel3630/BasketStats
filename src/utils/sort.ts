@@ -20,3 +20,6 @@ export const sortByDateDesc = (a: any, b: any) =>
 
 export const sortByDateAsc = (a: any, b: any) =>
   moment(a.date).diff(moment(b.date));
+
+export const sortByPourcentageStartingFive = (a: any, b: any) =>
+  b.startingfive / b.games - a.startingfive / a.games;

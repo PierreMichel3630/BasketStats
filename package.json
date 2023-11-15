@@ -25,6 +25,7 @@
     "file-saver": "^2.0.5",
     "formik": "^2.4.4",
     "i18next": "^23.5.1",
+    "lodash": "^4.17.21",
     "lodash.deburr": "^4.1.0",
     "moment": "^2.29.4",
     "pdf-parse": "^1.1.1",

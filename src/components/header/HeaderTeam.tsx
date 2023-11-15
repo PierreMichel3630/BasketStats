@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import { percent, px } from "csx";
 import { Game } from "src/models/Game";
 import { Team } from "src/models/Team";
@@ -6,7 +6,7 @@ import { style } from "typestyle";
 
 const imageCss = style({
   width: percent(100),
-  maxHeight: px(250),
+  maxHeight: px(150),
   borderRadius: px(15),
   objectFit: "cover",
 });
@@ -33,20 +33,31 @@ export const HeaderTeam = ({ team, games }: Props) => {
 
   return (
     <Grid container spacing={1}>
-      <Grid item xs={4}>
+      <Grid item xs={2}>
         {team.image && <img src={team.image} className={imageCss} />}
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={9}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="h2">
-              {team.name} - {team.club}
-            </Typography>
+            <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
+              <Typography variant="h1">{team.name}</Typography>
+              <Divider
+                orientation="vertical"
+                flexItem
+                variant="middle"
+                sx={{ borderRightWidth: 3, borderColor: "initial" }}
+              />
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <Typography variant="h2">{wins.length}</Typography>
+                <Typography variant="h6">V</Typography>
+                <Typography variant="h2">-</Typography>
+                <Typography variant="h2">{loses.length}</Typography>
+                <Typography variant="h6">D</Typography>
+              </Box>
+            </Box>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h4" sx={{ fontWeight: 500 }}>
-              {wins.length} Victoires - {loses.length} Défaites
-            </Typography>
+            <Typography variant="h4">{team.club}</Typography>
           </Grid>
         </Grid>
       </Grid>

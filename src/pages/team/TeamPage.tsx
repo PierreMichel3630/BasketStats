@@ -1,4 +1,4 @@
-import { Box, Grid, Tab, Tabs } from "@mui/material";
+import { Grid, Paper, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { getGamesByTeamId } from "src/api/game";
@@ -48,14 +48,12 @@ export const TeamPage = () => {
   };
 
   return (
-    <Grid container spacing={1}>
-      {team && (
-        <Grid item xs={12}>
-          <HeaderTeam team={team} games={games} />
-        </Grid>
-      )}
+    <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <Paper
+          elevation={3}
+          sx={{ width: "100%", bgcolor: "background.paper" }}
+        >
           <Tabs
             value={tab}
             onChange={handleChangeTab}
@@ -74,8 +72,19 @@ export const TeamPage = () => {
               />
             ))}
           </Tabs>
-        </Box>
+        </Paper>
       </Grid>
+      {team && (
+        <Grid item xs={12}>
+          <Paper
+            variant="outlined"
+            elevation={3}
+            sx={{ width: "100%", bgcolor: "background.paper", p: 1 }}
+          >
+            <HeaderTeam team={team} games={games} />
+          </Paper>
+        </Grid>
+      )}
       <Grid item xs={12}>
         <Outlet />
       </Grid>

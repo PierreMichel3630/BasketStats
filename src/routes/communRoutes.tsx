@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { PageAddStatsGame } from "src/pages/PageAddStatsGame";
+import { PageStatsGame } from "src/pages/PageStatsGame";
 import { SearchPage } from "src/pages/SearchPage";
 import { GameTeamPage } from "src/pages/team/GameTeamPage";
 import { HomeTeamPage } from "src/pages/team/HomeTeamPage";
@@ -41,5 +42,9 @@ export const CommunRoutes = [
   {
     path: "/game/:id/addstats",
     element: <PageAddStatsGame />,
+  },
+  {
+    path: "/game/:id/stats",
+    element: <PageStatsGame />,
   },
 ];

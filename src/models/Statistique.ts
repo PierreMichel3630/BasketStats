@@ -13,6 +13,7 @@ export interface StatsPlayerAvg {
   lfpassed: null | number;
   fouls: null | number;
   games: number;
+  startingfive: number;
 }
 
 export interface StatsPlayer {
@@ -79,13 +80,13 @@ export interface StatsTeam {
   foul1lfteam: null | number;
   foul2lfteam: null | number;
   foul3lfteam: null | number;
-  "3ptsteam": null | number;
-  "2ptsextteam": null | number;
-  "2ptsintteam": null | number;
+  threeptsteam: null | number;
+  twoptsextteam: null | number;
+  twoptsintteam: null | number;
   lfteam: null | number;
-  "3ptsopponent": null | number;
-  "2ptsextopponent": null | number;
-  "2ptsintopponent": null | number;
+  threeptsopponent: null | number;
+  twoptsextopponent: null | number;
+  twoptsintopponent: null | number;
   lfopponent: null | number;
 }
 
@@ -109,13 +110,13 @@ export interface StatsTeamUpdate {
   foul1lfteam: null | number;
   foul2lfteam: null | number;
   foul3lfteam: null | number;
-  "3ptsteam": null | number;
-  "2ptsextteam": null | number;
-  "2ptsintteam": null | number;
+  threeptsteam: null | number;
+  twoptsextteam: null | number;
+  twoptsintteam: null | number;
   lfteam: null | number;
-  "3ptsopponent": null | number;
-  "2ptsextopponent": null | number;
-  "2ptsintopponent": null | number;
+  threeptsopponent: null | number;
+  twoptsextopponent: null | number;
+  twoptsintopponent: null | number;
   lfopponent: null | number;
 }
 
@@ -138,12 +139,12 @@ export interface StatsTeamInsert {
   foul1lfteam: null | number;
   foul2lfteam: null | number;
   foul3lfteam: null | number;
-  "3ptsteam": null | number;
-  "2ptsextteam": null | number;
-  "2ptsintteam": null | number;
+  threeptsteam: null | number;
+  twoptsextteam: null | number;
+  twoptsintteam: null | number;
   lfteam: null | number;
-  "3ptsopponent": null | number;
-  "2ptsextopponent": null | number;
-  "2ptsintopponent": null | number;
+  threeptsopponent: null | number;
+  twoptsextopponent: null | number;
+  twoptsintopponent: null | number;
   lfopponent: null | number;
 }

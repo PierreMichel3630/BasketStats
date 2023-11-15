@@ -11,16 +11,16 @@ export const DonutRepartitionPtsMarques = ({ stats }: Props) => {
   const [type, setType] = useState("tot");
 
   const troisPoints = stats.reduce(
-    (acc, el) => acc + (el["3ptsteam"] ?? 0) * 3,
+    (acc, el) => acc + (el.threeptsteam ?? 0) * 3,
     0
   );
   const lfs = stats.reduce((acc, el) => acc + (el.lfteam ?? 0) * 1, 0);
   const deuxPtsExtTeam = stats.reduce(
-    (acc, el) => acc + (el["2ptsextteam"] ?? 0) * 2,
+    (acc, el) => acc + (el.twoptsextteam ?? 0) * 2,
     0
   );
   const deuxPtsIntTeam = stats.reduce(
-    (acc, el) => acc + (el["2ptsintteam"] ?? 0) * 2,
+    (acc, el) => acc + (el.twoptsintteam ?? 0) * 2,
     0
   );
   const dataMatch = [
@@ -99,16 +99,16 @@ export const DonutRepartitionPtsEncaisses = ({ stats }: Props) => {
   const [type, setType] = useState("tot");
 
   const troisPoints = stats.reduce(
-    (acc, el) => acc + (el["3ptsopponent"] ?? 0) * 3,
+    (acc, el) => acc + (el.threeptsopponent ?? 0) * 3,
     0
   );
   const lfs = stats.reduce((acc, el) => acc + (el.lfopponent ?? 0) * 1, 0);
   const deuxPtsExtTeam = stats.reduce(
-    (acc, el) => acc + (el["2ptsextopponent"] ?? 0) * 2,
+    (acc, el) => acc + (el.twoptsextopponent ?? 0) * 2,
     0
   );
   const deuxPtsIntTeam = stats.reduce(
-    (acc, el) => acc + (el["2ptsintopponent"] ?? 0) * 2,
+    (acc, el) => acc + (el.twoptsintopponent ?? 0) * 2,
     0
   );
   const dataMatch = [

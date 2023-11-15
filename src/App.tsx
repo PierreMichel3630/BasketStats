@@ -95,6 +95,9 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
+                primary: {
+                  main: "#0f6db4",
+                },
                 secondary: {
                   main: Colors.greyLightMode,
                 },
@@ -107,6 +110,9 @@ function App() {
                 },
               }
             : {
+                primary: {
+                  main: "#0f6db4",
+                },
                 secondary: {
                   main: Colors.grey,
                 },

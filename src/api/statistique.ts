@@ -48,9 +48,10 @@ export const updateStatsTeam = (value: StatsTeamUpdate) =>
 export const getStatsTeamByGameId = (id: number) =>
   supabase
     .from(SUPABASE_STATSTEAM_TABLE)
-    .select("*, team(*)")
-    .eq("game", id)
-    .maybeSingle();
+    .select("*, team(*), game(*)")
+    .not("game", "is", null)
+    .eq("game.id", id)
+    .single();
 
 export const getStatsTeamByTeamId = (id: number) =>
   supabase
