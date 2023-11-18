@@ -1,4 +1,9 @@
-import { Grid } from "@mui/material";
+import {
+  Grid,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getStatsTeamByTeamId } from "src/api/statistique";
@@ -19,6 +24,7 @@ import { StatsTeam } from "src/models/Statistique";
 
 export const StatsTeamPage = () => {
   const { id } = useParams();
+  const [type, setType] = useState("match");
   const [stats, setStats] = useState<Array<StatsTeam>>([]);
 
   const getStats = () => {
@@ -33,28 +39,48 @@ export const StatsTeamPage = () => {
     getStats();
   }, [id]);
 
+  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
+    setType(newValue);
+  };
+
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} justifyContent="center">
+      <Grid item>
+        <ToggleButtonGroup
+          color="secondary"
+          value={type}
+          exclusive
+          onChange={handleChange}
+          size="small"
+        >
+          <ToggleButton value="match">
+            <Typography variant="h4">Par Match</Typography>
+          </ToggleButton>
+          <ToggleButton value="tot">
+            <Typography variant="h4">Total</Typography>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Grid>
       <Grid item xs={12}>
-        <TeamLeaderBlock stats={stats} />
+        <TeamLeaderBlock stats={stats} type={type} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionPtsMarques stats={stats} />
+        <DonutRepartitionPtsMarques type={type} stats={stats} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionPtsEncaisses stats={stats} />
+        <DonutRepartitionPtsEncaisses type={type} stats={stats} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionPtsQuartTempsMarques stats={stats} />
+        <DonutRepartitionPtsQuartTempsMarques type={type} stats={stats} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionPtsQuartTempsEncaisses stats={stats} />
+        <DonutRepartitionPtsQuartTempsEncaisses type={type} stats={stats} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionFautes stats={stats} />
+        <DonutRepartitionFautes type={type} stats={stats} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <DonutRepartitionFautesProvoquees stats={stats} />
+        <DonutRepartitionFautesProvoquees type={type} stats={stats} />
       </Grid>
     </Grid>
   );

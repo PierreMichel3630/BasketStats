@@ -1,15 +1,15 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
 
 interface Props {
   stats: Array<StatsTeam>;
+  type: string;
 }
-export const DonutRepartitionPtsQuartTempsMarques = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionPtsQuartTempsMarques = ({
+  type,
+  stats,
+}: Props) => {
   const q1 = stats.reduce((acc, el) => acc + (el.q1team ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2team ?? 0), 0);
   const q3 = stats.reduce((acc, el) => acc + (el.q3team ?? 0), 0);
@@ -60,35 +60,20 @@ export const DonutRepartitionPtsQuartTempsMarques = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
       title="Répartition Points Marqués"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
     />
   );
 };
 
-export const DonutRepartitionPtsQuartTempsEncaisses = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionPtsQuartTempsEncaisses = ({
+  type,
+  stats,
+}: Props) => {
   const q1 = stats.reduce((acc, el) => acc + (el.q1opponent ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2opponent ?? 0), 0);
   const q3 = stats.reduce((acc, el) => acc + (el.q3opponent ?? 0), 0);
@@ -139,28 +124,12 @@ export const DonutRepartitionPtsQuartTempsEncaisses = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
       title="Répartition Points Encaissés"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
     />
   );
 };

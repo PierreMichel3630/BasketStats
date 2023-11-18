@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { Cell, LabelList, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { isInt } from "src/utils/calcul";
 
 export interface DataDonut {
   name: string;
@@ -10,21 +11,21 @@ export interface DataDonut {
 interface Props {
   title: string;
   data: Array<DataDonut>;
-  buttons?: JSX.Element;
 }
 
-export const DonutChart = ({ data, title, buttons }: Props) => {
+export const DonutChart = ({ data, title }: Props) => {
   return (
-    <Paper sx={{ p: 2 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={12} sx={{ textAlign: "center" }}>
-          <Typography variant="h2">{title}</Typography>
+    <Paper
+      variant="outlined"
+      elevation={3}
+      sx={{ width: "100%", bgcolor: "background.paper" }}
+    >
+      <Grid container>
+        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+          <Typography variant="h4" color="white">
+            {title.toUpperCase()}
+          </Typography>
         </Grid>
-        {buttons && (
-          <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-            {buttons}
-          </Grid>
-        )}
         <Grid item xs={12}>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -74,6 +75,8 @@ const renderCustomizedLabel = ({
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
+  const valueText = isInt(value) ? value : value.toFixed(1);
+
   return (
     <text
       x={x}
@@ -84,7 +87,7 @@ const renderCustomizedLabel = ({
       textAnchor="middle"
       dominantBaseline="central"
     >
-      {`${value} (${(percent * 100).toFixed(0)}%)`}
+      {`${valueText} (${(percent * 100).toFixed(0)}%)`}
     </text>
   );
 };

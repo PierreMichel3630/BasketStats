@@ -12,16 +12,20 @@ interface Props {
 }
 export const AddScoreBlock = ({ team, opponent, label }: Props) => {
   return (
-    <Grid container spacing={3} alignItems="center">
-      <Grid item xs={5} sx={{ textAlign: "right" }}>
-        <Typography variant="h4">{team.label}</Typography>
-      </Grid>
+    <Grid container spacing={1} alignItems="center">
+      <Grid item xs={5} />
       <Grid item xs={2}>
         {label && (
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="caption">{label}</Typography>
           </Box>
         )}
+      </Grid>
+      <Grid item xs={5} />
+      <Grid item xs={5} sx={{ textAlign: "right" }}>
+        <Typography variant="h4">{team.label}</Typography>
+      </Grid>
+      <Grid item xs={2}>
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
           <Box sx={{ flex: 1 }}>
             <TextField

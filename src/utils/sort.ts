@@ -23,3 +23,5 @@ export const sortByDateAsc = (a: any, b: any) =>
 
 export const sortByPourcentageStartingFive = (a: any, b: any) =>
   b.startingfive / b.games - a.startingfive / a.games;
+
+export const sortByPercent = (a: any, b: any) => b.percent - a.percent;

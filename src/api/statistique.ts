@@ -57,4 +57,5 @@ export const getStatsTeamByTeamId = (id: number) =>
   supabase
     .from(SUPABASE_STATSTEAM_TABLE)
     .select("*, team(*), game(*)")
+    .not("team", "is", null)
     .eq("team.id", id);

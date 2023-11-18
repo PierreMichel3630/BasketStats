@@ -28,7 +28,6 @@ export const UploadMatchStatsForm = ({ onValid }: Props) => {
     initialValues: initialValue,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
       onValid(values.files);
     },
   });

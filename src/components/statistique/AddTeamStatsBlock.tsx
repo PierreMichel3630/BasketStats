@@ -15,6 +15,7 @@ import { AddFoulsBlockOpponent, AddFoulsBlockTeam } from "./AddFoulsBlock";
 import { AddHoopBlockOpponent, AddHoopBlockTeam } from "./AddHoopBlock";
 import { AddScoreStatsBlock } from "./AddScoreStatsBlock";
 import { CircularLoading } from "../Loading";
+import { updateGameById } from "src/api/game";
 
 interface Props {
   game: Game;
@@ -83,6 +84,18 @@ export const AddTeamStatsBlock = ({ game }: Props) => {
   const updateStats = async () => {
     if (stats) {
       await updateStatsTeam(stats);
+      await updateGameById(game.id, {
+        team_score:
+          (stats.q1team ?? 0) +
+          (stats.q2team ?? 0) +
+          (stats.q3team ?? 0) +
+          (stats.q4team ?? 0),
+        opponent_score:
+          (stats.q1opponent ?? 0) +
+          (stats.q2opponent ?? 0) +
+          (stats.q3opponent ?? 0) +
+          (stats.q4opponent ?? 0),
+      });
     }
   };
 

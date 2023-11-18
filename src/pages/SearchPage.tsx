@@ -48,7 +48,7 @@ export const SearchPage = () => {
         </Button>
       </Grid>
       {teams.map((team) => (
-        <Grid item xs={4} key={team.id}>
+        <Grid item xs={12} sm={6} md={4} key={team.id}>
           <CardTeam team={team} />
         </Grid>
       ))}

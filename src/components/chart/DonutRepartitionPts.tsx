@@ -1,15 +1,12 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
 
 interface Props {
   stats: Array<StatsTeam>;
+  type: string;
 }
-export const DonutRepartitionPtsMarques = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionPtsMarques = ({ type, stats }: Props) => {
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsteam ?? 0) * 3,
     0
@@ -69,35 +66,17 @@ export const DonutRepartitionPtsMarques = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
       title="Répartition Points Marqués"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
     />
   );
 };
 
-export const DonutRepartitionPtsEncaisses = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsopponent ?? 0) * 3,
     0
@@ -157,28 +136,12 @@ export const DonutRepartitionPtsEncaisses = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
       title="Répartition Points Encaissés"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
     />
   );
 };

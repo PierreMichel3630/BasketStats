@@ -23,6 +23,10 @@ export const TeamPage = () => {
     { label: "Statistiques", value: "stats", url: "stats" },
   ];
 
+  useEffect(() => {
+    setTab(location.pathname.split("/").pop()!);
+  }, [location.pathname]);
+
   const getTeam = () => {
     if (id) {
       getTeamById(id).then((res) => {

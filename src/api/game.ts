@@ -1,4 +1,4 @@
-import { GameInsert } from "src/models/Game";
+import { GameInsert, GameUpdate } from "src/models/Game";
 import { BASEDATABASE, supabase } from "./supabaseClient";
 
 export const SUPABASE_GAME_TABLE = BASEDATABASE + "game";
@@ -19,3 +19,11 @@ export const getGamesById = (id: string) =>
     .select("*, team(*)")
     .eq("id", id)
     .maybeSingle();
+
+export const updateGameById = (id: number, value: GameUpdate) =>
+  supabase
+    .from(SUPABASE_GAME_TABLE)
+    .update(value)
+    .eq("id", id)
+    .select()
+    .single();

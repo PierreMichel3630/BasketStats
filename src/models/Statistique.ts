@@ -20,6 +20,7 @@ export interface StatsPlayer {
   id: number;
   player: Player;
   game: Game;
+  is_play: boolean;
   startingfive: boolean;
   minutes: null | number;
   points: null | number;
@@ -29,11 +30,16 @@ export interface StatsPlayer {
   twoptsextpassed: null | number;
   lfpassed: null | number;
   fouls: null | number;
+  fouls_0lf: null | number;
+  fouls_1lf: null | number;
+  fouls_2lf: null | number;
+  fouls_3lf: null | number;
 }
 
 export interface StatsPlayerInsert {
   player: number;
   game: number;
+  is_play: boolean;
   startingfive: boolean;
   minutes: null | number;
   points: null | number;
@@ -42,13 +48,17 @@ export interface StatsPlayerInsert {
   twoptsintpassed: null | number;
   twoptsextpassed: null | number;
   lfpassed: null | number;
-  fouls: null | number;
+  fouls_0lf: null | number;
+  fouls_1lf: null | number;
+  fouls_2lf: null | number;
+  fouls_3lf: null | number;
 }
 
 export interface StatsPlayerUpdate {
   id: number;
   player: number;
   game: number;
+  is_play: boolean;
   startingfive: boolean;
   minutes: null | number;
   points: null | number;
@@ -57,7 +67,10 @@ export interface StatsPlayerUpdate {
   twoptsintpassed: null | number;
   twoptsextpassed: null | number;
   lfpassed: null | number;
-  fouls: null | number;
+  fouls_0lf: null | number;
+  fouls_1lf: null | number;
+  fouls_2lf: null | number;
+  fouls_3lf: null | number;
 }
 
 export interface StatsTeam {

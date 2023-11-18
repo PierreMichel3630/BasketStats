@@ -1,4 +1,5 @@
 import {
+  Grid,
   Paper,
   Table,
   TableBody,
@@ -12,6 +13,9 @@ import {
 import { Player } from "src/models/Player";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { sortByName } from "src/utils/sort";
+
+import { DataGrid, GridColDef, GridColumnHeaderParams } from "@mui/x-data-grid";
+import { Colors } from "src/style/Colors";
 
 interface Props {
   players: Array<Player>;
@@ -56,117 +60,152 @@ interface PropsStats {
 }
 
 export const TablePlayerStats = ({ players, stats }: PropsStats) => {
+  const getValue = (value: null | number) =>
+    value !== null ? value.toFixed(1) : "-";
+
+  const columns: Array<GridColDef> = [
+    {
+      headerName: "Licence",
+      field: "licence",
+      headerAlign: "left",
+      align: "left",
+      width: 85,
+    },
+    {
+      headerName: "Nom",
+      field: "name",
+      headerAlign: "left",
+      align: "left",
+      width: 180,
+    },
+    {
+      headerName: "MJ",
+      field: "mj",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "MIN",
+      field: "min",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "PTS",
+      field: "pts",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "3PTS",
+      field: "threepts",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "2PTS Int",
+      field: "twoptsint",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "2PTS Ext",
+      field: "twoptsext",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "LF",
+      field: "lf",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+    {
+      headerName: "PF",
+      field: "pf",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      flex: 1,
+    },
+  ];
+
+  const rows = players.map((player) => {
+    const stat = stats.find((el) => el.player.id === player.id);
+    return {
+      id: player.id,
+      licence: player.licence,
+      name: `${player.lastname.toUpperCase()} ${player.firstname}`,
+      mj: stat ? stat.games ?? 0 : 0,
+      min: stat ? getValue(stat.minutes) : "-",
+      pts: stat ? getValue(stat.points) : "-",
+      threepts: stat ? getValue(stat.threeptspassed) : "-",
+      twoptsint: stat ? getValue(stat.twoptsintpassed) : "-",
+      twoptsext: stat ? getValue(stat.twoptsextpassed) : "-",
+      lf: stat ? getValue(stat.lfpassed) : "-",
+      pf: stat ? getValue(stat.fouls) : "-",
+    };
+  });
+
   return (
-    <TableContainer component={Paper}>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <Typography variant="h6">Licence</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6">Nom</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                MJ
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                MIN
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                PTS
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                3PTS
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                2PTS Int
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                2PTS Ext
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                LF
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="h6" align="center">
-                PF
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {players.sort(sortByName).map((player) => {
-            const stat = stats.find((el) => el.player.id === player.id);
-            return (
-              <TableRow key={player.id}>
-                <TableCell>
-                  <Typography variant="body1">{player.licence}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1">{`${player.lastname.toUpperCase()} ${
-                    player.firstname
-                  }`}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.games ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.minutes ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.points ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.threeptspassed ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.twoptsintpassed ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.twoptsextpassed ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1" align="center">
-                    {stat ? stat.lfpassed ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography variant="body1">
-                    {stat ? stat.fouls ?? "-" : "-"}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid container>
+      <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
+        <Typography variant="h4" color="white">
+          EFFECTIF
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <DataGrid
+          sx={{
+            ".MuiDataGrid-columnSeparator": {
+              display: "none",
+            },
+            "&.MuiDataGrid-root": {
+              border: "none",
+            },
+            ".MuiDataGrid-columnHeader": {
+              height: 20,
+            },
+            ".MuiDataGrid-columnHeaders": {
+              backgroundColor: Colors.subprimary,
+              minHeight: "inherit",
+            },
+            ".MuiDataGrid-columnHeaderTitle": {
+              fontSize: 13,
+              fontWeight: 600,
+              "@media (max-width:600px)": {
+                fontSize: 12,
+              },
+            },
+          }}
+          sortingOrder={["desc", "asc"]}
+          rowHeight={35}
+          rows={rows}
+          columns={columns}
+          hideFooter
+          disableRowSelectionOnClick
+          disableColumnMenu
+          initialState={{
+            sorting: {
+              sortModel: [{ field: "pts", sort: "desc" }],
+            },
+          }}
+        />
+      </Grid>
+    </Grid>
   );
 };

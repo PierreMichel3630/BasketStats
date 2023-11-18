@@ -1,10 +1,11 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Grid, Tab, Typography } from "@mui/material";
+import { Grid, Paper, Tab, Typography } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGamesById } from "src/api/game";
 import { getPlayersByEquipeId } from "src/api/player";
+import { GoBackButton } from "src/components/navigation/GoBackButton";
 import { AddPlayerStatsBlock } from "src/components/statistique/AddPlayerStatsBlock";
 import { AddTeamStatsBlock } from "src/components/statistique/AddTeamStatsBlock";
 import { Game } from "src/models/Game";
@@ -63,6 +64,9 @@ export const PageAddStatsGame = () => {
 
   return (
     <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <GoBackButton />
+      </Grid>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
         <Typography variant="h2">Saisir Statistique</Typography>
         {game && (
@@ -75,20 +79,32 @@ export const PageAddStatsGame = () => {
       {game && (
         <TabContext value={tabSelect}>
           <Grid item xs={12}>
-            <TabList onChange={handleChangeTab} centered>
-              {tabs.map((tab) => (
-                <Tab key={tab.value} label={tab.label} value={tab.value} />
-              ))}
-            </TabList>
+            <Paper
+              elevation={3}
+              sx={{ width: "100%", bgcolor: "background.paper" }}
+            >
+              <TabList
+                onChange={handleChangeTab}
+                variant="fullWidth"
+                indicatorColor="secondary"
+                textColor="secondary"
+              >
+                {tabs.map((tab) => (
+                  <Tab key={tab.value} label={tab.label} value={tab.value} />
+                ))}
+              </TabList>
+            </Paper>
           </Grid>
           <Grid item xs={12}>
-            <TabPanel value="equipe">
+            <TabPanel value="equipe" sx={{ p: 0 }}>
               <AddTeamStatsBlock game={game} />
             </TabPanel>
-            <TabPanel value="joueurs">
+            <TabPanel value="joueurs" sx={{ p: 0 }}>
               <AddPlayerStatsBlock game={game} players={players} />
             </TabPanel>
-            <TabPanel value="tirs">tirs</TabPanel>
+            <TabPanel value="tirs" sx={{ p: 0 }}>
+              tirs
+            </TabPanel>
           </Grid>
         </TabContext>
       )}

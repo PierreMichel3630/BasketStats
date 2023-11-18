@@ -1,15 +1,12 @@
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
 
 interface Props {
   stats: Array<StatsTeam>;
+  type: string;
 }
-export const DonutRepartitionFautes = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionFautes = ({ type, stats }: Props) => {
   const p = stats.reduce((acc, el) => acc + (el.foul0lfteam ?? 0), 0);
   const p1 = stats.reduce((acc, el) => acc + (el.foul1lfteam ?? 0), 0);
   const p2 = stats.reduce((acc, el) => acc + (el.foul2lfteam ?? 0), 0);
@@ -60,35 +57,14 @@ export const DonutRepartitionFautes = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
-    <DonutChart
-      data={data.filter((el) => el.value !== 0)}
-      title="Fautes"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
-    />
+    <DonutChart data={data.filter((el) => el.value !== 0)} title="Fautes" />
   );
 };
 
-export const DonutRepartitionFautesProvoquees = ({ stats }: Props) => {
-  const [type, setType] = useState("tot");
-
+export const DonutRepartitionFautesProvoquees = ({ type, stats }: Props) => {
   const p = stats.reduce((acc, el) => acc + (el.foul0lfopponent ?? 0), 0);
   const p1 = stats.reduce((acc, el) => acc + (el.foul1lfopponent ?? 0), 0);
   const p2 = stats.reduce((acc, el) => acc + (el.foul2lfopponent ?? 0), 0);
@@ -139,28 +115,12 @@ export const DonutRepartitionFautesProvoquees = ({ stats }: Props) => {
     },
   ];
 
-  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
-    setType(newValue);
-  };
-
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
       title="Fautes provoquées"
-      buttons={
-        <ToggleButtonGroup
-          color="secondary"
-          value={type}
-          exclusive
-          onChange={handleChange}
-          size="small"
-        >
-          <ToggleButton value="tot">Total</ToggleButton>
-          <ToggleButton value="match">Par Match</ToggleButton>
-        </ToggleButtonGroup>
-      }
     />
   );
 };

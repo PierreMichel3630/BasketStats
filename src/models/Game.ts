@@ -18,3 +18,12 @@ export interface GameInsert {
   team: number;
   is_outside: boolean;
 }
+
+export interface GameUpdate {
+  date?: Date;
+  opponent?: string;
+  team_score?: number | null;
+  opponent_score?: number | null;
+  team?: number;
+  is_outside?: boolean;
+}

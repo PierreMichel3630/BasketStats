@@ -1,13 +1,15 @@
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { StatsTeam } from "src/models/Statistique";
-import { CardStats } from "../card/CardStats";
+import { CardStats, CardStatsLF } from "../card/CardStats";
 import { getBreakpoint } from "src/utils/mediaQuery";
+import { sortByPercent } from "src/utils/sort";
 
 interface Props {
   stats: Array<StatsTeam>;
+  type?: string;
 }
 
-export const TeamLeaderBlock = ({ stats }: Props) => {
+export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
@@ -18,8 +20,7 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
       (value.q3team ?? 0) +
       (value.q4team ?? 0)
   );
-  const ptsMarquesMoy =
-    ptsMarques.reduce((acc, value) => acc + value, 0) / ptsMarques.length;
+  const ptsMarquesTot = ptsMarques.reduce((acc, value) => acc + value, 0);
   const ptsMarquesMin = Math.min(...ptsMarques);
   const ptsMarquesMax = Math.max(...ptsMarques);
 
@@ -30,24 +31,49 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
       (value.q3opponent ?? 0) +
       (value.q4opponent ?? 0)
   );
-  const ptsEncaissesMoy =
-    ptsEncaisses.reduce((acc, value) => acc + value, 0) / ptsEncaisses.length;
+  const ptsEncaissesTot = ptsEncaisses.reduce((acc, value) => acc + value, 0);
   const ptsEncaissesMin = Math.min(...ptsEncaisses);
   const ptsEncaissesMax = Math.max(...ptsEncaisses);
 
   const troisptsMarque = stats.map((value) => value.threeptsteam ?? 0);
-  const troisptsMarqueMoy =
-    troisptsMarque.reduce((acc, value) => acc + value, 0) /
-    troisptsMarque.length;
+  const troisptsMarqueTot = troisptsMarque.reduce(
+    (acc, value) => acc + value,
+    0
+  );
   const troisptsMarqueMin = Math.min(...troisptsMarque);
   const troisptsMarqueMax = Math.max(...troisptsMarque);
 
-  const lfptsMarque = stats.map((value) => value.lfteam ?? 0);
-  const lfptsMarqueMoy =
-    lfptsMarque.reduce((acc, value) => acc + value, 0) / lfptsMarque.length;
-  const lfptsMarqueMin = Math.min(...lfptsMarque);
-  const lfptsMarqueMax = Math.max(...lfptsMarque);
+  const percentLf = stats
+    .map((value) => {
+      const marque = value.lfteam ?? 0;
+      const tente =
+        (value.foul1lfopponent ?? 0) +
+        (value.foul2lfopponent ? value.foul2lfopponent * 2 : 0) +
+        (value.foul3lfopponent ? value.foul3lfopponent * 3 : 0);
+      const percent = (marque / tente) * 100;
+      return { marque, tente, percent };
+    })
+    .sort(sortByPercent);
+  const percentLfTot = percentLf.reduce(
+    (acc, value) => {
+      const marque = acc.marque + value.marque;
+      const tente = acc.tente + value.tente;
+      const percent = (marque / tente) * 100;
+      return { marque, tente, percent };
+    },
+    {
+      marque: 0,
+      tente: 0,
+      percent: 0,
+    }
+  );
 
+  console.log(percentLfTot);
+  const minPercentLf =
+    percentLf.length > 0 ? percentLf[percentLf.length - 1] : undefined;
+  const maxPercentLf = percentLf.length > 0 ? percentLf[0] : undefined;
+
+  console.log(percentLf);
   return (
     <Paper
       variant="outlined"
@@ -65,9 +91,13 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
             <Grid item xs={1}>
               <CardStats
                 label="Pts Marqués"
-                value={ptsMarquesMoy}
-                min={ptsMarquesMin}
-                max={ptsMarquesMax}
+                value={
+                  type === "match"
+                    ? ptsMarquesTot / ptsMarques.length
+                    : ptsMarquesTot
+                }
+                min={type === "match" ? ptsMarquesMin : undefined}
+                max={type === "match" ? ptsMarquesMax : undefined}
               />
             </Grid>
             <Grid item xs={1}>
@@ -84,9 +114,13 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
                 />
                 <CardStats
                   label="Pts Encaissés"
-                  value={ptsEncaissesMoy}
-                  min={ptsEncaissesMin}
-                  max={ptsEncaissesMax}
+                  value={
+                    type === "match"
+                      ? ptsEncaissesTot / ptsEncaisses.length
+                      : ptsEncaissesTot
+                  }
+                  min={type === "match" ? ptsEncaissesMin : undefined}
+                  max={type === "match" ? ptsEncaissesMax : undefined}
                 />
               </Box>
             </Grid>
@@ -104,9 +138,13 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
                 />
                 <CardStats
                   label="3Pts Marqués"
-                  value={troisptsMarqueMoy}
-                  min={troisptsMarqueMin}
-                  max={troisptsMarqueMax}
+                  value={
+                    type === "match"
+                      ? troisptsMarqueTot / troisptsMarque.length
+                      : troisptsMarqueTot
+                  }
+                  min={type === "match" ? troisptsMarqueMin : undefined}
+                  max={type === "match" ? troisptsMarqueMax : undefined}
                 />
               </Box>
             </Grid>
@@ -122,11 +160,23 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
                   orientation={isSmall ? "horizontal" : "vertical"}
                   flexItem
                 />
-                <CardStats
-                  label="LF Marqués"
-                  value={lfptsMarqueMoy}
-                  min={lfptsMarqueMin}
-                  max={lfptsMarqueMax}
+                <CardStatsLF
+                  label="%LF"
+                  value={
+                    type === "match"
+                      ? {
+                          marque: percentLfTot.marque / percentLf.length,
+                          tente: percentLfTot.tente / percentLf.length,
+                          percent:
+                            (percentLfTot.marque /
+                              percentLf.length /
+                              (percentLfTot.tente / percentLf.length)) *
+                            100,
+                        }
+                      : percentLfTot
+                  }
+                  min={type === "match" ? minPercentLf : undefined}
+                  max={type === "match" ? maxPercentLf : undefined}
                 />
               </Box>
             </Grid>

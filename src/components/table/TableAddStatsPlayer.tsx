@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
@@ -33,8 +33,12 @@ interface Row {
   twoptsintpassed: null | number;
   twoptsextpassed: null | number;
   lfpassed: null | number;
-  fouls: null | number;
+  fouls_0lf: null | number;
+  fouls_1lf: null | number;
+  fouls_2lf: null | number;
+  fouls_3lf: null | number;
   idStats: number | null;
+  is_play: boolean;
 }
 export const TableAddStatsPlayer = ({ game, players }: Props) => {
   const [rows, setRows] = useState<Array<Row>>(
@@ -44,6 +48,7 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
       number: null,
       lastname: player.lastname,
       firstname: player.firstname,
+      is_play: true,
       startingfive: false,
       minutes: null,
       points: null,
@@ -51,15 +56,25 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
       twoptsintpassed: null,
       twoptsextpassed: null,
       lfpassed: null,
-      fouls: null,
+      fouls_0lf: null,
+      fouls_1lf: null,
+      fouls_2lf: null,
+      fouls_3lf: null,
       idStats: null,
     }))
   );
 
   const columns: Array<GridColDef> = [
-    { field: "licence", headerName: "Licence", flex: 1, editable: true },
-    { field: "lastname", headerName: "Nom", flex: 1, editable: true },
-    { field: "firstname", headerName: "Prénom", flex: 1, editable: true },
+    {
+      field: "is_play",
+      headerName: "A Joué ?",
+      flex: 1,
+      type: "boolean",
+      editable: true,
+    },
+    { field: "licence", headerName: "Licence", flex: 1, editable: false },
+    { field: "lastname", headerName: "Nom", flex: 1, editable: false },
+    { field: "firstname", headerName: "Prénom", flex: 1, editable: false },
     { field: "number", headerName: "N°", flex: 1, editable: true },
     {
       field: "startingfive",
@@ -83,21 +98,21 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
       editable: true,
     },
     {
-      field: "3ptspassed",
+      field: "threeptspassed",
       headerName: "3PTS Réussis",
       flex: 1,
       type: "number",
       editable: true,
     },
     {
-      field: "2ptsintpassed",
+      field: "twoptsintpassed",
       headerName: "2PTS Int Réussis",
       flex: 1,
       type: "number",
       editable: true,
     },
     {
-      field: "2ptsextpassed",
+      field: "twoptsextpassed",
       headerName: "2PTS Ext Réussis",
       flex: 1,
       type: "number",
@@ -111,8 +126,29 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
       editable: true,
     },
     {
-      field: "fouls",
-      headerName: "Fautes",
+      field: "fouls_0lf",
+      headerName: "Fautes 0LF",
+      flex: 1,
+      type: "number",
+      editable: true,
+    },
+    {
+      field: "fouls_1lf",
+      headerName: "Fautes 1LF",
+      flex: 1,
+      type: "number",
+      editable: true,
+    },
+    {
+      field: "fouls_2lf",
+      headerName: "Fautes 2LF",
+      flex: 1,
+      type: "number",
+      editable: true,
+    },
+    {
+      field: "fouls_3lf",
+      headerName: "Fautes 3LF",
       flex: 1,
       type: "number",
       editable: true,
@@ -137,6 +173,7 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
           lastname: player.lastname,
           firstname: player.firstname,
           number: statsPlayer ? statsPlayer.number : null,
+          is_play: statsPlayer ? statsPlayer.is_play : true,
           startingfive: statsPlayer ? statsPlayer.startingfive : false,
           minutes: statsPlayer ? statsPlayer.minutes : null,
           points: statsPlayer ? statsPlayer.points : null,
@@ -144,7 +181,10 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
           twoptsintpassed: statsPlayer ? statsPlayer.twoptsintpassed : null,
           twoptsextpassed: statsPlayer ? statsPlayer.twoptsextpassed : null,
           lfpassed: statsPlayer ? statsPlayer.lfpassed : null,
-          fouls: statsPlayer ? statsPlayer.fouls : null,
+          fouls_0lf: statsPlayer ? statsPlayer.fouls_0lf : null,
+          fouls_1lf: statsPlayer ? statsPlayer.fouls_1lf : null,
+          fouls_2lf: statsPlayer ? statsPlayer.fouls_2lf : null,
+          fouls_3lf: statsPlayer ? statsPlayer.fouls_3lf : null,
           idStats: statsPlayer ? statsPlayer.id : null,
         };
       })
@@ -153,7 +193,6 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
 
   const getStats = () => {
     getStatsPlayerByGameId(game.id).then((res) => {
-      console.log(res);
       const stats = res.data as Array<StatsPlayer>;
       setStatsPlayers(stats);
     });
@@ -166,6 +205,7 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         game: game.id,
         id: newRow.idStats,
         number: newRow.number,
+        is_play: newRow.is_play,
         startingfive: newRow.startingfive,
         minutes: newRow.minutes,
         points: newRow.points,
@@ -173,7 +213,10 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         twoptsintpassed: newRow.twoptsintpassed,
         twoptsextpassed: newRow.twoptsextpassed,
         lfpassed: newRow.lfpassed,
-        fouls: newRow.fouls,
+        fouls_0lf: newRow.fouls_0lf,
+        fouls_1lf: newRow.fouls_1lf,
+        fouls_2lf: newRow.fouls_2lf,
+        fouls_3lf: newRow.fouls_3lf,
       };
       const { error } = await updateStatsPlayer(statsPlayerUpdate);
       if (error) return oldRow;
@@ -182,6 +225,7 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         player: newRow.id,
         game: game.id,
         number: newRow.number,
+        is_play: newRow.is_play,
         startingfive: newRow.startingfive,
         minutes: newRow.minutes,
         points: newRow.points,
@@ -189,7 +233,10 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
         twoptsintpassed: newRow.twoptsintpassed,
         twoptsextpassed: newRow.twoptsextpassed,
         lfpassed: newRow.lfpassed,
-        fouls: newRow.fouls,
+        fouls_0lf: newRow.fouls_0lf,
+        fouls_1lf: newRow.fouls_1lf,
+        fouls_2lf: newRow.fouls_2lf,
+        fouls_3lf: newRow.fouls_3lf,
       };
       const { data, error } = await insertStatsPlayer(statsPlayerInsert);
       if (error) {
@@ -202,16 +249,14 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
   };
 
   return (
-    <Grid container spacing={1}>
-      <Grid item xs={12}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          editMode="row"
-          processRowUpdate={onRowEditCommit}
-          hideFooter
-        />
-      </Grid>
-    </Grid>
+    <Paper elevation={3} sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        editMode="row"
+        processRowUpdate={onRowEditCommit}
+        hideFooter
+      />
+    </Paper>
   );
 };

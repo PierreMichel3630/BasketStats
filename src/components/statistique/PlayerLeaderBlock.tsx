@@ -2,17 +2,17 @@ import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import {
   sortBy3Pts,
+  sortByFouls,
   sortByLf,
-  sortByMinutes,
   sortByPoints,
 } from "src/utils/sort";
 
+import { px } from "csx";
 import rank1 from "src/assets/rank/rank1.png";
 import rank2 from "src/assets/rank/rank2.png";
 import rank3 from "src/assets/rank/rank3.png";
-import { style } from "typestyle";
-import { px } from "csx";
 import { getBreakpoint } from "src/utils/mediaQuery";
+import { style } from "typestyle";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
@@ -22,24 +22,24 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
-  const minutes: Array<Value> = stats.sort(sortByMinutes).map((el) => ({
+  const fautes: Array<Value> = stats.sort(sortByFouls).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
-    value: el.minutes ?? "-",
+    value: el.fouls ? el.fouls.toFixed(1) : "-",
   }));
 
   const points: Array<Value> = stats.sort(sortByPoints).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
-    value: el.points ?? "-",
+    value: el.points ? el.points.toFixed(1) : "-",
   }));
 
   const troisPoints: Array<Value> = stats.sort(sortBy3Pts).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
-    value: el.threeptspassed ?? "-",
+    value: el.threeptspassed ? el.threeptspassed.toFixed(1) : "-",
   }));
 
   const lfs: Array<Value> = stats.sort(sortByLf).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
-    value: el.lfpassed ?? "-",
+    value: el.lfpassed ? el.lfpassed.toFixed(1) : "-",
   }));
   return (
     <Paper
@@ -56,22 +56,7 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
         <Grid item xs={12} sx={{ p: 1 }}>
           <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
             <Grid item xs={1}>
-              <Card label="Minutes" values={minutes} />
-            </Grid>
-            <Grid item xs={1}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  flexDirection: isSmall ? "column" : "row",
-                }}
-              >
-                <Divider
-                  orientation={isSmall ? "horizontal" : "vertical"}
-                  flexItem
-                />
-                <Card label="Points" values={points} />
-              </Box>
+              <Card label="Points" values={points} />
             </Grid>
             <Grid item xs={1}>
               <Box
@@ -101,6 +86,21 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
                   flexItem
                 />
                 <Card label="LF" values={lfs} />
+              </Box>
+            </Grid>
+            <Grid item xs={1}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  flexDirection: isSmall ? "column" : "row",
+                }}
+              >
+                <Divider
+                  orientation={isSmall ? "horizontal" : "vertical"}
+                  flexItem
+                />
+                <Card label="Fautes" values={fautes} />
               </Box>
             </Grid>
           </Grid>
