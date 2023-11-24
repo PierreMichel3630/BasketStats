@@ -19,25 +19,27 @@ import { Game } from "src/models/Game";
 import { Colors } from "src/style/Colors";
 
 import AddchartIcon from "@mui/icons-material/Addchart";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import { groupBy } from "lodash";
 import { sortByDateDesc } from "src/utils/sort";
+import { useAuth } from "src/context/AuthProviderSupabase";
+import { Fragment } from "react";
 
 interface Props {
   games: Array<Game>;
 }
 
+const hoverCell = {
+  color: "inherit",
+};
+
 export const TableGame = ({ games }: Props) => {
+  const { user } = useAuth();
   const gamesSort = games.sort(sortByDateDesc);
   const gamesGroupByMonth = groupBy(gamesSort, (el) =>
     moment(el.date).format("MMMM")
   );
   return (
-    <Paper
-      elevation={3}
-      variant="outlined"
-      sx={{ bgcolor: "background.paper" }}
-    >
+    <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
           <Typography variant="h4" color="white">
@@ -50,40 +52,59 @@ export const TableGame = ({ games }: Props) => {
               <TableHead sx={{ bgcolor: Colors.subprimary }}>
                 <TableRow>
                   <TableCell>
-                    <Typography variant="h4">Date</Typography>
+                    <Typography variant="h4" color="white">
+                      Date
+                    </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="h4">Opponent</Typography>
+                    <Typography variant="h4" color="white">
+                      Opponent
+                    </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="h4">Result</Typography>
+                    <Typography variant="h4" color="white">
+                      Result
+                    </Typography>
                   </TableCell>
-                  <TableCell></TableCell>
+                  {user && <TableCell></TableCell>}
                 </TableRow>
               </TableHead>
               <TableBody>
                 {Object.entries(gamesGroupByMonth).map(([key, value]) => (
-                  <>
+                  <Fragment key={key}>
                     <TableRow sx={{ bgcolor: Colors.subprimary2 }}>
                       <TableCell colSpan={4}>
-                        <Typography variant="h6">{key}</Typography>
+                        <Typography variant="h6" color="white">
+                          {key}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                     {value.map((game) => (
-                      <TableRow key={game.id}>
-                        <TableCell>
+                      <TableRow
+                        component={Link}
+                        key={game.id}
+                        sx={{
+                          "&:hover": {
+                            bgcolor: "secondary.main",
+                            cursor: "pointer",
+                            color: Colors.black,
+                          },
+                        }}
+                        to={`/game/${game.id}/stats`}
+                      >
+                        <TableCell sx={hoverCell}>
                           <Typography variant="body1">
                             {moment(game.date).format("DD/MM/YYYY")}
                           </Typography>
                         </TableCell>
-                        <TableCell>
+                        <TableCell sx={hoverCell}>
                           <Typography variant="body1">
                             {`${game.is_outside ? "à" : "contre"} ${
                               game.opponent
                             }`}
                           </Typography>
                         </TableCell>
-                        <TableCell>
+                        <TableCell sx={hoverCell}>
                           {game.opponent_score && game.team_score ? (
                             <Box sx={{ display: "flex", gap: 1 }}>
                               <Typography
@@ -107,25 +128,20 @@ export const TableGame = ({ games }: Props) => {
                             </Typography>
                           )}
                         </TableCell>
-                        <TableCell sx={{ display: "flex", gap: 2 }}>
-                          <Link to={`/game/${game.id}/addstats`}>
-                            <Tooltip title="Ajouter / Modifier les statistiques">
-                              <IconButton size="small">
-                                <AddchartIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </Link>
-                          <Link to={`/game/${game.id}/stats`}>
-                            <Tooltip title="Voir les statistiques">
-                              <IconButton>
-                                <QueryStatsIcon />
-                              </IconButton>
-                            </Tooltip>
-                          </Link>
-                        </TableCell>
+                        {user && (
+                          <TableCell>
+                            <Link to={`/game/${game.id}/addstats`}>
+                              <Tooltip title="Ajouter / Modifier les statistiques">
+                                <IconButton size="small">
+                                  <AddchartIcon />
+                                </IconButton>
+                              </Tooltip>
+                            </Link>
+                          </TableCell>
+                        )}
                       </TableRow>
                     ))}
-                  </>
+                  </Fragment>
                 ))}
               </TableBody>
             </Table>

@@ -5,6 +5,7 @@ import { getGamesByTeamId } from "src/api/game";
 
 import { getTeamById } from "src/api/team";
 import { HeaderTeam } from "src/components/header/HeaderTeam";
+import { GoHomeButton } from "src/components/navigation/GoBackButton";
 import { Game } from "src/models/Game";
 import { Team } from "src/models/Team";
 
@@ -21,6 +22,7 @@ export const TeamPage = () => {
     { label: "Matchs", value: "games", url: "games" },
     { label: "Joueurs", value: "players", url: "players" },
     { label: "Statistiques", value: "stats", url: "stats" },
+    { label: "Comparer", value: "compare", url: "compare" },
   ];
 
   useEffect(() => {
@@ -54,14 +56,34 @@ export const TeamPage = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
+        <GoHomeButton />
+      </Grid>
+      {team && (
+        <Grid item xs={12}>
+          <Paper
+            variant="outlined"
+            sx={{ width: "100%", bgcolor: "background.paper", p: 1 }}
+          >
+            <HeaderTeam team={team} games={games} />
+          </Paper>
+        </Grid>
+      )}
+      <Grid item xs={12}>
         <Paper
-          elevation={3}
-          sx={{ width: "100%", bgcolor: "background.paper" }}
+          variant="outlined"
+          sx={{
+            width: "100%",
+            bgcolor: "background.paper",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Tabs
             value={tab}
             onChange={handleChangeTab}
-            variant="fullWidth"
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
             indicatorColor="secondary"
             textColor="secondary"
           >
@@ -78,17 +100,6 @@ export const TeamPage = () => {
           </Tabs>
         </Paper>
       </Grid>
-      {team && (
-        <Grid item xs={12}>
-          <Paper
-            variant="outlined"
-            elevation={3}
-            sx={{ width: "100%", bgcolor: "background.paper", p: 1 }}
-          >
-            <HeaderTeam team={team} games={games} />
-          </Paper>
-        </Grid>
-      )}
       <Grid item xs={12}>
         <Outlet />
       </Grid>

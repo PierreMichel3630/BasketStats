@@ -14,7 +14,8 @@ import { Player } from "src/models/Player";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { sortByName } from "src/utils/sort";
 
-import { DataGrid, GridColDef, GridColumnHeaderParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 import { Colors } from "src/style/Colors";
 
 interface Props {
@@ -60,6 +61,7 @@ interface PropsStats {
 }
 
 export const TablePlayerStats = ({ players, stats }: PropsStats) => {
+  const navigate = useNavigate();
   const getValue = (value: null | number) =>
     value !== null ? value.toFixed(1) : "-";
 
@@ -161,6 +163,10 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
     };
   });
 
+  const onRowClick: GridEventListener<"rowClick"> = (params) => {
+    navigate(`/player/${params.id}`);
+  };
+
   return (
     <Grid container>
       <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
@@ -171,6 +177,9 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       <Grid item xs={12}>
         <DataGrid
           sx={{
+            ".MuiButtonBase-root": {
+              color: "white",
+            },
             ".MuiDataGrid-columnSeparator": {
               display: "none",
             },
@@ -183,6 +192,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
             ".MuiDataGrid-columnHeaders": {
               backgroundColor: Colors.subprimary,
               minHeight: "inherit",
+              color: "white",
             },
             ".MuiDataGrid-columnHeaderTitle": {
               fontSize: 13,
@@ -196,6 +206,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
           rowHeight={35}
           rows={rows}
           columns={columns}
+          onRowClick={onRowClick}
           hideFooter
           disableRowSelectionOnClick
           disableColumnMenu

@@ -28,11 +28,32 @@ export const getStatsPlayerAvgByTeamId = (id: number) =>
     .select("*, player(*)")
     .eq("team", id);
 
+export const getStatsPlayerAvgByTeamIdIn = (id: Array<number>) =>
+  supabase
+    .from(SUPABASE_STATSPLAYERAVG_TABLE)
+    .select("*, player(*), team(*)")
+    .not("team", "is", null)
+    .eq("team.id", id);
+
+export const getStatsPlayerAvgByPlayerId = (id: number) =>
+  supabase
+    .from(SUPABASE_STATSPLAYERAVG_TABLE)
+    .select("*, player(*), team(*)")
+    .not("player", "is", null)
+    .eq("player.id", id);
+
 export const getStatsPlayerByGameId = (id: number) =>
   supabase
     .from(SUPABASE_STATSPLAYER_TABLE)
     .select("*, player(*)")
     .eq("game", id);
+
+export const getStatsPlayerByPlayerId = (id: number) =>
+  supabase
+    .from(SUPABASE_STATSPLAYER_TABLE)
+    .select("*, player(*), game(*)")
+    .not("player", "is", null)
+    .eq("player.id", id);
 
 export const insertStatsTeam = (value: StatsTeamInsert) =>
   supabase.from(SUPABASE_STATSTEAM_TABLE).insert(value).select().single();

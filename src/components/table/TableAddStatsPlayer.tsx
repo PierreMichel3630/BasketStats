@@ -249,7 +249,10 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
   };
 
   return (
-    <Paper elevation={3} sx={{ width: "100%", bgcolor: "background.paper" }}>
+    <Paper
+      variant="outlined"
+      sx={{ width: "100%", bgcolor: "background.paper" }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}

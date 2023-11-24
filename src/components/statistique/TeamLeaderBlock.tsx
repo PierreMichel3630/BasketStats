@@ -68,18 +68,12 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
     }
   );
 
-  console.log(percentLfTot);
   const minPercentLf =
     percentLf.length > 0 ? percentLf[percentLf.length - 1] : undefined;
   const maxPercentLf = percentLf.length > 0 ? percentLf[0] : undefined;
 
-  console.log(percentLf);
   return (
-    <Paper
-      variant="outlined"
-      elevation={3}
-      sx={{ bgcolor: "background.paper" }}
-    >
+    <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
           <Typography variant="h4" color="white">

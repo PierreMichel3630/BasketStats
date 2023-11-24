@@ -7,6 +7,9 @@ export const SUPABASE_TEAMPLAYER_TABLE = BASEDATABASE + "teamplayer";
 export const insertPlayer = (value: PlayerInsert) =>
   supabase.from(SUPABASE_PLAYER_TABLE).insert(value).select().single();
 
+export const getPlayerById = (id: number) =>
+  supabase.from(SUPABASE_PLAYER_TABLE).select().eq("id", id).maybeSingle();
+
 export const getPlayersByEquipeId = (id: string) =>
   supabase.from(SUPABASE_TEAMPLAYER_TABLE).select(`player(*)`).eq("team", id);
 

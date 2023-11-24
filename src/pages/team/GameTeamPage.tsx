@@ -4,9 +4,11 @@ import { useParams } from "react-router-dom";
 import { getGamesByTeamId } from "src/api/game";
 import { CreateGameDialog } from "src/components/dialog/CreateGameDialog";
 import { TableGame } from "src/components/table/TableGame";
+import { useAuth } from "src/context/AuthProviderSupabase";
 import { Game } from "src/models/Game";
 
 export const GameTeamPage = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const [games, setGames] = useState<Array<Game>>([]);
   const [open, setOpen] = useState(false);
@@ -28,18 +30,20 @@ export const GameTeamPage = () => {
       <Grid item xs={12}>
         <TableGame games={games} />
       </Grid>
-      <Grid item xs={12}>
-        <Button
-          disableElevation
-          fullWidth
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() => setOpen(true)}
-        >
-          Ajouter un match
-        </Button>
-      </Grid>
+      {user && (
+        <Grid item xs={12}>
+          <Button
+            disableElevation
+            fullWidth
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpen(true)}
+          >
+            Ajouter un match
+          </Button>
+        </Grid>
+      )}
       <CreateGameDialog
         open={open}
         close={() => {

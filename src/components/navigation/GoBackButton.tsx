@@ -18,3 +18,19 @@ export const GoBackButton = () => {
     </Button>
   );
 };
+
+export const GoHomeButton = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Button
+      startIcon={<ArrowBackIosIcon />}
+      onClick={() => navigate("/")}
+      sx={{ color: "text.primary" }}
+    >
+      <Typography variant="h6" color="text.primary">
+        Retour à l'accueil
+      </Typography>
+    </Button>
+  );
+};

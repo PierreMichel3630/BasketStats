@@ -2,7 +2,7 @@ import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { sortByPourcentageStartingFive } from "src/utils/sort";
 import { getBreakpoint } from "src/utils/mediaQuery";
-
+import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 
 interface Props {
@@ -19,7 +19,6 @@ export const StartingFiveBlock = ({ stats }: Props) => {
   return (
     <Paper
       variant="outlined"
-      elevation={3}
       sx={{ width: "100%", bgcolor: "background.paper" }}
     >
       <Grid container alignItems="center">
@@ -68,9 +67,14 @@ const Card = ({ stat }: PropsCard) => {
         </Avatar>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h6">
-          {stat.player.firstname} {stat.player.lastname.toUpperCase()}
-        </Typography>
+        <Link to={`/player/${stat.player.id}`}>
+          <Typography
+            variant="h6"
+            sx={{ "&:hover": { color: "secondary.main" } }}
+          >
+            {stat.player.firstname} {stat.player.lastname.toUpperCase()}
+          </Typography>
+        </Link>
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">

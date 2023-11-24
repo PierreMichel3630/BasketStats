@@ -6,10 +6,12 @@ import { getStatsPlayerAvgByTeamId } from "src/api/statistique";
 import { CreatePlayerDialog } from "src/components/dialog/CreatePlayerDialog";
 import { PlayerLeaderBlock } from "src/components/statistique/PlayerLeaderBlock";
 import { TablePlayerStats } from "src/components/table/TablePlayer";
+import { useAuth } from "src/context/AuthProviderSupabase";
 import { Player } from "src/models/Player";
 import { StatsPlayerAvg } from "src/models/Statistique";
 
 export const PlayersTeamPage = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const [players, setPlayers] = useState<Array<Player>>([]);
   const [stats, setStats] = useState<Array<StatsPlayerAvg>>([]);
@@ -44,18 +46,20 @@ export const PlayersTeamPage = () => {
       <Grid item xs={12}>
         <TablePlayerStats players={players} stats={stats} />
       </Grid>
-      <Grid item xs={12}>
-        <Button
-          disableElevation
-          fullWidth
-          size="small"
-          variant="contained"
-          color="secondary"
-          onClick={() => setOpen(true)}
-        >
-          Ajouter un joueur
-        </Button>
-      </Grid>
+      {user && (
+        <Grid item xs={12}>
+          <Button
+            disableElevation
+            fullWidth
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpen(true)}
+          >
+            Ajouter un joueur
+          </Button>
+        </Grid>
+      )}
       <CreatePlayerDialog
         open={open}
         close={() => {

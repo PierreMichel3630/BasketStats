@@ -72,7 +72,7 @@ export const PageStatsGame = () => {
       )}
       <Grid item xs={12}>
         <Paper
-          elevation={3}
+          variant="outlined"
           sx={{ width: "100%", bgcolor: "background.paper" }}
         >
           <Tabs

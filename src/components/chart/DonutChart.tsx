@@ -17,7 +17,6 @@ export const DonutChart = ({ data, title }: Props) => {
   return (
     <Paper
       variant="outlined"
-      elevation={3}
       sx={{ width: "100%", bgcolor: "background.paper" }}
     >
       <Grid container>

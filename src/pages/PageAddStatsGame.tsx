@@ -80,7 +80,7 @@ export const PageAddStatsGame = () => {
         <TabContext value={tabSelect}>
           <Grid item xs={12}>
             <Paper
-              elevation={3}
+              variant="outlined"
               sx={{ width: "100%", bgcolor: "background.paper" }}
             >
               <TabList

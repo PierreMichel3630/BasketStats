@@ -1,16 +1,15 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
-import { percent, px } from "csx";
+import { Grid, Paper, Typography } from "@mui/material";
 import { Game } from "src/models/Game";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
-import { getPourcentageLFNumber } from "src/utils/calcul";
-
-interface Value {
-  label: string;
-  value1: number;
-  value2: number;
-  fixed?: number;
-}
+import {
+  getNbreFouls,
+  getNbreFoulsOpponent,
+  getNbreLf,
+  getNbreLfOpponent,
+  getPourcentageLFNumber,
+} from "src/utils/calcul";
+import { LineCompareTable } from "../LineCompareTable";
 
 interface Props {
   stats: StatsTeam;
@@ -18,29 +17,15 @@ interface Props {
 }
 
 export const TableTeamStats = ({ game, stats }: Props) => {
-  const nbreLfTeam =
-    (stats.foul1lfopponent ?? 0) * 1 +
-    (stats.foul2lfopponent ?? 0) * 2 +
-    (stats.foul3lfopponent ?? 0) * 3;
+  const nbreLfTeam = getNbreLf(stats);
 
-  const nbreLfOpponent =
-    (stats.foul1lfteam ?? 0) * 1 +
-    (stats.foul2lfteam ?? 0) * 2 +
-    (stats.foul3lfteam ?? 0) * 3;
+  const nbreLfOpponent = getNbreLfOpponent(stats);
 
-  const foulsTeam =
-    (stats.foul0lfteam ?? 0) +
-    (stats.foul1lfteam ?? 0) +
-    (stats.foul2lfteam ?? 0) +
-    (stats.foul3lfteam ?? 0);
+  const foulsTeam = getNbreFouls(stats);
 
-  const foulsOpponent =
-    (stats.foul0lfopponent ?? 0) +
-    (stats.foul1lfopponent ?? 0) +
-    (stats.foul2lfopponent ?? 0) +
-    (stats.foul3lfopponent ?? 0);
+  const foulsOpponent = getNbreFoulsOpponent(stats);
 
-  const data: Array<Value> = [
+  const data = [
     {
       label: "PTS",
       value1: stats.game.team_score ?? 0,
@@ -85,7 +70,7 @@ export const TableTeamStats = ({ game, stats }: Props) => {
   ];
   return (
     <Paper
-      elevation={3}
+      variant="outlined"
       sx={{ width: "100%", bgcolor: "background.paper", pb: 2 }}
     >
       <Grid container>
@@ -108,75 +93,12 @@ export const TableTeamStats = ({ game, stats }: Props) => {
           <Grid container spacing={2}>
             {data.map((el) => (
               <Grid item xs={12}>
-                <LineTable value={el} />
+                <LineCompareTable value={el} />
               </Grid>
             ))}
           </Grid>
         </Grid>
       </Grid>
     </Paper>
-  );
-};
-
-interface PropsLine {
-  value: Value;
-}
-
-export const LineTable = ({ value }: PropsLine) => {
-  const isWin = value.value1 > value.value2;
-  return (
-    <Grid container alignItems="center">
-      <Grid
-        item
-        xs={5}
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          gap: 2,
-          alignItems: "center",
-        }}
-      >
-        <Typography
-          variant="h4"
-          color={isWin ? "primary.main" : "secondary.main"}
-        >
-          {value.fixed ? value.value1.toFixed(value.fixed) : value.value1}
-        </Typography>
-        <Box
-          sx={{
-            width: percent(value.value1),
-            height: px(25),
-            bgcolor: isWin ? "primary.main" : "secondary.main",
-          }}
-        />
-      </Grid>
-      <Grid item xs={2} sx={{ textAlign: "center" }}>
-        <Typography variant="h4">{value.label.toUpperCase()}</Typography>
-      </Grid>
-      <Grid
-        item
-        xs={5}
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          gap: 2,
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{
-            width: percent(value.value2),
-            height: px(25),
-            bgcolor: !isWin ? "primary.main" : "secondary.main",
-          }}
-        />
-        <Typography
-          variant="h4"
-          color={!isWin ? "primary.main" : "secondary.main"}
-        >
-          {value.fixed ? value.value2.toFixed(value.fixed) : value.value2}
-        </Typography>
-      </Grid>
-    </Grid>
   );
 };

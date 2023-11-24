@@ -1,7 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { PageAddStatsGame } from "src/pages/PageAddStatsGame";
 import { PageStatsGame } from "src/pages/PageStatsGame";
+import { ComparePlayerPage } from "src/pages/player/ComparePlayerPage";
+import { PlayerPage } from "src/pages/player/PlayerPage";
+import { StatsPlayerPage } from "src/pages/player/StatsPlayerPage";
 import { SearchPage } from "src/pages/SearchPage";
+import { CompareTeamPage } from "src/pages/team/CompareTeamPage";
 import { GameTeamPage } from "src/pages/team/GameTeamPage";
 import { HomeTeamPage } from "src/pages/team/HomeTeamPage";
 import { PlayersTeamPage } from "src/pages/team/PlayersTeamPage";
@@ -37,6 +41,10 @@ export const CommunRoutes = [
         path: "/team/:id/stats",
         element: <StatsTeamPage />,
       },
+      {
+        path: "/team/:id/compare",
+        element: <CompareTeamPage />,
+      },
     ],
   },
   {
@@ -46,5 +54,23 @@ export const CommunRoutes = [
   {
     path: "/game/:id/stats",
     element: <PageStatsGame />,
+  },
+  {
+    path: "/player/:id",
+    element: <PlayerPage />,
+    children: [
+      {
+        path: "/player/:id",
+        element: <Navigate to="stats" replace />,
+      },
+      {
+        path: "/player/:id/stats",
+        element: <StatsPlayerPage />,
+      },
+      {
+        path: "/player/:id/compare",
+        element: <ComparePlayerPage />,
+      },
+    ],
   },
 ];
