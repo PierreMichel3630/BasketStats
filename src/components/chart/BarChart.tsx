@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import moment from "moment";
+import { useContext } from "react";
 import {
   Bar,
   BarChart,
@@ -9,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { UserContext } from "src/App";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { sortByGameDateAsc } from "src/utils/sort";
@@ -18,6 +20,7 @@ interface Props {
 }
 
 export const BarChartLF = ({ stats }: Props) => {
+  const { mode } = useContext(UserContext);
   const data = stats.sort(sortByGameDateAsc).map((stat) => {
     const succeed = stat.lfteam ?? 0;
     const miss =
@@ -49,18 +52,25 @@ export const BarChartLF = ({ stats }: Props) => {
         <Grid item xs={12}>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
-              width={500}
-              height={300}
               data={data}
               margin={{
-                top: 20,
-                right: 30,
-                left: 20,
+                top: 0,
+                right: 10,
+                left: -25,
                 bottom: 5,
               }}
             >
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis
+                dataKey="name"
+                stroke={mode === "dark" ? "white" : Colors.black}
+                fontWeight={700}
+                fontSize={10}
+              />
+              <YAxis
+                stroke={mode === "dark" ? "white" : Colors.black}
+                fontWeight={700}
+                fontSize={10}
+              />
               <Legend />
               <Bar
                 dataKey="succeed"
@@ -90,7 +100,7 @@ export const BarChartLF = ({ stats }: Props) => {
                 <LabelList
                   fill="white"
                   fontWeight={700}
-                  fontSize={20}
+                  fontSize={10}
                   position="top"
                   dataKey="percent"
                   formatter={(value: any) => `${value}%`}

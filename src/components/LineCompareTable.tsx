@@ -22,7 +22,8 @@ export const LineCompareTable = ({ value, max }: PropsLine) => {
     <Grid container alignItems="center">
       <Grid
         item
-        xs={5}
+        xs={4}
+        sm={5}
         sx={{
           display: "flex",
           justifyContent: "flex-end",
@@ -44,12 +45,13 @@ export const LineCompareTable = ({ value, max }: PropsLine) => {
           }}
         />
       </Grid>
-      <Grid item xs={2} sx={{ textAlign: "center" }}>
+      <Grid item xs={4} sm={2} sx={{ textAlign: "center" }}>
         <Typography variant="h4">{value.label.toUpperCase()}</Typography>
       </Grid>
       <Grid
         item
-        xs={5}
+        xs={4}
+        sm={5}
         sx={{
           display: "flex",
           justifyContent: "flex-start",

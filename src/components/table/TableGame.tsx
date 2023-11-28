@@ -119,7 +119,10 @@ export const TableGame = ({ games, isRight = false }: Props) => {
                                   ? "V"
                                   : "D"}
                               </Typography>
-                              <Typography variant="body1">{`${game.team_score} - ${game.opponent_score}`}</Typography>
+                              <Typography
+                                variant="body1"
+                                noWrap
+                              >{`${game.team_score} - ${game.opponent_score}`}</Typography>
                             </Box>
                           ) : (
                             <Typography variant="body1">

@@ -48,12 +48,14 @@ export const SelectStatsTeam = ({ value, onSelect, results }: Props) => {
         }}
         onClick={onFocus}
       >
-        <Typography variant="h2" color="white">
-          {value.label}
-        </Typography>
-        <Typography variant="h6" color="white">
-          ({value.stats.length} matchs)
-        </Typography>
+        <Box>
+          <Typography variant="h2" color="white">
+            {value.label}
+          </Typography>
+          <Typography variant="h6" color="white">
+            ({value.stats.length} matchs)
+          </Typography>
+        </Box>
         <ArrowDropDownIcon sx={{ color: "white" }} />
       </Box>
       {results.length > 0 && focused && (

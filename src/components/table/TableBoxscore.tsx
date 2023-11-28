@@ -20,7 +20,10 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
   const statsFilter = stats.filter((el) => el.is_play);
   return (
     <TableContainer component={Paper}>
-      <Table size="small">
+      <Table
+        size="small"
+        sx={{ borderCollapse: "separate", borderSpacing: "0px 1px" }}
+      >
         <TableBoxscoreStaterOrBench
           title="STARTER"
           stats={statsFilter.filter((el) => el.startingfive)}
@@ -30,7 +33,9 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
           stats={statsFilter.filter((el) => !el.startingfive)}
         />
         <TableRow sx={{ bgcolor: Colors.subprimary }}>
-          <TableCell>
+          <TableCell
+            sx={{ position: "sticky", left: 0, bgcolor: Colors.subprimary }}
+          >
             <Typography variant="h4">TEAM</Typography>
           </TableCell>
           <TableCell>
@@ -104,41 +109,43 @@ const TableBoxscoreStaterOrBench = ({
     <>
       <TableHead sx={{ bgcolor: "primary.main" }}>
         <TableRow>
-          <TableCell>
+          <TableCell
+            sx={{ position: "sticky", left: 0, bgcolor: "primary.main" }}
+          >
             <Typography variant="h6">{title}</Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               MIN
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               PTS
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               3PTS
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               2PTS Int
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               2PTS Ext
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               LF
             </Typography>
           </TableCell>
           <TableCell>
-            <Typography variant="h6" align="center">
+            <Typography variant="h6" align="center" noWrap>
               PF
             </Typography>
           </TableCell>
@@ -158,7 +165,9 @@ const TableBoxscoreStaterOrBench = ({
             (stat.fouls_3lf ?? 0);
           return (
             <TableRow key={stat.id}>
-              <TableCell>
+              <TableCell
+                sx={{ position: "sticky", left: 0, bgcolor: Colors.subprimary }}
+              >
                 <Typography variant="body1">{`${stat.player.lastname.toUpperCase()} ${
                   stat.player.firstname
                 }`}</Typography>

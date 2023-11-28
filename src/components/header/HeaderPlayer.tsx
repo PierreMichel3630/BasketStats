@@ -15,7 +15,7 @@ export const HeaderPlayer = () => {
   const fautes = avg.length > 0 ? avg[0].fouls : undefined;
   return (
     <Grid container spacing={2} alignItems="center">
-      <Grid item xs={2}>
+      <Grid item xs={12} sm={4} md={2}>
         <Box
           sx={{
             width: percent(100),
@@ -31,7 +31,7 @@ export const HeaderPlayer = () => {
         </Box>
       </Grid>
       {player && (
-        <Grid item xs={10}>
+        <Grid item xs={12} sm={8} md={10}>
           <Grid
             container
             spacing={1}

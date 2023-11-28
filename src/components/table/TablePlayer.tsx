@@ -67,13 +67,6 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
 
   const columns: Array<GridColDef> = [
     {
-      headerName: "Licence",
-      field: "licence",
-      headerAlign: "left",
-      align: "left",
-      width: 85,
-    },
-    {
       headerName: "Nom",
       field: "name",
       headerAlign: "left",
@@ -87,6 +80,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 40,
     },
     {
       headerName: "MIN",
@@ -95,6 +89,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: "PTS",
@@ -103,6 +98,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: "3PTS",
@@ -111,6 +107,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 60,
     },
     {
       headerName: "2PTS Int",
@@ -119,6 +116,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 80,
     },
     {
       headerName: "2PTS Ext",
@@ -127,6 +125,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 80,
     },
     {
       headerName: "LF",
@@ -135,6 +134,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       align: "center",
       type: "number",
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: "PF",
@@ -142,6 +142,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       headerAlign: "center",
       align: "center",
       type: "number",
+      minWidth: 50,
       flex: 1,
     },
   ];
@@ -178,7 +179,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
         <DataGrid
           sx={{
             ".MuiButtonBase-root": {
-              color: "white",
+              display: "none",
             },
             ".MuiDataGrid-columnSeparator": {
               display: "none",
@@ -200,6 +201,9 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
               "@media (max-width:600px)": {
                 fontSize: 12,
               },
+            },
+            ".MuiDataGrid-row": {
+              cursor: "pointer",
             },
           }}
           sortingOrder={["desc", "asc"]}

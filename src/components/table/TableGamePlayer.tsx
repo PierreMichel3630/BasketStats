@@ -8,9 +8,9 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { getFouls } from "src/utils/calcul";
@@ -27,6 +27,7 @@ export const TableGamePlayer = ({
   number,
   title = "JOURNAL DE MATCHS",
 }: Props) => {
+  const navigate = useNavigate();
   const getValue = (value: null | number) => (value !== null ? value : "-");
 
   const columns: Array<GridColDef> = [
@@ -97,7 +98,7 @@ export const TableGamePlayer = ({
   ];
 
   const rows = stats.map((stat) => ({
-    id: stat.id,
+    id: stat.game.id,
     date: moment(stat.game.date).toDate(),
     opponent: stat.game.opponent,
     min: getValue(stat.minutes),
@@ -110,6 +111,10 @@ export const TableGamePlayer = ({
   }));
 
   const rowsDisplay = number ? rows.splice(0, 5) : rows;
+
+  const onRowClick: GridEventListener<"rowClick"> = (params) => {
+    navigate(`/game/${params.id}/stats`);
+  };
 
   return (
     <Grid container>
@@ -145,11 +150,15 @@ export const TableGamePlayer = ({
                 fontSize: 12,
               },
             },
+            ".MuiDataGrid-row": {
+              cursor: "pointer",
+            },
           }}
           sortingOrder={["desc", "asc"]}
           rowHeight={35}
           rows={rowsDisplay}
           columns={columns}
+          onRowClick={onRowClick}
           hideFooter
           disableRowSelectionOnClick
           disableColumnMenu
