@@ -5,13 +5,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useState } from "react";
-import { TableGamePlayer } from "src/components/table/TableGamePlayer";
-import { PlayerContext } from "./PlayerPage";
 import { TableSeasonPlayer } from "src/components/table/TableSeasonPlayer";
+import { PlayerContext } from "./PlayerPage";
+import { DonutRepartitionPtsMarquesPlayer } from "src/components/chart/DonutRepartitionPts";
+import { DonutRepartitionShootPlayer } from "src/components/chart/DonutRepartitionShoot";
+import { DonutRepartitionFautesPlayer } from "src/components/chart/DonutRepartitionFautes";
 
 export const StatsPlayerPage = () => {
-  const { games, avg } = useContext(PlayerContext);
-  const [type, setType] = useState("game");
+  const { avg, games } = useContext(PlayerContext);
+  const [type, setType] = useState("match");
 
   const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
     setType(newValue);
@@ -19,7 +21,10 @@ export const StatsPlayerPage = () => {
 
   return (
     <Grid container spacing={1} justifyContent="center">
-      <Grid item>
+      <Grid item xs={12}>
+        <TableSeasonPlayer stats={avg} />
+      </Grid>
+      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
         <ToggleButtonGroup
           color="secondary"
           value={type}
@@ -27,20 +32,22 @@ export const StatsPlayerPage = () => {
           onChange={handleChange}
           size="small"
         >
-          <ToggleButton value="game">
-            <Typography variant="h4">Matchs</Typography>
+          <ToggleButton value="match">
+            <Typography variant="h4">Par Match</Typography>
           </ToggleButton>
-          <ToggleButton value="career">
-            <Typography variant="h4">Carrière</Typography>
+          <ToggleButton value="tot">
+            <Typography variant="h4">Total</Typography>
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
-      <Grid item xs={12}>
-        {type === "game" ? (
-          <TableGamePlayer stats={games.filter((el) => el.is_play)} />
-        ) : (
-          <TableSeasonPlayer stats={avg} />
-        )}
+      <Grid item xs={12} md={6}>
+        <DonutRepartitionPtsMarquesPlayer type={type} stats={games} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <DonutRepartitionShootPlayer type={type} stats={games} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <DonutRepartitionFautesPlayer type={type} stats={games} />
       </Grid>
     </Grid>
   );

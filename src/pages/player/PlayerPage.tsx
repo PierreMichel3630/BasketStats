@@ -40,6 +40,7 @@ export const PlayerPage = () => {
 
   const tabs = [
     { label: "Profil", value: "profil", url: "profil" },
+    { label: "Matchs", value: "games", url: "games" },
     { label: "Statistiques", value: "stats", url: "stats" },
     { label: "Comparer", value: "compare", url: "compare" },
   ];

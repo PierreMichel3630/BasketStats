@@ -1,4 +1,4 @@
-import { StatsTeam } from "src/models/Statistique";
+import { StatsPlayer, StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
 
@@ -122,5 +122,67 @@ export const DonutRepartitionFautesProvoquees = ({ type, stats }: Props) => {
       data={data.filter((el) => el.value !== 0)}
       title="Fautes provoquées"
     />
+  );
+};
+
+interface PropsPlayer {
+  stats: Array<StatsPlayer>;
+  type: string;
+}
+export const DonutRepartitionFautesPlayer = ({ type, stats }: PropsPlayer) => {
+  const p = stats.reduce((acc, el) => acc + (el.fouls_0lf ?? 0), 0);
+  const p1 = stats.reduce((acc, el) => acc + (el.fouls_1lf ?? 0), 0);
+  const p2 = stats.reduce((acc, el) => acc + (el.fouls_2lf ?? 0), 0);
+  const p3 = stats.reduce((acc, el) => acc + (el.fouls_3lf ?? 0), 0);
+  const dataMatch = [
+    {
+      name: "0LF",
+      value: p / stats.length,
+      color: Colors.blue,
+    },
+    {
+      name: "1LF",
+      value: p1 / stats.length,
+      color: Colors.green,
+    },
+    {
+      name: "2LF",
+      value: p2 / stats.length,
+      color: Colors.red,
+    },
+    {
+      name: "3LF",
+      value: p3 / stats.length,
+      color: Colors.yellow,
+    },
+  ];
+
+  const dataTotal = [
+    {
+      name: "0LF",
+      value: p,
+      color: Colors.blue,
+    },
+    {
+      name: "1LF",
+      value: p1,
+      color: Colors.green,
+    },
+    {
+      name: "2LF",
+      value: p2,
+      color: Colors.red,
+    },
+    {
+      name: "3LF",
+      value: p3,
+      color: Colors.yellow,
+    },
+  ];
+
+  const data = type === "tot" ? dataTotal : dataMatch;
+
+  return (
+    <DonutChart data={data.filter((el) => el.value !== 0)} title="Fautes" />
   );
 };

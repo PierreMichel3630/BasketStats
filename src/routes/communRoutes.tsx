@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { PageAddStatsGame } from "src/pages/PageAddStatsGame";
 import { PageStatsGame } from "src/pages/PageStatsGame";
 import { ComparePlayerPage } from "src/pages/player/ComparePlayerPage";
+import { GamesPlayerPage } from "src/pages/player/GamesPlayerPage";
 import { PlayerPage } from "src/pages/player/PlayerPage";
 import { ProfilPlayerPage } from "src/pages/player/ProfilPlayerPage";
 import { StatsPlayerPage } from "src/pages/player/StatsPlayerPage";
@@ -75,6 +76,10 @@ export const CommunRoutes = [
       {
         path: "/player/:id/compare",
         element: <ComparePlayerPage />,
+      },
+      {
+        path: "/player/:id/games",
+        element: <GamesPlayerPage />,
       },
     ],
   },

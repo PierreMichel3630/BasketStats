@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
@@ -99,54 +99,59 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
   }));
 
   return (
-    <Grid container>
-      <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
-        <Typography variant="h4" color="white">
-          STATISTIQUES DE CARRIERE
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <DataGrid
-          sx={{
-            ".MuiButtonBase-root": {
-              color: "white",
-            },
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-            ".MuiDataGrid-columnHeader": {
-              height: 20,
-            },
-            ".MuiDataGrid-columnHeaders": {
-              backgroundColor: Colors.subprimary,
-              minHeight: "inherit",
-              color: "white",
-            },
-            ".MuiDataGrid-columnHeaderTitle": {
-              fontSize: 13,
-              fontWeight: 600,
-              "@media (max-width:600px)": {
-                fontSize: 12,
+    <Paper
+      variant="outlined"
+      sx={{ width: "100%", bgcolor: "background.paper" }}
+    >
+      <Grid container>
+        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
+          <Typography variant="h4" color="white">
+            STATISTIQUES DE CARRIERE
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <DataGrid
+            sx={{
+              ".MuiButtonBase-root": {
+                color: "white",
               },
-            },
-          }}
-          sortingOrder={["desc", "asc"]}
-          rowHeight={35}
-          rows={rows}
-          columns={columns}
-          hideFooter
-          disableRowSelectionOnClick
-          disableColumnMenu
-          initialState={{
-            sorting: {
-              sortModel: [{ field: "date", sort: "desc" }],
-            },
-          }}
-        />
+              ".MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root": {
+                border: "none",
+              },
+              ".MuiDataGrid-columnHeader": {
+                height: 20,
+              },
+              ".MuiDataGrid-columnHeaders": {
+                backgroundColor: Colors.subprimary,
+                minHeight: "inherit",
+                color: "white",
+              },
+              ".MuiDataGrid-columnHeaderTitle": {
+                fontSize: 13,
+                fontWeight: 600,
+                "@media (max-width:600px)": {
+                  fontSize: 12,
+                },
+              },
+            }}
+            sortingOrder={["desc", "asc"]}
+            rowHeight={35}
+            rows={rows}
+            columns={columns}
+            hideFooter
+            disableRowSelectionOnClick
+            disableColumnMenu
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
+          />
+        </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   );
 };
