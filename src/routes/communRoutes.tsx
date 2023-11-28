@@ -3,6 +3,7 @@ import { PageAddStatsGame } from "src/pages/PageAddStatsGame";
 import { PageStatsGame } from "src/pages/PageStatsGame";
 import { ComparePlayerPage } from "src/pages/player/ComparePlayerPage";
 import { PlayerPage } from "src/pages/player/PlayerPage";
+import { ProfilPlayerPage } from "src/pages/player/ProfilPlayerPage";
 import { StatsPlayerPage } from "src/pages/player/StatsPlayerPage";
 import { SearchPage } from "src/pages/SearchPage";
 import { CompareTeamPage } from "src/pages/team/CompareTeamPage";
@@ -61,7 +62,11 @@ export const CommunRoutes = [
     children: [
       {
         path: "/player/:id",
-        element: <Navigate to="stats" replace />,
+        element: <Navigate to="profil" replace />,
+      },
+      {
+        path: "/player/:id/profil",
+        element: <ProfilPlayerPage />,
       },
       {
         path: "/player/:id/stats",

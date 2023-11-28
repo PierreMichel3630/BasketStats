@@ -15,6 +15,7 @@
     "createplayer": "Créer un joueur",
     "search": "Rechercher une équipe",
     "error": "Oups une erreur est survenue. Veuillez ressayer",
+    "errorrightteam": "Vous ne disposez pas des droits sur cette équipe.",
     "or": "Ou",
     "validate": "Valider"
   },

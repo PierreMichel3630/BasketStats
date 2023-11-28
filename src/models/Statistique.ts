@@ -2,6 +2,19 @@ import { Game } from "./Game";
 import { Player } from "./Player";
 import { Team } from "./Team";
 
+export interface PlayerAvg {
+  team: Team;
+  minutes: null | number;
+  points: null | number;
+  threeptspassed: null | number;
+  twoptsintpassed: null | number;
+  twoptsextpassed: null | number;
+  lfpassed: null | number;
+  fouls: null | number;
+  games: number;
+  startingfive: number;
+}
+
 export interface StatsPlayerAvg {
   player: Player;
   team: Team;

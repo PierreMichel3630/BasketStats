@@ -1,6 +1,6 @@
 import { supabase } from "./supabaseClient";
-
-const URLPROD = "http://localhost:5173";
+//http://localhost:5173
+const URLPROD = "https://basketstats-853f3.web.app";
 
 export const signUpWithGoogle = () =>
   supabase.auth.signInWithOAuth({

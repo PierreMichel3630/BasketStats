@@ -53,13 +53,15 @@ export const GameForm = ({ teamId, onValid }: Props) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const { error } = await insertGame({
+        const { status, error } = await insertGame({
           ...values,
           date: values.date !== null ? values.date : new Date(),
           team: teamId,
         });
         if (error) {
-          setMessage(t("commun.error"));
+          setMessage(
+            status === 403 ? t("commun.errorrightteam") : t("commun.error")
+          );
         } else {
           onValid();
         }

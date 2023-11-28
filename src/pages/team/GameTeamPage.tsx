@@ -1,16 +1,15 @@
 import { Button, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getGamesByTeamId } from "src/api/game";
 import { CreateGameDialog } from "src/components/dialog/CreateGameDialog";
 import { TableGame } from "src/components/table/TableGame";
-import { useAuth } from "src/context/AuthProviderSupabase";
 import { Game } from "src/models/Game";
+import { TeamContext } from "./TeamPage";
 
 export const GameTeamPage = () => {
-  const { user } = useAuth();
+  const { games, setGames, rightTeam } = useContext(TeamContext);
   const { id } = useParams();
-  const [games, setGames] = useState<Array<Game>>([]);
   const [open, setOpen] = useState(false);
 
   const getGames = () => {
@@ -21,16 +20,12 @@ export const GameTeamPage = () => {
     }
   };
 
-  useEffect(() => {
-    getGames();
-  }, [id]);
-
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <TableGame games={games} />
+        <TableGame games={games} isRight={rightTeam !== undefined} />
       </Grid>
-      {user && (
+      {rightTeam && (
         <Grid item xs={12}>
           <Button
             disableElevation

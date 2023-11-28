@@ -1,20 +1,17 @@
 import { Button, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPlayersByEquipeId } from "src/api/player";
-import { getStatsPlayerAvgByTeamId } from "src/api/statistique";
 import { CreatePlayerDialog } from "src/components/dialog/CreatePlayerDialog";
 import { PlayerLeaderBlock } from "src/components/statistique/PlayerLeaderBlock";
 import { TablePlayerStats } from "src/components/table/TablePlayer";
-import { useAuth } from "src/context/AuthProviderSupabase";
 import { Player } from "src/models/Player";
-import { StatsPlayerAvg } from "src/models/Statistique";
+import { TeamContext } from "./TeamPage";
 
 export const PlayersTeamPage = () => {
-  const { user } = useAuth();
+  const { rightTeam, players, setPlayers, statsPlayer } =
+    useContext(TeamContext);
   const { id } = useParams();
-  const [players, setPlayers] = useState<Array<Player>>([]);
-  const [stats, setStats] = useState<Array<StatsPlayerAvg>>([]);
   const [open, setOpen] = useState(false);
 
   const getPlayers = () => {
@@ -25,28 +22,15 @@ export const PlayersTeamPage = () => {
     }
   };
 
-  const getStats = () => {
-    if (id) {
-      getStatsPlayerAvgByTeamId(Number(id)).then((res) => {
-        setStats(res.data as Array<StatsPlayerAvg>);
-      });
-    }
-  };
-
-  useEffect(() => {
-    getPlayers();
-    getStats();
-  }, [id]);
-
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <PlayerLeaderBlock stats={stats} />
+        <PlayerLeaderBlock stats={statsPlayer} />
       </Grid>
       <Grid item xs={12}>
-        <TablePlayerStats players={players} stats={stats} />
+        <TablePlayerStats players={players} stats={statsPlayer} />
       </Grid>
-      {user && (
+      {rightTeam && (
         <Grid item xs={12}>
           <Button
             disableElevation

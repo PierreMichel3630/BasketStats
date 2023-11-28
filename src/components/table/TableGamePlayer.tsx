@@ -1,15 +1,32 @@
-import { Grid, Typography } from "@mui/material";
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { getFouls } from "src/utils/calcul";
+import { sortByGameDateDesc } from "src/utils/sort";
 
 interface Props {
   stats: Array<StatsPlayer>;
+  number?: number;
+  title?: string;
 }
 
-export const TableGamePlayer = ({ stats }: Props) => {
+export const TableGamePlayer = ({
+  stats,
+  number,
+  title = "JOURNAL DE MATCHS",
+}: Props) => {
   const getValue = (value: null | number) => (value !== null ? value : "-");
 
   const columns: Array<GridColDef> = [
@@ -92,11 +109,13 @@ export const TableGamePlayer = ({ stats }: Props) => {
     pf: getFouls(stat),
   }));
 
+  const rowsDisplay = number ? rows.splice(0, 5) : rows;
+
   return (
     <Grid container>
       <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
         <Typography variant="h4" color="white">
-          JOURNAL DE MATCHS
+          {title}
         </Typography>
       </Grid>
       <Grid item xs={12}>
@@ -129,7 +148,7 @@ export const TableGamePlayer = ({ stats }: Props) => {
           }}
           sortingOrder={["desc", "asc"]}
           rowHeight={35}
-          rows={rows}
+          rows={rowsDisplay}
           columns={columns}
           hideFooter
           disableRowSelectionOnClick
@@ -140,6 +159,246 @@ export const TableGamePlayer = ({ stats }: Props) => {
             },
           }}
         />
+      </Grid>
+    </Grid>
+  );
+};
+
+const hoverCell = {
+  color: "inherit",
+};
+
+interface PropsLast5 {
+  stats: Array<StatsPlayer>;
+}
+
+export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
+  const getValue = (value: null | number) => (value !== null ? value : "-");
+
+  const rows = [...stats]
+    .sort(sortByGameDateDesc)
+    .splice(0, 5)
+    .map((stat) => ({
+      id: stat.game.id,
+      date: moment(stat.game.date).format("DD/MM/YYYY"),
+      opponent: stat.game.opponent,
+      min: stat.minutes,
+      pts: stat.points,
+      threepts: stat.threeptspassed,
+      twoptsint: stat.twoptsintpassed,
+      twoptsext: stat.twoptsextpassed,
+      lf: stat.lfpassed,
+      pf: getFouls(stat),
+    }));
+
+  const totalMin = rows.reduce((acc, value) => acc + (value.min ?? 0), 0);
+  const totalPts = rows.reduce((acc, value) => acc + (value.pts ?? 0), 0);
+  const totalThreepts = rows.reduce(
+    (acc, value) => acc + (value.threepts ?? 0),
+    0
+  );
+  const totalTwoptsint = rows.reduce(
+    (acc, value) => acc + (value.twoptsint ?? 0),
+    0
+  );
+  const totalTwoptsext = rows.reduce(
+    (acc, value) => acc + (value.twoptsext ?? 0),
+    0
+  );
+  const totalLf = rows.reduce((acc, value) => acc + (value.lf ?? 0), 0);
+  const totalPf = rows.reduce((acc, value) => acc + (value.pf ?? 0), 0);
+
+  return (
+    <Grid container>
+      <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
+        <Typography variant="h4" color="white">
+          5 DERNIERS MATCHS
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <TableContainer>
+          <Table size="small">
+            <TableHead sx={{ bgcolor: Colors.subprimary }}>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="h6" color="white">
+                    Date
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="h6" color="white">
+                    Adversaire
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    MIN
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    PTS
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    3PTS
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    2PTS Int
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    2PTS Ext
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    LF
+                  </Typography>
+                </TableCell>
+                <TableCell align="center">
+                  <Typography variant="h6" color="white">
+                    PF
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow
+                  component={Link}
+                  key={row.id}
+                  sx={{
+                    "&:hover": {
+                      bgcolor: "secondary.main",
+                      cursor: "pointer",
+                      color: Colors.black,
+                    },
+                  }}
+                  to={`/game/${row.id}/stats`}
+                >
+                  <TableCell sx={hoverCell}>
+                    <Typography variant="body2">{row.date}</Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell}>
+                    <Typography variant="body2">{row.opponent}</Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">{getValue(row.min)}</Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">{getValue(row.pts)}</Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">
+                      {getValue(row.threepts)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">
+                      {getValue(row.twoptsint)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">
+                      {getValue(row.twoptsext)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">{getValue(row.lf)}</Typography>
+                  </TableCell>
+                  <TableCell sx={hoverCell} align="center">
+                    <Typography variant="body2">{row.pf}</Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableRow sx={{ bgcolor: Colors.subprimary2 }}>
+                <TableCell colSpan={9}>
+                  <Typography variant="h6" color="white">
+                    Moyenne
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={hoverCell} align="center"></TableCell>
+                <TableCell sx={hoverCell} align="center"></TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {totalMin === 0 ? "-" : (totalMin / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalPts / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalThreepts / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalTwoptsint / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalTwoptsext / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalLf / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {(totalPf / rows.length).toFixed(1)}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow sx={{ bgcolor: Colors.subprimary2 }}>
+                <TableCell colSpan={9}>
+                  <Typography variant="h6" color="white">
+                    Total
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell sx={hoverCell}></TableCell>
+                <TableCell sx={hoverCell}></TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">
+                    {totalMin === 0 ? "-" : totalMin}
+                  </Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalPts}</Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalThreepts}</Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalTwoptsint}</Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalTwoptsext}</Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalLf}</Typography>
+                </TableCell>
+                <TableCell sx={hoverCell} align="center">
+                  <Typography variant="h6">{totalPf}</Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
     </Grid>
   );

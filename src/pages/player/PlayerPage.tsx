@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { getPlayerById } from "src/api/player";
 import {
+  getAvgPlayerByTeamId,
   getStatsPlayerAvgByPlayerId,
   getStatsPlayerByPlayerId,
 } from "src/api/statistique";
@@ -10,7 +11,7 @@ import { getTeamByPlayerId } from "src/api/team";
 import { HeaderPlayer } from "src/components/header/HeaderPlayer";
 import { GoBackButton } from "src/components/navigation/GoBackButton";
 import { Player } from "src/models/Player";
-import { StatsPlayer, StatsPlayerAvg } from "src/models/Statistique";
+import { PlayerAvg, StatsPlayer, StatsPlayerAvg } from "src/models/Statistique";
 import { Team } from "src/models/Team";
 
 export const PlayerContext = createContext<{
@@ -18,11 +19,13 @@ export const PlayerContext = createContext<{
   games: Array<StatsPlayer>;
   avg: Array<StatsPlayerAvg>;
   teams: Array<Team>;
+  playerAvg: Array<PlayerAvg>;
 }>({
   player: undefined,
   games: [],
   avg: [],
   teams: [],
+  playerAvg: [],
 });
 
 export const PlayerPage = () => {
@@ -31,10 +34,12 @@ export const PlayerPage = () => {
   const [player, setPlayer] = useState<Player | undefined>(undefined);
   const [statsGame, setStatsGame] = useState<Array<StatsPlayer>>([]);
   const [statsAvg, setStatsAvg] = useState<Array<StatsPlayerAvg>>([]);
+  const [playerAvg, setPlayerAvg] = useState<Array<PlayerAvg>>([]);
   const [teams, setTeams] = useState<Array<Team>>([]);
   const [tab, setTab] = useState<string>(location.pathname.split("/").pop()!);
 
   const tabs = [
+    { label: "Profil", value: "profil", url: "profil" },
     { label: "Statistiques", value: "stats", url: "stats" },
     { label: "Comparer", value: "compare", url: "compare" },
   ];
@@ -50,6 +55,19 @@ export const PlayerPage = () => {
       });
     }
   };
+
+  const getAvgPlayer = () => {
+    if (teams.length > 0) {
+      const ids = teams.map((el) => el.id);
+      getAvgPlayerByTeamId(ids).then((res) => {
+        setPlayerAvg(res.data as Array<PlayerAvg>);
+      });
+    }
+  };
+
+  useEffect(() => {
+    getAvgPlayer();
+  }, [teams]);
 
   const getTeams = () => {
     if (id) {
@@ -90,7 +108,7 @@ export const PlayerPage = () => {
 
   return (
     <PlayerContext.Provider
-      value={{ teams, player, games: statsGame, avg: statsAvg }}
+      value={{ teams, player, games: statsGame, avg: statsAvg, playerAvg }}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

@@ -12,8 +12,10 @@ import {
   updatePassword,
 } from "src/api/authentification";
 import { getProfil } from "src/api/profile";
+import { getMyRightTeam } from "src/api/right";
 import { supabase } from "src/api/supabaseClient";
 import { Profile } from "src/models/Profile";
+import { RightTeam } from "src/models/Right";
 
 type Props = {
   children: string | JSX.Element | JSX.Element[];
@@ -22,6 +24,7 @@ type Props = {
 const AuthContext = createContext<{
   user: User | null;
   profile: Profile | null;
+  rightTeam: Array<RightTeam>;
   setProfile: (value: Profile) => void;
   login: (email: string, password: string) => Promise<AuthTokenResponse>;
   logout: () => Promise<{ error: AuthError | null }>;
@@ -35,6 +38,7 @@ const AuthContext = createContext<{
       ? (JSON.parse(localStorage.getItem("user")!) as User)
       : null,
   profile: null,
+  rightTeam: [],
   setProfile: (value: Profile) => {},
   login: (email: string, password: string) => signInWithEmail(email, password),
   logout: () => signOut(),
@@ -51,6 +55,7 @@ const logout = () => signOut();
 
 export const AuthProviderSupabase = ({ children }: Props) => {
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [rightTeam, setRightTeam] = useState<Array<RightTeam>>([]);
   const [user, setUser] = useState<User | null>(
     localStorage.getItem("user") !== null
       ? (JSON.parse(localStorage.getItem("user")!) as User)
@@ -61,12 +66,23 @@ export const AuthProviderSupabase = ({ children }: Props) => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
     getProfilUser();
+    getRight();
   }, [user]);
 
   const getProfilUser = async () => {
     if (user !== null) {
       const { data } = await getProfil(user.id);
       setProfile(data as Profile);
+    }
+  };
+
+  const getRight = () => {
+    if (user !== null) {
+      getMyRightTeam(user.id).then((res) => {
+        if (res.data) {
+          setRightTeam(res.data as Array<RightTeam>);
+        }
+      });
     }
   };
 
@@ -80,6 +96,7 @@ export const AuthProviderSupabase = ({ children }: Props) => {
       } else if (event === "SIGNED_OUT") {
         setUser(null);
         setAuth(false);
+        setRightTeam([]);
       }
     });
     return () => {
@@ -97,6 +114,7 @@ export const AuthProviderSupabase = ({ children }: Props) => {
         logout,
         passwordReset,
         updatePassword,
+        rightTeam,
       }}
     >
       {children}

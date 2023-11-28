@@ -27,7 +27,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       width: 180,
     },
     {
-      headerName: "M",
+      headerName: "MJ",
       field: "games",
       headerAlign: "center",
       align: "center",

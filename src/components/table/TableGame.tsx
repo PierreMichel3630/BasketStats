@@ -20,20 +20,19 @@ import { Colors } from "src/style/Colors";
 
 import AddchartIcon from "@mui/icons-material/Addchart";
 import { groupBy } from "lodash";
-import { sortByDateDesc } from "src/utils/sort";
-import { useAuth } from "src/context/AuthProviderSupabase";
 import { Fragment } from "react";
+import { sortByDateDesc } from "src/utils/sort";
 
 interface Props {
   games: Array<Game>;
+  isRight?: boolean;
 }
 
 const hoverCell = {
   color: "inherit",
 };
 
-export const TableGame = ({ games }: Props) => {
-  const { user } = useAuth();
+export const TableGame = ({ games, isRight = false }: Props) => {
   const gamesSort = games.sort(sortByDateDesc);
   const gamesGroupByMonth = groupBy(gamesSort, (el) =>
     moment(el.date).format("MMMM")
@@ -66,7 +65,7 @@ export const TableGame = ({ games }: Props) => {
                       Result
                     </Typography>
                   </TableCell>
-                  {user && <TableCell></TableCell>}
+                  {isRight && <TableCell></TableCell>}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -128,7 +127,7 @@ export const TableGame = ({ games }: Props) => {
                             </Typography>
                           )}
                         </TableCell>
-                        {user && (
+                        {isRight && (
                           <TableCell>
                             <Link to={`/game/${game.id}/addstats`}>
                               <Tooltip title="Ajouter / Modifier les statistiques">

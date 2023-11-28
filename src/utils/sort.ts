@@ -37,6 +37,12 @@ export const sortByDateDesc = (a: any, b: any) =>
 export const sortByDateAsc = (a: any, b: any) =>
   moment(a.date).diff(moment(b.date));
 
+export const sortByGameDateAsc = (a: any, b: any) =>
+  moment(a.game.date).diff(moment(b.game.date));
+
+export const sortByGameDateDesc = (a: any, b: any) =>
+  moment(b.game.date).diff(moment(a.game.date));
+
 export const sortByPourcentageStartingFive = (a: any, b: any) =>
   b.startingfive / b.games - a.startingfive / a.games;
 

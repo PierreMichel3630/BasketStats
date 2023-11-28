@@ -10,6 +10,8 @@ export const SUPABASE_STATSPLAYER_TABLE = BASEDATABASE + "statsplayer";
 export const SUPABASE_STATSTEAM_TABLE = BASEDATABASE + "statsteam";
 export const SUPABASE_STATSPLAYERAVG_TABLE =
   BASEDATABASE + "avgstatsplayerbyteam";
+export const SUPABASE_STATSPLAYERONTEAMAVG_TABLE =
+  BASEDATABASE + "avgplayeronteam";
 
 export const insertStatsPlayer = (value: StatsPlayerInsert) =>
   supabase.from(SUPABASE_STATSPLAYER_TABLE).insert(value).select().single();
@@ -22,6 +24,13 @@ export const updateStatsPlayer = (value: StatsPlayerUpdate) =>
     .select()
     .single();
 
+export const getAvgPlayerByTeamId = (id: Array<number>) =>
+  supabase
+    .from(SUPABASE_STATSPLAYERONTEAMAVG_TABLE)
+    .select("*, team(*)")
+    .not("team", "is", null)
+    .in("team.id", id);
+
 export const getStatsPlayerAvgByTeamId = (id: number) =>
   supabase
     .from(SUPABASE_STATSPLAYERAVG_TABLE)
@@ -33,7 +42,7 @@ export const getStatsPlayerAvgByTeamIdIn = (id: Array<number>) =>
     .from(SUPABASE_STATSPLAYERAVG_TABLE)
     .select("*, player(*), team(*)")
     .not("team", "is", null)
-    .eq("team.id", id);
+    .in("team.id", id);
 
 export const getStatsPlayerAvgByPlayerId = (id: number) =>
   supabase

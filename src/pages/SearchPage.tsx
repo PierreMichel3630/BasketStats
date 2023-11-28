@@ -8,8 +8,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { Team } from "src/models/Team";
 import { getTeamByName } from "src/api/team";
 import { CardTeam } from "src/components/card/CardTeam";
+import { useAuth } from "src/context/AuthProviderSupabase";
+import { useNavigate } from "react-router-dom";
 
 export const SearchPage = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [openModal, setOpenModal] = useState(false);
@@ -25,6 +29,14 @@ export const SearchPage = () => {
   useEffect(() => {
     searchTeams();
   }, [search]);
+
+  const createTeam = () => {
+    if (user) {
+      setOpenModal(true);
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <Grid container spacing={1}>
@@ -42,7 +54,7 @@ export const SearchPage = () => {
           startIcon={<AddIcon />}
           size="small"
           fullWidth
-          onClick={() => setOpenModal(true)}
+          onClick={() => createTeam()}
         >
           {t("commun.createteam")}
         </Button>

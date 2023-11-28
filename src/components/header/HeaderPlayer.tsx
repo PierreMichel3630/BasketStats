@@ -46,7 +46,7 @@ export const HeaderPlayer = () => {
                 <Typography variant="h4">Équipes :</Typography>
                 <Typography variant="body1">
                   {teams.map((team) => (
-                    <Link to={`/team/${team.id}`}>
+                    <Link to={`/team/${team.id}`} key={team.id}>
                       <Typography
                         variant="h6"
                         sx={{

@@ -1,45 +1,17 @@
 import { Grid, Paper, Tab, Tabs } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  getStatsPlayerAvgByTeamId,
-  getStatsTeamByTeamId,
-} from "src/api/statistique";
+import { useContext, useState } from "react";
 import { ComparePlayerBlock } from "src/components/compare/ComparePlayerBlock";
 import { CompareTeamBlock } from "src/components/compare/CompareTeamBlock";
-import { StatsPlayerAvg, StatsTeam } from "src/models/Statistique";
+import { TeamContext } from "./TeamPage";
 
 export const CompareTeamPage = () => {
-  const { id } = useParams();
-  const [statsTeam, setStatsTeam] = useState<Array<StatsTeam>>([]);
-  const [statsPlayer, setStatsPlayer] = useState<Array<StatsPlayerAvg>>([]);
+  const { statsTeam, statsPlayer } = useContext(TeamContext);
   const [tab, setTab] = useState<string>("game");
 
   const tabs = [
     { label: "Matchs", value: "game" },
     { label: "Joueur", value: "player" },
   ];
-
-  const getStatsTeam = () => {
-    if (id) {
-      getStatsTeamByTeamId(Number(id)).then((res) => {
-        setStatsTeam(res.data as Array<StatsTeam>);
-      });
-    }
-  };
-
-  const getStatsPlayer = () => {
-    if (id) {
-      getStatsPlayerAvgByTeamId(Number(id)).then((res) => {
-        setStatsPlayer(res.data as Array<StatsPlayerAvg>);
-      });
-    }
-  };
-
-  useEffect(() => {
-    getStatsTeam();
-    getStatsPlayer();
-  }, [id]);
 
   const handleChangeTab = (_: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
