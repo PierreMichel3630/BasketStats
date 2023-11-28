@@ -5,6 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useState } from "react";
+import { BarChartLF } from "src/components/chart/BarChart";
 import {
   DonutRepartitionFautes,
   DonutRepartitionFautesProvoquees,
@@ -66,6 +67,9 @@ export const StatsTeamPage = () => {
       </Grid>
       <Grid item xs={12} md={6}>
         <DonutRepartitionFautesProvoquees type={type} stats={statsTeam} />
+      </Grid>
+      <Grid item xs={12}>
+        <BarChartLF stats={statsTeam} />
       </Grid>
     </Grid>
   );
