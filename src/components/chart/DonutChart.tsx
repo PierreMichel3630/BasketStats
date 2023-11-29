@@ -1,6 +1,9 @@
 import { Grid, Paper, Typography } from "@mui/material";
+import { padding, px } from "csx";
+import { useState } from "react";
 import { Cell, LabelList, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { isInt } from "src/utils/calcul";
+import { ToogleButtonTotal } from "../ToogleButton";
 
 export interface DataDonut {
   name: string;
@@ -10,20 +13,40 @@ export interface DataDonut {
 
 interface Props {
   title: string;
-  data: Array<DataDonut>;
+  dataAverage: Array<DataDonut>;
+  dataTotal: Array<DataDonut>;
 }
 
-export const DonutChart = ({ data, title }: Props) => {
+export const DonutChart = ({ dataAverage, dataTotal, title }: Props) => {
+  const [type, setType] = useState("pergame");
+  const isTypeMoy = type === "pergame";
+
+  const data = isTypeMoy ? dataAverage : dataTotal;
   return (
     <Paper
       variant="outlined"
       sx={{ width: "100%", bgcolor: "background.paper" }}
     >
       <Grid container>
-        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            bgcolor: "primary.main",
+            p: padding(px(2), px(8)),
+            mb: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="h4" color="white" textTransform="uppercase">
             {title}
           </Typography>
+          <ToogleButtonTotal
+            value={type}
+            onChange={(value) => setType(value)}
+          />
         </Grid>
         <Grid item xs={12}>
           <ResponsiveContainer width="100%" height={300}>

@@ -1,13 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { StatsPlayer, StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
-import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
-  type: string;
 }
-export const DonutRepartitionPtsMarques = ({ type, stats }: Props) => {
+export const DonutRepartitionPtsMarques = ({ stats }: Props) => {
   const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsteam ?? 0) * 3,
@@ -68,17 +67,16 @@ export const DonutRepartitionPtsMarques = ({ type, stats }: Props) => {
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.scoredpointsdistribution")}
     />
   );
 };
 
-export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
+export const DonutRepartitionPtsEncaisses = ({ stats }: Props) => {
   const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsopponent ?? 0) * 3,
@@ -139,11 +137,10 @@ export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.concededpointsdistribution")}
     />
   );
@@ -151,12 +148,8 @@ export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
 
 interface PropsPlayer {
   stats: Array<StatsPlayer>;
-  type: string;
 }
-export const DonutRepartitionPtsMarquesPlayer = ({
-  type,
-  stats,
-}: PropsPlayer) => {
+export const DonutRepartitionPtsMarquesPlayer = ({ stats }: PropsPlayer) => {
   const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptspassed ?? 0) * 3,
@@ -217,11 +210,10 @@ export const DonutRepartitionPtsMarquesPlayer = ({
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.scoredpointsdistribution")}
     />
   );

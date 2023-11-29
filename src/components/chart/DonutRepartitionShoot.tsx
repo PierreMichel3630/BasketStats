@@ -5,9 +5,8 @@ import { useTranslation } from "react-i18next";
 
 interface PropsPlayer {
   stats: Array<StatsPlayer>;
-  type: string;
 }
-export const DonutRepartitionShootPlayer = ({ type, stats }: PropsPlayer) => {
+export const DonutRepartitionShootPlayer = ({ stats }: PropsPlayer) => {
   const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptspassed ?? 0),
@@ -68,11 +67,10 @@ export const DonutRepartitionShootPlayer = ({ type, stats }: PropsPlayer) => {
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.shootdistribution")}
     />
   );

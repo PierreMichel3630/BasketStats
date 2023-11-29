@@ -4,16 +4,20 @@ import { CardStats, CardStatsLF } from "../card/CardStats";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { sortByPercent } from "src/utils/sort";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { ToogleButtonTotal } from "../ToogleButton";
+import { padding, px } from "csx";
 
 interface Props {
   stats: Array<StatsTeam>;
-  type?: string;
 }
 
-export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
+export const TeamLeaderBlock = ({ stats }: Props) => {
   const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
+  const [type, setType] = useState("pergame");
+  const isTypeMoy = type === "pergame";
 
   const ptsMarques = stats.map(
     (value) =>
@@ -77,10 +81,25 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
   return (
     <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
       <Grid container>
-        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            bgcolor: "primary.main",
+            p: padding(px(2), px(8)),
+            mb: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="h4" color="white" textTransform="uppercase">
             {t("commun.teamstatistics")}
           </Typography>
+          <ToogleButtonTotal
+            value={type}
+            onChange={(value) => setType(value)}
+          />
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
           <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
@@ -88,12 +107,10 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
               <CardStats
                 label={t("commun.pointsscored")}
                 value={
-                  type === "match"
-                    ? ptsMarquesTot / ptsMarques.length
-                    : ptsMarquesTot
+                  isTypeMoy ? ptsMarquesTot / ptsMarques.length : ptsMarquesTot
                 }
-                min={type === "match" ? ptsMarquesMin : undefined}
-                max={type === "match" ? ptsMarquesMax : undefined}
+                min={isTypeMoy ? ptsMarquesMin : undefined}
+                max={isTypeMoy ? ptsMarquesMax : undefined}
               />
             </Grid>
             <Grid item xs={1}>
@@ -111,12 +128,12 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                 <CardStats
                   label={t("commun.pointsconceded")}
                   value={
-                    type === "match"
+                    isTypeMoy
                       ? ptsEncaissesTot / ptsEncaisses.length
                       : ptsEncaissesTot
                   }
-                  min={type === "match" ? ptsEncaissesMin : undefined}
-                  max={type === "match" ? ptsEncaissesMax : undefined}
+                  min={isTypeMoy ? ptsEncaissesMin : undefined}
+                  max={isTypeMoy ? ptsEncaissesMax : undefined}
                 />
               </Box>
             </Grid>
@@ -135,12 +152,12 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                 <CardStats
                   label={t("commun.threepointsscored")}
                   value={
-                    type === "match"
+                    isTypeMoy
                       ? troisptsMarqueTot / troisptsMarque.length
                       : troisptsMarqueTot
                   }
-                  min={type === "match" ? troisptsMarqueMin : undefined}
-                  max={type === "match" ? troisptsMarqueMax : undefined}
+                  min={isTypeMoy ? troisptsMarqueMin : undefined}
+                  max={isTypeMoy ? troisptsMarqueMax : undefined}
                 />
               </Box>
             </Grid>
@@ -159,7 +176,7 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                 <CardStatsLF
                   label={t("commun.ftpercent")}
                   value={
-                    type === "match"
+                    isTypeMoy
                       ? {
                           marque: percentLfTot.marque / percentLf.length,
                           tente: percentLfTot.tente / percentLf.length,
@@ -171,8 +188,8 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                         }
                       : percentLfTot
                   }
-                  min={type === "match" ? minPercentLf : undefined}
-                  max={type === "match" ? maxPercentLf : undefined}
+                  min={isTypeMoy ? minPercentLf : undefined}
+                  max={isTypeMoy ? maxPercentLf : undefined}
                 />
               </Box>
             </Grid>

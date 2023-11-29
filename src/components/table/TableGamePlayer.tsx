@@ -50,6 +50,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.pointsabbreviation"),
@@ -57,6 +58,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.threepointsabbreviation"),
@@ -64,6 +66,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 70,
     },
     {
       headerName: t("commun.twopointsintabbreviation"),
@@ -71,6 +74,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 80,
     },
     {
       headerName: t("commun.twopointsextabbreviation"),
@@ -78,6 +82,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 85,
     },
     {
       headerName: t("commun.ftabbreviation"),
@@ -85,13 +90,15 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 50,
     },
     {
-      headerName: t("commun.gamediary"),
+      headerName: t("commun.foulsabbreviation"),
       field: "pf",
       headerAlign: "center",
       align: "center",
       flex: 1,
+      minWidth: 85,
     },
   ];
 

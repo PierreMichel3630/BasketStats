@@ -1,8 +1,11 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { padding, px } from "csx";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
+import { ToogleButtonTotal } from "../ToogleButton";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
@@ -10,8 +13,15 @@ interface Props {
 
 export const TableSeasonPlayer = ({ stats }: Props) => {
   const { t } = useTranslation();
-  const getValue = (value: null | number) =>
-    value !== null ? value.toFixed(1) : "-";
+  const [type, setType] = useState("pergame");
+  const isTypeMoy = type === "pergame";
+
+  const getValue = (games: null | number, value: null | number) =>
+    games !== null && value !== null
+      ? isTypeMoy
+        ? value.toFixed(1)
+        : value * games
+      : "-";
 
   const columns: Array<GridColDef> = [
     {
@@ -99,13 +109,13 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
     club: stat.team.club,
     team: stat.team.name,
     games: stat.games,
-    min: getValue(stat.minutes),
-    pts: getValue(stat.points),
-    threepts: getValue(stat.threeptspassed),
-    twoptsint: getValue(stat.twoptsintpassed),
-    twoptsext: getValue(stat.twoptsextpassed),
-    lf: getValue(stat.lfpassed),
-    pf: getValue(stat.fouls),
+    min: getValue(stat.games, stat.minutes),
+    pts: getValue(stat.games, stat.points),
+    threepts: getValue(stat.games, stat.threeptspassed),
+    twoptsint: getValue(stat.games, stat.twoptsintpassed),
+    twoptsext: getValue(stat.games, stat.twoptsextpassed),
+    lf: getValue(stat.games, stat.lfpassed),
+    pf: getValue(stat.games, stat.fouls),
   }));
 
   return (
@@ -114,10 +124,24 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       sx={{ width: "100%", bgcolor: "background.paper" }}
     >
       <Grid container>
-        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            bgcolor: "primary.main",
+            p: padding(px(2), px(8)),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="h4" color="white" textTransform="uppercase">
             {t("commun.careerstatistics")}
           </Typography>
+          <ToogleButtonTotal
+            value={type}
+            onChange={(value) => setType(value)}
+          />
         </Grid>
         <Grid item xs={12}>
           <DataGrid

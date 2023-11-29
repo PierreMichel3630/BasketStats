@@ -19,6 +19,9 @@ import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "src/style/Colors";
+import { padding, px } from "csx";
+import { ToogleButtonTotal } from "../ToogleButton";
+import { useState } from "react";
 
 interface Props {
   players: Array<Player>;
@@ -66,8 +69,16 @@ interface PropsStats {
 export const TablePlayerStats = ({ players, stats }: PropsStats) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const getValue = (value: null | number) =>
-    value !== null ? value.toFixed(1) : "-";
+
+  const [type, setType] = useState("pergame");
+  const isTypeMoy = type === "pergame";
+
+  const getValue = (games: null | number, value: null | number) =>
+    games !== null && value !== null
+      ? isTypeMoy
+        ? value.toFixed(1)
+        : value * games
+      : "-";
 
   const columns: Array<GridColDef> = [
     {
@@ -158,13 +169,13 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       licence: player.licence,
       name: `${player.lastname.toUpperCase()} ${player.firstname}`,
       mj: stat ? stat.games ?? 0 : 0,
-      min: stat ? getValue(stat.minutes) : "-",
-      pts: stat ? getValue(stat.points) : "-",
-      threepts: stat ? getValue(stat.threeptspassed) : "-",
-      twoptsint: stat ? getValue(stat.twoptsintpassed) : "-",
-      twoptsext: stat ? getValue(stat.twoptsextpassed) : "-",
-      lf: stat ? getValue(stat.lfpassed) : "-",
-      pf: stat ? getValue(stat.fouls) : "-",
+      min: stat ? getValue(stat.games, stat.minutes) : "-",
+      pts: stat ? getValue(stat.games, stat.points) : "-",
+      threepts: stat ? getValue(stat.games, stat.threeptspassed) : "-",
+      twoptsint: stat ? getValue(stat.games, stat.twoptsintpassed) : "-",
+      twoptsext: stat ? getValue(stat.games, stat.twoptsextpassed) : "-",
+      lf: stat ? getValue(stat.games, stat.lfpassed) : "-",
+      pf: stat ? getValue(stat.games, stat.fouls) : "-",
     };
   });
 
@@ -174,10 +185,21 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
 
   return (
     <Grid container>
-      <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          bgcolor: "primary.main",
+          p: padding(px(2), px(8)),
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography variant="h4" color="white" textTransform="uppercase">
           {t("commun.teamsize")}
         </Typography>
+        <ToogleButtonTotal value={type} onChange={(value) => setType(value)} />
       </Grid>
       {rows.length > 0 ? (
         <Grid item xs={12}>

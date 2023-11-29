@@ -5,12 +5,8 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
-  type: string;
 }
-export const DonutRepartitionPtsQuartTempsMarques = ({
-  type,
-  stats,
-}: Props) => {
+export const DonutRepartitionPtsQuartTempsMarques = ({ stats }: Props) => {
   const { t } = useTranslation();
   const q1 = stats.reduce((acc, el) => acc + (el.q1team ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2team ?? 0), 0);
@@ -62,20 +58,16 @@ export const DonutRepartitionPtsQuartTempsMarques = ({
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.scoredpointsdistribution")}
     />
   );
 };
 
-export const DonutRepartitionPtsQuartTempsEncaisses = ({
-  type,
-  stats,
-}: Props) => {
+export const DonutRepartitionPtsQuartTempsEncaisses = ({ stats }: Props) => {
   const { t } = useTranslation();
   const q1 = stats.reduce((acc, el) => acc + (el.q1opponent ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2opponent ?? 0), 0);
@@ -127,11 +119,10 @@ export const DonutRepartitionPtsQuartTempsEncaisses = ({
     },
   ];
 
-  const data = type === "tot" ? dataTotal : dataMatch;
-
   return (
     <DonutChart
-      data={data.filter((el) => el.value !== 0)}
+      dataTotal={dataTotal.filter((el) => el.value !== 0)}
+      dataAverage={dataMatch.filter((el) => el.value !== 0)}
       title={t("commun.concededpointsdistribution")}
     />
   );

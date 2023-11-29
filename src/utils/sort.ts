@@ -1,4 +1,5 @@
 import moment from "moment";
+export const sortByValue = (a: any, b: any) => b.value - a.value;
 export const sortByPlayerName = (a: any, b: any) =>
   `${a.player.firstname} ${a.player.lastname.toUpperCase()}`.localeCompare(
     `${b.player.firstname} ${b.player.lastname.toUpperCase()}`
@@ -45,5 +46,8 @@ export const sortByGameDateDesc = (a: any, b: any) =>
 
 export const sortByPourcentageStartingFive = (a: any, b: any) =>
   b.startingfive / b.games - a.startingfive / a.games;
+
+export const sortByStartingFive = (a: any, b: any) =>
+  b.startingfive - a.startingfive;
 
 export const sortByPercent = (a: any, b: any) => b.percent - a.percent;

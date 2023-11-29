@@ -5,16 +5,19 @@ import {
   sortByFouls,
   sortByLf,
   sortByPoints,
+  sortByValue,
 } from "src/utils/sort";
 
-import { px } from "csx";
+import { padding, px } from "csx";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import rank1 from "src/assets/rank/rank1.png";
 import rank2 from "src/assets/rank/rank2.png";
 import rank3 from "src/assets/rank/rank3.png";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { style } from "typestyle";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { ToogleButtonTotal } from "../ToogleButton";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
@@ -25,42 +28,92 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
-  const fautes: Array<Value> = stats.sort(sortByFouls).map((el) => ({
+  const [type, setType] = useState("pergame");
+
+  const fautesMoy: Array<Value> = stats.sort(sortByFouls).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.fouls ? el.fouls.toFixed(1) : "-",
   }));
+  const fautesTot: Array<Value> = stats
+    .map((el) => ({
+      label: `${el.player.firstname} ${el.player.lastname}`,
+      to: `/player/${el.player.id}`,
+      value: el.games && el.fouls ? el.fouls * el.games : 0,
+    }))
+    .sort(sortByValue);
 
-  const points: Array<Value> = stats.sort(sortByPoints).map((el) => ({
+  const pointsMoy: Array<Value> = stats.sort(sortByPoints).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.points ? el.points.toFixed(1) : "-",
   }));
+  const pointsTot: Array<Value> = stats
+    .map((el) => ({
+      label: `${el.player.firstname} ${el.player.lastname}`,
+      to: `/player/${el.player.id}`,
+      value: el.points && el.games ? el.games * el.points : 0,
+    }))
+    .sort(sortByValue);
 
-  const troisPoints: Array<Value> = stats.sort(sortBy3Pts).map((el) => ({
+  const troisPointsMoy: Array<Value> = stats.sort(sortBy3Pts).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.threeptspassed ? el.threeptspassed.toFixed(1) : "-",
   }));
+  const troisPointsTot: Array<Value> = stats
+    .map((el) => ({
+      label: `${el.player.firstname} ${el.player.lastname}`,
+      to: `/player/${el.player.id}`,
+      value: el.threeptspassed && el.games ? el.games * el.threeptspassed : 0,
+    }))
+    .sort(sortByValue);
 
-  const lfs: Array<Value> = stats.sort(sortByLf).map((el) => ({
+  const lfsMoy: Array<Value> = stats.sort(sortByLf).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.lfpassed ? el.lfpassed.toFixed(1) : "-",
   }));
+  const lfsTot: Array<Value> = stats
+    .map((el) => ({
+      label: `${el.player.firstname} ${el.player.lastname}`,
+      to: `/player/${el.player.id}`,
+      value: el.lfpassed && el.games ? el.games * el.lfpassed : 0,
+    }))
+    .sort(sortByValue);
+
+  const isTypeMoy = type === "pergame";
   return (
     stats.length > 0 && (
       <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
         <Grid container>
-          <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              bgcolor: "primary.main",
+              p: padding(px(2), px(8)),
+              mb: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
             <Typography variant="h4" color="white" textTransform="uppercase">
               {t("commun.teamleaders")}
             </Typography>
+            <ToogleButtonTotal
+              value={type}
+              onChange={(value) => setType(value)}
+            />
           </Grid>
           <Grid item xs={12} sx={{ p: 1 }}>
             <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
               <Grid item xs={1}>
-                <Card label={t("commun.points")} values={points} />
+                <Card
+                  label={t("commun.points")}
+                  values={isTypeMoy ? pointsMoy : pointsTot}
+                />
               </Grid>
               <Grid item xs={1}>
                 <Box
@@ -74,7 +127,10 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
                     orientation={isSmall ? "horizontal" : "vertical"}
                     flexItem
                   />
-                  <Card label={t("commun.threepoints")} values={troisPoints} />
+                  <Card
+                    label={t("commun.threepoints")}
+                    values={isTypeMoy ? troisPointsMoy : troisPointsTot}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={1}>
@@ -89,7 +145,10 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
                     orientation={isSmall ? "horizontal" : "vertical"}
                     flexItem
                   />
-                  <Card label={t("commun.freethrow")} values={lfs} />
+                  <Card
+                    label={t("commun.freethrow")}
+                    values={isTypeMoy ? lfsMoy : lfsTot}
+                  />
                 </Box>
               </Grid>
               <Grid item xs={1}>
@@ -104,7 +163,10 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
                     orientation={isSmall ? "horizontal" : "vertical"}
                     flexItem
                   />
-                  <Card label={t("commun.fouls")} values={fautes} />
+                  <Card
+                    label={t("commun.fouls")}
+                    values={isTypeMoy ? fautesMoy : fautesTot}
+                  />
                 </Box>
               </Grid>
             </Grid>

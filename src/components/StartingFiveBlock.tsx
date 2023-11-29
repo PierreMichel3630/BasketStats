@@ -1,10 +1,16 @@
 import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { StatsPlayerAvg } from "src/models/Statistique";
-import { sortByPourcentageStartingFive } from "src/utils/sort";
+import {
+  sortByPourcentageStartingFive,
+  sortByStartingFive,
+} from "src/utils/sort";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import { useTranslation } from "react-i18next";
+import { padding, px } from "csx";
+import { ToogleButtonTotal } from "./ToogleButton";
+import { useState } from "react";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
@@ -14,8 +20,11 @@ export const StartingFiveBlock = ({ stats }: Props) => {
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
+  const [type, setType] = useState("pergame");
+  const isTypeMoy = type === "pergame";
+
   const titulaires = [...stats]
-    .sort(sortByPourcentageStartingFive)
+    .sort(isTypeMoy ? sortByPourcentageStartingFive : sortByStartingFive)
     .splice(0, 5);
 
   return (
@@ -24,10 +33,25 @@ export const StartingFiveBlock = ({ stats }: Props) => {
       sx={{ width: "100%", bgcolor: "background.paper" }}
     >
       <Grid container alignItems="center">
-        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            bgcolor: "primary.main",
+            p: padding(px(2), px(8)),
+            mb: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Typography variant="h4" color="white" textTransform="uppercase">
             {t("commun.starter")}
           </Typography>
+          <ToogleButtonTotal
+            value={type}
+            onChange={(value) => setType(value)}
+          />
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
           <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 5 }}>
