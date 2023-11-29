@@ -33,6 +33,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "games",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -40,6 +41,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "min",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -47,6 +49,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "pts",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -54,6 +57,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "threepts",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -61,6 +65,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "twoptsint",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -68,6 +73,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "twoptsext",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -75,6 +81,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "lf",
       headerAlign: "center",
       align: "center",
+      minWidth: 50,
       flex: 1,
     },
     {
@@ -82,6 +89,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "pf",
       headerAlign: "center",
       align: "center",
+      minWidth: 80,
       flex: 1,
     },
   ];
