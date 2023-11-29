@@ -146,8 +146,8 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       headerAlign: "center",
       align: "center",
       type: "number",
-      minWidth: 80,
       flex: 1,
+      minWidth: 80,
     },
   ];
 
@@ -167,8 +167,6 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       pf: stat ? getValue(stat.fouls) : "-",
     };
   });
-
-  console.log(rows);
 
   const onRowClick: GridEventListener<"rowClick"> = (params) => {
     navigate(`/player/${params.id}`);

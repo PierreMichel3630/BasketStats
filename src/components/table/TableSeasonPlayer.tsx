@@ -33,64 +33,64 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       field: "games",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.minutessabbreviation"),
       field: "min",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.pointsabbreviation"),
       field: "pts",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.threepointsabbreviation"),
       field: "threepts",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 60,
     },
     {
       headerName: t("commun.twopointsintabbreviation"),
       field: "twoptsint",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 80,
     },
     {
       headerName: t("commun.twopointsextabbreviation"),
       field: "twoptsext",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 85,
     },
     {
       headerName: t("commun.ftabbreviation"),
       field: "lf",
       headerAlign: "center",
       align: "center",
-      minWidth: 50,
       flex: 1,
+      minWidth: 50,
     },
     {
       headerName: t("commun.foulsabbreviation"),
       field: "pf",
       headerAlign: "center",
       align: "center",
-      minWidth: 80,
       flex: 1,
+      minWidth: 80,
     },
   ];
 
@@ -123,7 +123,7 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
           <DataGrid
             sx={{
               ".MuiButtonBase-root": {
-                color: "white",
+                display: "none",
               },
               ".MuiDataGrid-columnSeparator": {
                 display: "none",
@@ -145,6 +145,9 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
                 "@media (max-width:600px)": {
                   fontSize: 12,
                 },
+              },
+              ".MuiDataGrid-row": {
+                cursor: "pointer",
               },
             }}
             sortingOrder={["desc", "asc"]}
