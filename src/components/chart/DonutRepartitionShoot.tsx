@@ -1,12 +1,14 @@
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
+import { useTranslation } from "react-i18next";
 
 interface PropsPlayer {
   stats: Array<StatsPlayer>;
   type: string;
 }
 export const DonutRepartitionShootPlayer = ({ type, stats }: PropsPlayer) => {
+  const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptspassed ?? 0),
     0
@@ -71,7 +73,7 @@ export const DonutRepartitionShootPlayer = ({ type, stats }: PropsPlayer) => {
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Tirs"
+      title={t("commun.shootdistribution")}
     />
   );
 };

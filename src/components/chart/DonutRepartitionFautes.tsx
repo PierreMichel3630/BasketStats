@@ -1,12 +1,14 @@
 import { StatsPlayer, StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
   type: string;
 }
 export const DonutRepartitionFautes = ({ type, stats }: Props) => {
+  const { t } = useTranslation();
   const p = stats.reduce((acc, el) => acc + (el.foul0lfteam ?? 0), 0);
   const p1 = stats.reduce((acc, el) => acc + (el.foul1lfteam ?? 0), 0);
   const p2 = stats.reduce((acc, el) => acc + (el.foul2lfteam ?? 0), 0);
@@ -60,11 +62,15 @@ export const DonutRepartitionFautes = ({ type, stats }: Props) => {
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
-    <DonutChart data={data.filter((el) => el.value !== 0)} title="Fautes" />
+    <DonutChart
+      data={data.filter((el) => el.value !== 0)}
+      title={t("commun.fouls")}
+    />
   );
 };
 
 export const DonutRepartitionFautesProvoquees = ({ type, stats }: Props) => {
+  const { t } = useTranslation();
   const p = stats.reduce((acc, el) => acc + (el.foul0lfopponent ?? 0), 0);
   const p1 = stats.reduce((acc, el) => acc + (el.foul1lfopponent ?? 0), 0);
   const p2 = stats.reduce((acc, el) => acc + (el.foul2lfopponent ?? 0), 0);
@@ -120,7 +126,7 @@ export const DonutRepartitionFautesProvoquees = ({ type, stats }: Props) => {
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Fautes provoquées"
+      title={t("commun.provokedfouls")}
     />
   );
 };
@@ -130,6 +136,7 @@ interface PropsPlayer {
   type: string;
 }
 export const DonutRepartitionFautesPlayer = ({ type, stats }: PropsPlayer) => {
+  const { t } = useTranslation();
   const p = stats.reduce((acc, el) => acc + (el.fouls_0lf ?? 0), 0);
   const p1 = stats.reduce((acc, el) => acc + (el.fouls_1lf ?? 0), 0);
   const p2 = stats.reduce((acc, el) => acc + (el.fouls_2lf ?? 0), 0);
@@ -183,6 +190,9 @@ export const DonutRepartitionFautesPlayer = ({ type, stats }: PropsPlayer) => {
   const data = type === "tot" ? dataTotal : dataMatch;
 
   return (
-    <DonutChart data={data.filter((el) => el.value !== 0)} title="Fautes" />
+    <DonutChart
+      data={data.filter((el) => el.value !== 0)}
+      title={t("commun.fouls")}
+    />
   );
 };

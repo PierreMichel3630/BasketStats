@@ -4,11 +4,13 @@ import { sortByPourcentageStartingFive } from "src/utils/sort";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
 }
 export const StartingFiveBlock = ({ stats }: Props) => {
+  const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
@@ -23,8 +25,8 @@ export const StartingFiveBlock = ({ stats }: Props) => {
     >
       <Grid container alignItems="center">
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
-          <Typography variant="h4" color="white">
-            LE 5 MAJEUR
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.starter")}
           </Typography>
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
@@ -59,6 +61,7 @@ interface PropsCard {
   stat: StatsPlayerAvg;
 }
 const Card = ({ stat }: PropsCard) => {
+  const { t } = useTranslation();
   return (
     <Grid container spacing={1} sx={{ textAlign: "center" }}>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
@@ -78,7 +81,7 @@ const Card = ({ stat }: PropsCard) => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="body1">
-          {stat.startingfive} Titularisations (
+          {stat.startingfive} {t("commun.inclusionsteam")} (
           {((stat.startingfive / stat.games) * 100).toFixed(0)}%)
         </Typography>
       </Grid>

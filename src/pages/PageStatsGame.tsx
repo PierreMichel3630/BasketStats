@@ -1,5 +1,6 @@
 import { Grid, Paper, Tab, Tabs } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { getGamesById } from "src/api/game";
 import {
@@ -15,6 +16,7 @@ import { StatsPlayer, StatsTeam } from "src/models/Statistique";
 
 export const PageStatsGame = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
 
   const [game, setGame] = useState<Game | undefined>(undefined);
   const [statsTeam, setStatsTeam] = useState<StatsTeam | undefined>(undefined);
@@ -22,8 +24,8 @@ export const PageStatsGame = () => {
   const [tab, setTab] = useState<string>("feuille");
 
   const tabs = [
-    { label: "Feuille de match", value: "feuille" },
-    { label: "Comparaisons d'équipe", value: "equipe" },
+    { label: t("commun.gamesheet"), value: "feuille" },
+    { label: t("commun.teamcompare"), value: "equipe" },
   ];
 
   const handleChangeTab = (_: React.SyntheticEvent, newValue: string) => {

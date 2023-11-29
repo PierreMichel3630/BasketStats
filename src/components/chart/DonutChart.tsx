@@ -21,8 +21,8 @@ export const DonutChart = ({ data, title }: Props) => {
     >
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
-          <Typography variant="h4" color="white">
-            {title.toUpperCase()}
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {title}
           </Typography>
         </Grid>
         <Grid item xs={12}>

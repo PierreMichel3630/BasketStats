@@ -1,5 +1,6 @@
 import { Alert, Button, Grid, Paper, Tab, Tabs } from "@mui/material";
 import { createContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Link,
   Outlet,
@@ -16,6 +17,7 @@ import {
 
 import { getTeamById } from "src/api/team";
 import { CircularLoading } from "src/components/Loading";
+import { MessageSnackbar } from "src/components/Snackbar";
 import { CreateGameDialog } from "src/components/dialog/CreateGameDialog";
 import { HeaderTeam } from "src/components/header/HeaderTeam";
 import { GoHomeButton } from "src/components/navigation/GoBackButton";
@@ -51,16 +53,20 @@ export const TeamPage = () => {
   const { user, rightTeam } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const myRightTeam = rightTeam.find((el) => el.team.toString() === id);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingGame, setIsLoadingGame] = useState(true);
+  const [isLoadingPlayer, setIsLoadingPlayer] = useState(true);
+  const [isLoadingStats, setIsLoadingStats] = useState(true);
   const [open, setOpen] = useState(false);
   const [team, setTeam] = useState<undefined | Team>(undefined);
   const [games, setGames] = useState<Array<Game>>([]);
   const [players, setPlayers] = useState<Array<Player>>([]);
   const [statsPlayer, setStatsPlayer] = useState<Array<StatsPlayerAvg>>([]);
   const [statsTeam, setStatsTeam] = useState<Array<StatsTeam>>([]);
+  const [message, setMessage] = useState("");
   const [tab, setTab] = useState<string>(location.pathname.split("/").pop()!);
 
   const tabs = [
@@ -86,7 +92,7 @@ export const TeamPage = () => {
     if (id) {
       getGamesByTeamId(id).then((res) => {
         setGames(res.data as Array<Game>);
-        setIsLoading(false);
+        setIsLoadingGame(false);
       });
     }
   };
@@ -94,7 +100,13 @@ export const TeamPage = () => {
   const getPlayers = () => {
     if (id) {
       getPlayersByEquipeId(id).then((res) => {
-        setPlayers(res.data.map((el) => el.player) as Array<Player>);
+        const data = res.data;
+        setPlayers(
+          data && data.length > 0
+            ? (data.map((el) => el.player) as Array<Player>)
+            : []
+        );
+        setIsLoadingPlayer(false);
       });
     }
   };
@@ -111,12 +123,15 @@ export const TeamPage = () => {
     if (id) {
       getStatsTeamByTeamId(Number(id)).then((res) => {
         setStatsTeam(res.data as Array<StatsTeam>);
+        setIsLoadingStats(false);
       });
     }
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsLoadingGame(true);
+    setIsLoadingPlayer(true);
+    setIsLoadingStats(true);
     getTeam();
     getGames();
     getPlayers();
@@ -130,11 +145,17 @@ export const TeamPage = () => {
 
   const addGame = () => {
     if (user) {
-      setOpen(true);
+      if (myRightTeam) {
+        setOpen(true);
+      } else {
+        setMessage(t("commun.errorrightteam"));
+      }
     } else {
       navigate("/login");
     }
   };
+
+  const isLoading = isLoadingGame || isLoadingPlayer || isLoadingStats;
 
   return (
     <TeamContext.Provider
@@ -210,32 +231,34 @@ export const TeamPage = () => {
             ) : (
               <>
                 <Grid item xs={12}>
-                  <Alert severity="info">Aucun match saisi.</Alert>
+                  <Alert severity="info">{t("alert.nogame")}</Alert>
                 </Grid>
-                {myRightTeam && (
-                  <>
-                    <Grid item xs={12}>
-                      <Button
-                        disableElevation
-                        fullWidth
-                        size="small"
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => addGame()}
-                      >
-                        Ajouter un match
-                      </Button>
-                    </Grid>
-                    <CreateGameDialog
-                      open={open}
-                      close={() => {
-                        setOpen(false);
-                        getGames();
-                      }}
-                      teamId={Number(id)}
-                    />
-                  </>
-                )}
+                <Grid item xs={12}>
+                  <Button
+                    disableElevation
+                    fullWidth
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => addGame()}
+                  >
+                    {t("commun.addgame")}
+                  </Button>
+                </Grid>
+                <CreateGameDialog
+                  open={open}
+                  close={() => {
+                    setOpen(false);
+                    getGames();
+                  }}
+                  teamId={Number(id)}
+                />
+                <MessageSnackbar
+                  open={message !== ""}
+                  handleClose={() => setMessage("")}
+                  message={message}
+                  severity="error"
+                />
               </>
             )}
           </>

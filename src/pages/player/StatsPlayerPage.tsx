@@ -10,9 +10,11 @@ import { PlayerContext } from "./PlayerPage";
 import { DonutRepartitionPtsMarquesPlayer } from "src/components/chart/DonutRepartitionPts";
 import { DonutRepartitionShootPlayer } from "src/components/chart/DonutRepartitionShoot";
 import { DonutRepartitionFautesPlayer } from "src/components/chart/DonutRepartitionFautes";
+import { useTranslation } from "react-i18next";
 
 export const StatsPlayerPage = () => {
   const { avg, games } = useContext(PlayerContext);
+  const { t } = useTranslation();
   const [type, setType] = useState("match");
 
   const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
@@ -33,10 +35,10 @@ export const StatsPlayerPage = () => {
           size="small"
         >
           <ToggleButton value="match">
-            <Typography variant="h4">Par Match</Typography>
+            <Typography variant="h6">{t("commun.pergame")}</Typography>
           </ToggleButton>
           <ToggleButton value="tot">
-            <Typography variant="h4">Total</Typography>
+            <Typography variant="h6">{t("commun.total")}</Typography>
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>

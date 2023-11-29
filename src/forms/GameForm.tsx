@@ -132,12 +132,12 @@ export const GameForm = ({ teamId, onValid }: Props) => {
               <FormControlLabel
                 value={false}
                 control={<Radio />}
-                label="Domicile"
+                label={t("form.creategame.home")}
               />
               <FormControlLabel
                 value={true}
                 control={<Radio />}
-                label="Extérieur"
+                label={t("form.creategame.exterior")}
               />
             </RadioGroup>
           </FormControl>

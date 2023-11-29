@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { px } from "csx";
+import { useTranslation } from "react-i18next";
 import { StatsTeam } from "src/models/Statistique";
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export const TableScore = ({ stats }: Props) => {
+  const { t } = useTranslation();
   const isWin = (value1: number | null, value2: number | null) =>
     (value1 ?? 0) > (value2 ?? 0);
 
@@ -38,19 +40,21 @@ export const TableScore = ({ stats }: Props) => {
           <TableRow>
             <TableCell></TableCell>
             <TableCell align="center">
-              <Typography variant="h6">Q1</Typography>
+              <Typography variant="h6">{t("commun.q1abbreviation")}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="h6">Q2</Typography>
+              <Typography variant="h6">{t("commun.q2abbreviation")}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="h6">Q3</Typography>
+              <Typography variant="h6">{t("commun.q3abbreviation")}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="h6">Q4</Typography>
+              <Typography variant="h6">{t("commun.q4abbreviation")}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="h4">T</Typography>
+              <Typography variant="h4">
+                {t("commun.totalabbreviation")}
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>

@@ -2,8 +2,10 @@ import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useTranslation } from "react-i18next";
 
 export const GoBackButton = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -13,13 +15,14 @@ export const GoBackButton = () => {
       sx={{ color: "text.primary" }}
     >
       <Typography variant="h6" color="text.primary">
-        Retour
+        {t("commun.back")}
       </Typography>
     </Button>
   );
 };
 
 export const GoHomeButton = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
@@ -29,7 +32,7 @@ export const GoHomeButton = () => {
       sx={{ color: "text.primary" }}
     >
       <Typography variant="h6" color="text.primary">
-        Retour à l'accueil
+        {t("commun.backhome")}
       </Typography>
     </Button>
   );

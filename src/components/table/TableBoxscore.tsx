@@ -8,6 +8,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
@@ -17,6 +18,7 @@ interface PropsStats {
 }
 
 export const TableBoxscore = ({ stats }: PropsStats) => {
+  const { t } = useTranslation();
   const statsFilter = stats.filter((el) => el.is_play);
   return (
     <TableContainer component={Paper}>
@@ -25,18 +27,20 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
         sx={{ borderCollapse: "separate", borderSpacing: "0px 1px" }}
       >
         <TableBoxscoreStaterOrBench
-          title="STARTER"
+          title={t("commun.starter")}
           stats={statsFilter.filter((el) => el.startingfive)}
         />
         <TableBoxscoreStaterOrBench
-          title="BENCH"
+          title={t("commun.bench")}
           stats={statsFilter.filter((el) => !el.startingfive)}
         />
         <TableRow sx={{ bgcolor: Colors.subprimary }}>
           <TableCell
             sx={{ position: "sticky", left: 0, bgcolor: Colors.subprimary }}
           >
-            <Typography variant="h4">TEAM</Typography>
+            <Typography variant="h4" textTransform="uppercase">
+              {t("commun.team")}
+            </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h4" align="center">
@@ -105,6 +109,7 @@ const TableBoxscoreStaterOrBench = ({
   stats,
   title,
 }: PropsTableBoxscoreStaterOrBench) => {
+  const { t } = useTranslation();
   return (
     <>
       <TableHead sx={{ bgcolor: "primary.main" }}>
@@ -112,41 +117,43 @@ const TableBoxscoreStaterOrBench = ({
           <TableCell
             sx={{ position: "sticky", left: 0, bgcolor: "primary.main" }}
           >
-            <Typography variant="h6">{title}</Typography>
-          </TableCell>
-          <TableCell>
-            <Typography variant="h6" align="center" noWrap>
-              MIN
+            <Typography variant="h6" textTransform="uppercase">
+              {title}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              PTS
+              {t("commun.minutessabbreviation")}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              3PTS
+              {t("commun.pointsabbreviation")}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              2PTS Int
+              {t("commun.threepointsabbreviation")}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              2PTS Ext
+              {t("commun.twopointsintabbreviation")}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              LF
+              {t("commun.twopointsextabbreviation")}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h6" align="center" noWrap>
-              PF
+              {t("commun.ftabbreviation")}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            <Typography variant="h6" align="center" noWrap>
+              {t("commun.foulsabbreviation")}
             </Typography>
           </TableCell>
         </TableRow>

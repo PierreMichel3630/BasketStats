@@ -14,12 +14,14 @@ import rank3 from "src/assets/rank/rank3.png";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { style } from "typestyle";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
 }
 
 export const PlayerLeaderBlock = ({ stats }: Props) => {
+  const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
@@ -47,67 +49,69 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
     value: el.lfpassed ? el.lfpassed.toFixed(1) : "-",
   }));
   return (
-    <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
-      <Grid container>
-        <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
-          <Typography variant="h4" color="white">
-            TEAM LEADERS
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sx={{ p: 1 }}>
-          <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
-            <Grid item xs={1}>
-              <Card label="Points" values={points} />
-            </Grid>
-            <Grid item xs={1}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  flexDirection: isSmall ? "column" : "row",
-                }}
-              >
-                <Divider
-                  orientation={isSmall ? "horizontal" : "vertical"}
-                  flexItem
-                />
-                <Card label="3PTS" values={troisPoints} />
-              </Box>
-            </Grid>
-            <Grid item xs={1}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  flexDirection: isSmall ? "column" : "row",
-                }}
-              >
-                <Divider
-                  orientation={isSmall ? "horizontal" : "vertical"}
-                  flexItem
-                />
-                <Card label="LF" values={lfs} />
-              </Box>
-            </Grid>
-            <Grid item xs={1}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  flexDirection: isSmall ? "column" : "row",
-                }}
-              >
-                <Divider
-                  orientation={isSmall ? "horizontal" : "vertical"}
-                  flexItem
-                />
-                <Card label="Fautes" values={fautes} />
-              </Box>
+    stats.length > 0 && (
+      <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
+        <Grid container>
+          <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
+            <Typography variant="h4" color="white" textTransform="uppercase">
+              {t("commun.teamleaders")}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sx={{ p: 1 }}>
+            <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
+              <Grid item xs={1}>
+                <Card label={t("commun.points")} values={points} />
+              </Grid>
+              <Grid item xs={1}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1,
+                    flexDirection: isSmall ? "column" : "row",
+                  }}
+                >
+                  <Divider
+                    orientation={isSmall ? "horizontal" : "vertical"}
+                    flexItem
+                  />
+                  <Card label={t("commun.threepoints")} values={troisPoints} />
+                </Box>
+              </Grid>
+              <Grid item xs={1}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1,
+                    flexDirection: isSmall ? "column" : "row",
+                  }}
+                >
+                  <Divider
+                    orientation={isSmall ? "horizontal" : "vertical"}
+                    flexItem
+                  />
+                  <Card label={t("commun.freethrow")} values={lfs} />
+                </Box>
+              </Grid>
+              <Grid item xs={1}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1,
+                    flexDirection: isSmall ? "column" : "row",
+                  }}
+                >
+                  <Divider
+                    orientation={isSmall ? "horizontal" : "vertical"}
+                    flexItem
+                  />
+                  <Card label={t("commun.fouls")} values={fautes} />
+                </Box>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    )
   );
 };
 

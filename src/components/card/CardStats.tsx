@@ -4,6 +4,7 @@ import { Colors } from "src/style/Colors";
 
 import PersonIcon from "@mui/icons-material/Person";
 import { isInt } from "src/utils/calcul";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   label: string;
@@ -12,48 +13,51 @@ interface Props {
   min?: number;
 }
 
-export const CardStats = ({ label, value, max, min }: Props) => (
-  <Grid container spacing={1} sx={{ textAlign: "center" }}>
-    <Grid item xs={12}>
-      <Typography variant="h4">{label}</Typography>
-    </Grid>
-    <Grid item xs={12}>
-      <Typography variant="h2">{value.toFixed(1)}</Typography>
-    </Grid>
-    {min !== undefined && (
-      <Grid
-        item
-        xs={6}
-        sx={{
-          display: "flex",
-          gap: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          color: Colors.red,
-        }}
-      >
-        <Typography variant="h6">Min</Typography>
-        <Typography variant="body1">{min}</Typography>
+export const CardStats = ({ label, value, max, min }: Props) => {
+  const { t } = useTranslation();
+  return (
+    <Grid container spacing={1} sx={{ textAlign: "center" }}>
+      <Grid item xs={12}>
+        <Typography variant="h4">{label}</Typography>
       </Grid>
-    )}
-    {max !== undefined && (
-      <Grid
-        item
-        xs={6}
-        sx={{
-          display: "flex",
-          gap: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          color: Colors.green,
-        }}
-      >
-        <Typography variant="h6">Max</Typography>
-        <Typography variant="body1">{max}</Typography>
+      <Grid item xs={12}>
+        <Typography variant="h2">{value.toFixed(1)}</Typography>
       </Grid>
-    )}
-  </Grid>
-);
+      {min !== undefined && (
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            gap: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            color: Colors.red,
+          }}
+        >
+          <Typography variant="h6">{t("commun.min")}</Typography>
+          <Typography variant="body1">{min}</Typography>
+        </Grid>
+      )}
+      {max !== undefined && (
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            gap: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            color: Colors.green,
+          }}
+        >
+          <Typography variant="h6">{t("commun.max")}</Typography>
+          <Typography variant="body1">{max}</Typography>
+        </Grid>
+      )}
+    </Grid>
+  );
+};
 
 interface PropsCardStatsPlayer {
   player: Player;
@@ -95,64 +99,67 @@ interface PropsCardStatsLF {
   min?: Value;
 }
 
-export const CardStatsLF = ({ label, value, max, min }: PropsCardStatsLF) => (
-  <Grid container spacing={1} sx={{ textAlign: "center" }}>
-    <Grid item xs={12}>
-      <Typography variant="h4">{label}</Typography>
-    </Grid>
-    <Grid
-      item
-      xs={12}
-      sx={{
-        display: "flex",
-        gap: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Typography variant="h2">
-        {((value.marque / value.tente) * 100).toFixed(1)}
-      </Typography>
-      <Typography variant="h6">
-        ({isInt(value.marque) ? value.marque : value.marque.toFixed(1)}/
-        {isInt(value.tente) ? value.tente : value.tente.toFixed(1)})
-      </Typography>
-    </Grid>
-    {min !== undefined && (
+export const CardStatsLF = ({ label, value, max, min }: PropsCardStatsLF) => {
+  const { t } = useTranslation();
+  return (
+    <Grid container spacing={1} sx={{ textAlign: "center" }}>
+      <Grid item xs={12}>
+        <Typography variant="h4">{label}</Typography>
+      </Grid>
       <Grid
         item
-        xs={6}
+        xs={12}
         sx={{
           display: "flex",
           gap: 1,
-          justifyContent: "center",
           alignItems: "center",
-          color: Colors.red,
+          justifyContent: "center",
         }}
       >
-        <Typography variant="h6">Min</Typography>
-        <Typography variant="body1">
-          {min.percent.toFixed(1)} ({min.marque}/{min.tente})
+        <Typography variant="h2">
+          {((value.marque / value.tente) * 100).toFixed(1)}
+        </Typography>
+        <Typography variant="h6">
+          ({isInt(value.marque) ? value.marque : value.marque.toFixed(1)}/
+          {isInt(value.tente) ? value.tente : value.tente.toFixed(1)})
         </Typography>
       </Grid>
-    )}
-    {max !== undefined && (
-      <Grid
-        item
-        xs={6}
-        sx={{
-          display: "flex",
-          gap: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          color: Colors.green,
-        }}
-      >
-        <Typography variant="h6">Max</Typography>
-        <Typography variant="body1">
-          {max.percent.toFixed(1)} ({max.marque}/{max.tente})
-        </Typography>
-      </Grid>
-    )}
-  </Grid>
-);
+      {min !== undefined && (
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            gap: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            color: Colors.red,
+          }}
+        >
+          <Typography variant="h6">{t("commun.min")}</Typography>
+          <Typography variant="body1">
+            {min.percent.toFixed(1)} ({min.marque}/{min.tente})
+          </Typography>
+        </Grid>
+      )}
+      {max !== undefined && (
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            gap: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            color: Colors.green,
+          }}
+        >
+          <Typography variant="h6">{t("commun.max")}</Typography>
+          <Typography variant="body1">
+            {max.percent.toFixed(1)} ({max.marque}/{max.tente})
+          </Typography>
+        </Grid>
+      )}
+    </Grid>
+  );
+};

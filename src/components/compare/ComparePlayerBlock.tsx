@@ -6,6 +6,7 @@ import { LineCompareTable } from "../LineCompareTable";
 import { SelectStatsPlayer } from "../input/Select";
 import { sortByPlayerName } from "src/utils/sort";
 import { Player } from "src/models/Player";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   player?: Player;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export const ComparePlayerBlock = ({ player, stats }: Props) => {
+  const { t } = useTranslation();
   const VALUES = stats.sort(sortByPlayerName).map((stat) => ({
     label: `${stat.player.firstname} ${stat.player.lastname}`,
     value: stat.player.id,
@@ -40,37 +42,37 @@ export const ComparePlayerBlock = ({ player, stats }: Props) => {
 
   const datas = [
     {
-      label: "PTS",
+      label: t("commun.pointsabbreviation"),
       value1: value1.stats.points ?? 0,
       value2: value2.stats.points ?? 0,
       fixed: 1,
     },
     {
-      label: "3PTS",
+      label: t("commun.threepointsabbreviation"),
       value1: value1.stats.threeptspassed ?? 0,
       value2: value2.stats.threeptspassed ?? 0,
       fixed: 1,
     },
     {
-      label: "2PTS INT",
+      label: t("commun.twopointsintabbreviation"),
       value1: value1.stats.twoptsintpassed ?? 0,
       value2: value2.stats.twoptsintpassed ?? 0,
       fixed: 1,
     },
     {
-      label: "2PTS EXT",
+      label: t("commun.twopointsextabbreviation"),
       value1: value1.stats.twoptsextpassed ?? 0,
       value2: value2.stats.twoptsextpassed ?? 0,
       fixed: 1,
     },
     {
-      label: "LF",
+      label: t("commun.ftabbreviation"),
       value1: value1.stats.lfpassed ?? 0,
       value2: value2.stats.lfpassed ?? 0,
       fixed: 1,
     },
     {
-      label: "FAUTES",
+      label: t("commun.foulsabbreviation"),
       value1: value1.stats.fouls ?? 0,
       value2: value2.stats.fouls ?? 0,
       fixed: 1,
@@ -92,7 +94,7 @@ export const ComparePlayerBlock = ({ player, stats }: Props) => {
                     {value1.label}
                   </Typography>
                   <Typography variant="h6" color="white">
-                    ({value1.stats.games} matchs)
+                    ({value1.stats.games} {t("commun.games")})
                   </Typography>
                 </>
               ) : (

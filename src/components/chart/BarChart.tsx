@@ -1,6 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import moment from "moment";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Bar,
   BarChart,
@@ -21,6 +22,7 @@ interface Props {
 
 export const BarChartLF = ({ stats }: Props) => {
   const { mode } = useContext(UserContext);
+  const { t } = useTranslation();
   const data = stats.sort(sortByGameDateAsc).map((stat) => {
     const succeed = stat.lfteam ?? 0;
     const miss =
@@ -45,8 +47,8 @@ export const BarChartLF = ({ stats }: Props) => {
     >
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
-          <Typography variant="h4" color="white">
-            ÉVOLUTION LANCER FRANC
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.freethrowevolution")}
           </Typography>
         </Grid>
         <Grid item xs={12}>
@@ -76,7 +78,7 @@ export const BarChartLF = ({ stats }: Props) => {
                 dataKey="succeed"
                 stackId="a"
                 fill={Colors.green}
-                name="LFs marqués"
+                name={t("commun.freethrowscored")}
               >
                 <LabelList
                   dataKey="succeed"
@@ -89,7 +91,7 @@ export const BarChartLF = ({ stats }: Props) => {
                 dataKey="miss"
                 stackId="a"
                 fill={Colors.red}
-                name="LFs Ratés"
+                name={t("commun.freethrowmiss")}
               >
                 <LabelList
                   dataKey="miss"

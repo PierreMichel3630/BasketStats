@@ -1,5 +1,6 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useTranslation } from "react-i18next";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 
@@ -8,75 +9,76 @@ interface Props {
 }
 
 export const TableSeasonPlayer = ({ stats }: Props) => {
+  const { t } = useTranslation();
   const getValue = (value: null | number) =>
     value !== null ? value.toFixed(1) : "-";
 
   const columns: Array<GridColDef> = [
     {
-      headerName: "Club",
+      headerName: t("commun.club"),
       field: "club",
       headerAlign: "left",
       align: "left",
       width: 180,
     },
     {
-      headerName: "Équipe",
+      headerName: t("commun.team"),
       field: "team",
       headerAlign: "left",
       align: "left",
       width: 180,
     },
     {
-      headerName: "MJ",
+      headerName: t("commun.gameplayabbreviation"),
       field: "games",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "MIN",
+      headerName: t("commun.minutessabbreviation"),
       field: "min",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "PTS",
+      headerName: t("commun.pointsabbreviation"),
       field: "pts",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "3PTS",
+      headerName: t("commun.threepointsabbreviation"),
       field: "threepts",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "2PTS Int",
+      headerName: t("commun.twopointsintabbreviation"),
       field: "twoptsint",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "2PTS Ext",
+      headerName: t("commun.twopointsextabbreviation"),
       field: "twoptsext",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "LF",
+      headerName: t("commun.ftabbreviation"),
       field: "lf",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "PF",
+      headerName: t("commun.foulsabbreviation"),
       field: "pf",
       headerAlign: "center",
       align: "center",
@@ -105,8 +107,8 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
     >
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
-          <Typography variant="h4" color="white">
-            STATISTIQUES DE CARRIERE
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.careerstatistics")}
           </Typography>
         </Grid>
         <Grid item xs={12}>

@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { px } from "csx";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { PlayerAvg, StatsPlayerAvg } from "src/models/Statistique";
 import { Team } from "src/models/Team";
 import { Colors } from "src/style/Colors";
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
+  const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
@@ -71,8 +73,8 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
     >
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
-          <Typography variant="h4" color="white">
-            COMPARAISON
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.comparison")}
           </Typography>
         </Grid>
         {teams.length > 1 && (
@@ -85,7 +87,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
             }}
           >
             <FormControl size="small" fullWidth>
-              <InputLabel id="select-team">Équipe</InputLabel>
+              <InputLabel id="select-team">{t("commun.team")}</InputLabel>
               <Select
                 id="select-team"
                 value={team}
@@ -120,7 +122,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
             }}
           />
           <Typography variant="h4" color="white">
-            Joueur
+            {t("commun.player")}
           </Typography>
           <Box
             sx={{
@@ -131,7 +133,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
             }}
           />
           <Typography variant="h4" color="white">
-            Moyenne joueur de l'équipe
+            {t("commun.averageteamplayer")}
           </Typography>
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
@@ -139,7 +141,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
             <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
               <Grid item xs={1}>
                 <Card
-                  label="Points"
+                  label={t("commun.points")}
                   value1={pointsPlayer}
                   value2={pointsAvg}
                   max={Math.max(pointsAvg, pointsPlayer)}
@@ -158,7 +160,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
                     flexItem
                   />
                   <Card
-                    label="3PTS"
+                    label={t("commun.threepointsabbreviation")}
                     value1={threePointsPlayer}
                     value2={threePointsAvg}
                     max={Math.max(threePointsAvg, threePointsPlayer)}
@@ -178,7 +180,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
                     flexItem
                   />
                   <Card
-                    label="LF"
+                    label={t("commun.ftabbreviation")}
                     value1={lfPlayer}
                     value2={lfAvg}
                     max={Math.max(lfAvg, lfPlayer)}
@@ -198,7 +200,7 @@ export const ComparePlayerAvg = ({ playerAvgs, playerStat, teams }: Props) => {
                     flexItem
                   />
                   <Card
-                    label="Fautes"
+                    label={t("commun.fouls")}
                     value1={foulPlayer}
                     value2={foulAvg}
                     max={Math.max(foulAvg, foulPlayer)}

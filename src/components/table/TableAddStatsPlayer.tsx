@@ -1,6 +1,7 @@
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   getStatsPlayerByGameId,
@@ -41,6 +42,7 @@ interface Row {
   is_play: boolean;
 }
 export const TableAddStatsPlayer = ({ game, players }: Props) => {
+  const { t } = useTranslation();
   const [rows, setRows] = useState<Array<Row>>(
     players.map((player) => ({
       id: player.id,
@@ -67,88 +69,108 @@ export const TableAddStatsPlayer = ({ game, players }: Props) => {
   const columns: Array<GridColDef> = [
     {
       field: "is_play",
-      headerName: "A Joué ?",
+      headerName: t("commun.isplay"),
       flex: 1,
       type: "boolean",
       editable: true,
     },
-    { field: "licence", headerName: "Licence", flex: 1, editable: false },
-    { field: "lastname", headerName: "Nom", flex: 1, editable: false },
-    { field: "firstname", headerName: "Prénom", flex: 1, editable: false },
-    { field: "number", headerName: "N°", flex: 1, editable: true },
+    {
+      field: "licence",
+      headerName: t("commun.licence"),
+      flex: 1,
+      editable: false,
+    },
+    {
+      field: "lastname",
+      headerName: t("commun.lastname"),
+      flex: 1,
+      editable: false,
+    },
+    {
+      field: "firstname",
+      headerName: t("commun.firstname"),
+      flex: 1,
+      editable: false,
+    },
+    {
+      field: "number",
+      headerName: t("commun.numberabbreviation"),
+      flex: 1,
+      editable: true,
+    },
     {
       field: "startingfive",
-      headerName: "5 de départ",
+      headerName: t("commun.startingfive"),
       flex: 1,
       type: "boolean",
       editable: true,
     },
     {
       field: "minutes",
-      headerName: "Temps de jeu",
+      headerName: t("commun.playtime"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "points",
-      headerName: "Points",
+      headerName: t("commun.pointsabbreviation"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "threeptspassed",
-      headerName: "3PTS Réussis",
+      headerName: t("commun.threeptspassed"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "twoptsintpassed",
-      headerName: "2PTS Int Réussis",
+      headerName: t("commun.twoptsintpassed"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "twoptsextpassed",
-      headerName: "2PTS Ext Réussis",
+      headerName: t("commun.twoptsextpassed"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "lfpassed",
-      headerName: "LF Réussis",
+      headerName: t("commun.lfpassed"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "fouls_0lf",
-      headerName: "Fautes 0LF",
+      headerName: t("commun.fouls0lf"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "fouls_1lf",
-      headerName: "Fautes 1LF",
+      headerName: t("commun.fouls1lf"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "fouls_2lf",
-      headerName: "Fautes 2LF",
+      headerName: t("commun.fouls2lf"),
       flex: 1,
       type: "number",
       editable: true,
     },
     {
       field: "fouls_3lf",
-      headerName: "Fautes 3LF",
+      headerName: t("commun.fouls3lf"),
       flex: 1,
       type: "number",
       editable: true,

@@ -16,7 +16,7 @@ export const CreateGameDialog = ({ teamId, open, close }: Props) => {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12} sx={{ textAlign: "center" }}>
-            <Typography variant="h2">{t("commun.creategame")}</Typography>
+            <Typography variant="h2">{t("form.creategame.title")}</Typography>
           </Grid>
           <Grid item xs={12}>
             <GameForm teamId={teamId} onValid={close} />

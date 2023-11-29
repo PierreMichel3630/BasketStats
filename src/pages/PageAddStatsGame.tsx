@@ -2,6 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Grid, Paper, Tab, Typography } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { getGamesById } from "src/api/game";
 import { getPlayersByEquipeId } from "src/api/player";
@@ -13,20 +14,21 @@ import { Player } from "src/models/Player";
 
 export const PageAddStatsGame = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
 
   const [game, setGame] = useState<Game | undefined>(undefined);
   const [players, setPlayers] = useState<Array<Player>>([]);
   const tabs = [
     {
-      label: "Joueurs",
+      label: t("commun.players"),
       value: "joueurs",
     },
     {
-      label: "Équipe",
+      label: t("commun.team"),
       value: "equipe",
     },
     {
-      label: "Position de tirs",
+      label: t("commun.shootingposition"),
       value: "tirs",
     },
   ];
@@ -68,11 +70,13 @@ export const PageAddStatsGame = () => {
         <GoBackButton />
       </Grid>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
-        <Typography variant="h2">Saisir Statistique</Typography>
+        <Typography variant="h2">{t("commun.enterstatistics")}</Typography>
         {game && (
           <Typography variant="h4">
-            Match du {moment(game.date).format("DD/MM/YYYY")} contre{" "}
-            {game.opponent}
+            {t("commun.gameonagainst", {
+              date: moment(game.date).format("DD/MM/YYYY"),
+              opponent: game.opponent,
+            })}
           </Typography>
         )}
       </Grid>
@@ -103,7 +107,7 @@ export const PageAddStatsGame = () => {
               <AddPlayerStatsBlock game={game} players={players} />
             </TabPanel>
             <TabPanel value="tirs" sx={{ p: 0 }}>
-              tirs
+              {t("commun.shoots")}
             </TabPanel>
           </Grid>
         </TabContext>

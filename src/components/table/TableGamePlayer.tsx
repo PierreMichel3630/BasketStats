@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
@@ -22,17 +23,14 @@ interface Props {
   title?: string;
 }
 
-export const TableGamePlayer = ({
-  stats,
-  number,
-  title = "JOURNAL DE MATCHS",
-}: Props) => {
+export const TableGamePlayer = ({ stats, number, title }: Props) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const getValue = (value: null | number) => (value !== null ? value : "-");
 
   const columns: Array<GridColDef> = [
     {
-      headerName: "Date",
+      headerName: t("commun.date"),
       field: "date",
       type: "date",
       headerAlign: "left",
@@ -40,56 +38,56 @@ export const TableGamePlayer = ({
       width: 85,
     },
     {
-      headerName: "Adversaire",
+      headerName: t("commun.opponent"),
       field: "opponent",
       headerAlign: "left",
       align: "left",
       width: 180,
     },
     {
-      headerName: "MIN",
+      headerName: t("commun.minutessabbreviation"),
       field: "min",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "PTS",
+      headerName: t("commun.pointsabbreviation"),
       field: "pts",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "3PTS",
+      headerName: t("commun.threepointsabbreviation"),
       field: "threepts",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "2PTS Int",
+      headerName: t("commun.twopointsintabbreviation"),
       field: "twoptsint",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "2PTS Ext",
+      headerName: t("commun.twopointsextabbreviation"),
       field: "twoptsext",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "LF",
+      headerName: t("commun.ftabbreviation"),
       field: "lf",
       headerAlign: "center",
       align: "center",
       flex: 1,
     },
     {
-      headerName: "PF",
+      headerName: t("commun.gamediary"),
       field: "pf",
       headerAlign: "center",
       align: "center",
@@ -119,8 +117,8 @@ export const TableGamePlayer = ({
   return (
     <Grid container>
       <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
-        <Typography variant="h4" color="white">
-          {title}
+        <Typography variant="h4" color="white" textTransform="uppercase">
+          {title ? title : t("commun.gamediary")}
         </Typography>
       </Grid>
       <Grid item xs={12}>

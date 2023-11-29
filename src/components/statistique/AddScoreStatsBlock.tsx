@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import { Game } from "src/models/Game";
 import { StatsTeamUpdate } from "src/models/Statistique";
 import { AddScoreBlock } from "../AddScoreBlock";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   game: Game;
@@ -10,10 +11,11 @@ interface Props {
 }
 
 export const AddScoreStatsBlock = ({ game, stats, onChange }: Props) => {
+  const { t } = useTranslation();
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
-        <Typography variant="h2">Score</Typography>
+        <Typography variant="h2">{t("commun.score")}</Typography>
       </Grid>
       <Grid item xs={12}>
         <AddScoreBlock
@@ -27,7 +29,7 @@ export const AddScoreStatsBlock = ({ game, stats, onChange }: Props) => {
             value: stats.q1opponent,
             onChange: (value) => onChange("q1opponent", value),
           }}
-          label="Quart-Temps 1"
+          label={t("commun.quartertime1")}
         />
       </Grid>
       <Grid item xs={12}>
@@ -42,7 +44,7 @@ export const AddScoreStatsBlock = ({ game, stats, onChange }: Props) => {
             value: stats.q2opponent,
             onChange: (value) => onChange("q2opponent", value),
           }}
-          label="Quart-Temps 2"
+          label={t("commun.quartertime2")}
         />
       </Grid>
       <Grid item xs={12}>
@@ -57,7 +59,7 @@ export const AddScoreStatsBlock = ({ game, stats, onChange }: Props) => {
             value: stats.q3opponent,
             onChange: (value) => onChange("q3opponent", value),
           }}
-          label="Quart-Temps 3"
+          label={t("commun.quartertime3")}
         />
       </Grid>
       <Grid item xs={12}>
@@ -72,7 +74,7 @@ export const AddScoreStatsBlock = ({ game, stats, onChange }: Props) => {
             value: stats.q4opponent,
             onChange: (value) => onChange("q4opponent", value),
           }}
-          label="Quart-Temps 4"
+          label={t("commun.quartertime4")}
         />
       </Grid>
     </Grid>

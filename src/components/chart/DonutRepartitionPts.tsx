@@ -1,12 +1,14 @@
 import { StatsPlayer, StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
   type: string;
 }
 export const DonutRepartitionPtsMarques = ({ type, stats }: Props) => {
+  const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsteam ?? 0) * 3,
     0
@@ -71,12 +73,13 @@ export const DonutRepartitionPtsMarques = ({ type, stats }: Props) => {
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Points Marqués"
+      title={t("commun.scoredpointsdistribution")}
     />
   );
 };
 
 export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
+  const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptsopponent ?? 0) * 3,
     0
@@ -141,7 +144,7 @@ export const DonutRepartitionPtsEncaisses = ({ type, stats }: Props) => {
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Points Encaissés"
+      title={t("commun.concededpointsdistribution")}
     />
   );
 };
@@ -154,6 +157,7 @@ export const DonutRepartitionPtsMarquesPlayer = ({
   type,
   stats,
 }: PropsPlayer) => {
+  const { t } = useTranslation();
   const troisPoints = stats.reduce(
     (acc, el) => acc + (el.threeptspassed ?? 0) * 3,
     0
@@ -218,7 +222,7 @@ export const DonutRepartitionPtsMarquesPlayer = ({
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Points Marqués"
+      title={t("commun.scoredpointsdistribution")}
     />
   );
 };

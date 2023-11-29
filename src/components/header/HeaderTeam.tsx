@@ -1,5 +1,6 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import { percent, px } from "csx";
+import { useTranslation } from "react-i18next";
 import { Game } from "src/models/Game";
 import { Team } from "src/models/Team";
 import { style } from "typestyle";
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const HeaderTeam = ({ team, games }: Props) => {
+  const { t } = useTranslation();
   const wins = games.filter(
     (el) =>
       el.opponent_score !== null &&
@@ -49,10 +51,14 @@ export const HeaderTeam = ({ team, games }: Props) => {
               />
               <Box sx={{ display: "flex", gap: 1 }}>
                 <Typography variant="h2">{wins.length}</Typography>
-                <Typography variant="h6">V</Typography>
+                <Typography variant="h6">
+                  {t("commun.victoryabbreviation")}
+                </Typography>
                 <Typography variant="h2">-</Typography>
                 <Typography variant="h2">{loses.length}</Typography>
-                <Typography variant="h6">D</Typography>
+                <Typography variant="h6">
+                  {t("commun.defeatabbreviation")}
+                </Typography>
               </Box>
             </Box>
           </Grid>

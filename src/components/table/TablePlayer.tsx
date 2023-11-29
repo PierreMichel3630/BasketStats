@@ -1,4 +1,5 @@
 import {
+  Alert,
   Grid,
   Paper,
   Table,
@@ -15,6 +16,7 @@ import { StatsPlayerAvg } from "src/models/Statistique";
 import { sortByName } from "src/utils/sort";
 
 import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Colors } from "src/style/Colors";
 
@@ -23,16 +25,17 @@ interface Props {
 }
 
 export const TablePlayer = ({ players }: Props) => {
+  const { t } = useTranslation();
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography variant="h6">Licence</Typography>
+              <Typography variant="h6">{t("commun.licence")}</Typography>
             </TableCell>
             <TableCell>
-              <Typography variant="h6">Nom</Typography>
+              <Typography variant="h6">{t("commun.lastname")}</Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -61,20 +64,21 @@ interface PropsStats {
 }
 
 export const TablePlayerStats = ({ players, stats }: PropsStats) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const getValue = (value: null | number) =>
     value !== null ? value.toFixed(1) : "-";
 
   const columns: Array<GridColDef> = [
     {
-      headerName: "Nom",
+      headerName: t("commun.lastname"),
       field: "name",
       headerAlign: "left",
       align: "left",
       width: 180,
     },
     {
-      headerName: "MJ",
+      headerName: t("commun.gameplayabbreviation"),
       field: "mj",
       headerAlign: "center",
       align: "center",
@@ -83,7 +87,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 40,
     },
     {
-      headerName: "MIN",
+      headerName: t("commun.minutessabbreviation"),
       field: "min",
       headerAlign: "center",
       align: "center",
@@ -92,7 +96,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 50,
     },
     {
-      headerName: "PTS",
+      headerName: t("commun.pointsabbreviation"),
       field: "pts",
       headerAlign: "center",
       align: "center",
@@ -101,7 +105,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 50,
     },
     {
-      headerName: "3PTS",
+      headerName: t("commun.threepointsabbreviation"),
       field: "threepts",
       headerAlign: "center",
       align: "center",
@@ -110,7 +114,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 60,
     },
     {
-      headerName: "2PTS Int",
+      headerName: t("commun.twopointsintabbreviation"),
       field: "twoptsint",
       headerAlign: "center",
       align: "center",
@@ -119,7 +123,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 80,
     },
     {
-      headerName: "2PTS Ext",
+      headerName: t("commun.twopointsextabbreviation"),
       field: "twoptsext",
       headerAlign: "center",
       align: "center",
@@ -128,7 +132,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 80,
     },
     {
-      headerName: "LF",
+      headerName: t("commun.ftabbreviation"),
       field: "lf",
       headerAlign: "center",
       align: "center",
@@ -137,12 +141,12 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       minWidth: 50,
     },
     {
-      headerName: "PF",
+      headerName: t("commun.foulsabbreviation"),
       field: "pf",
       headerAlign: "center",
       align: "center",
       type: "number",
-      minWidth: 50,
+      minWidth: 80,
       flex: 1,
     },
   ];
@@ -164,6 +168,8 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
     };
   });
 
+  console.log(rows);
+
   const onRowClick: GridEventListener<"rowClick"> = (params) => {
     navigate(`/player/${params.id}`);
   };
@@ -171,56 +177,64 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
   return (
     <Grid container>
       <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1 }}>
-        <Typography variant="h4" color="white">
-          EFFECTIF
+        <Typography variant="h4" color="white" textTransform="uppercase">
+          {t("commun.teamsize")}
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <DataGrid
-          sx={{
-            ".MuiButtonBase-root": {
-              display: "none",
-            },
-            ".MuiDataGrid-columnSeparator": {
-              display: "none",
-            },
-            "&.MuiDataGrid-root": {
-              border: "none",
-            },
-            ".MuiDataGrid-columnHeader": {
-              height: 20,
-            },
-            ".MuiDataGrid-columnHeaders": {
-              backgroundColor: Colors.subprimary,
-              minHeight: "inherit",
-              color: "white",
-            },
-            ".MuiDataGrid-columnHeaderTitle": {
-              fontSize: 13,
-              fontWeight: 600,
-              "@media (max-width:600px)": {
-                fontSize: 12,
+      {rows.length > 0 ? (
+        <Grid item xs={12}>
+          <DataGrid
+            sx={{
+              ".MuiButtonBase-root": {
+                display: "none",
               },
-            },
-            ".MuiDataGrid-row": {
-              cursor: "pointer",
-            },
-          }}
-          sortingOrder={["desc", "asc"]}
-          rowHeight={35}
-          rows={rows}
-          columns={columns}
-          onRowClick={onRowClick}
-          hideFooter
-          disableRowSelectionOnClick
-          disableColumnMenu
-          initialState={{
-            sorting: {
-              sortModel: [{ field: "pts", sort: "desc" }],
-            },
-          }}
-        />
-      </Grid>
+              ".MuiDataGrid-columnSeparator": {
+                display: "none",
+              },
+              "&.MuiDataGrid-root": {
+                border: "none",
+              },
+              ".MuiDataGrid-columnHeader": {
+                height: 20,
+              },
+              ".MuiDataGrid-columnHeaders": {
+                backgroundColor: Colors.subprimary,
+                minHeight: "inherit",
+                color: "white",
+              },
+              ".MuiDataGrid-columnHeaderTitle": {
+                fontSize: 13,
+                fontWeight: 600,
+                "@media (max-width:600px)": {
+                  fontSize: 12,
+                },
+              },
+              ".MuiDataGrid-row": {
+                cursor: "pointer",
+              },
+            }}
+            sortingOrder={["desc", "asc"]}
+            rowHeight={35}
+            rows={rows}
+            columns={columns}
+            onRowClick={onRowClick}
+            hideFooter
+            disableRowSelectionOnClick
+            disableColumnMenu
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "pts", sort: "desc" }],
+              },
+            }}
+          />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <Alert severity="warning" sx={{ m: 2 }}>
+            {t("commun.noplayer")}
+          </Alert>
+        </Grid>
+      )}
     </Grid>
   );
 };

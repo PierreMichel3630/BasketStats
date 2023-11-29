@@ -3,6 +3,7 @@ import { StatsTeam } from "src/models/Statistique";
 import { CardStats, CardStatsLF } from "../card/CardStats";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { sortByPercent } from "src/utils/sort";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
+  const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
@@ -76,15 +78,15 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
     <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
       <Grid container>
         <Grid item xs={12} sx={{ bgcolor: "primary.main", p: 1, mb: 1 }}>
-          <Typography variant="h4" color="white">
-            TEAM STATISTIQUE
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.teamstatistics")}
           </Typography>
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
           <Grid container spacing={1} columns={{ xs: 1, sm: 2, md: 4 }}>
             <Grid item xs={1}>
               <CardStats
-                label="Pts Marqués"
+                label={t("commun.pointsscored")}
                 value={
                   type === "match"
                     ? ptsMarquesTot / ptsMarques.length
@@ -107,7 +109,7 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                   flexItem
                 />
                 <CardStats
-                  label="Pts Encaissés"
+                  label={t("commun.pointsconceded")}
                   value={
                     type === "match"
                       ? ptsEncaissesTot / ptsEncaisses.length
@@ -131,7 +133,7 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                   flexItem
                 />
                 <CardStats
-                  label="3Pts Marqués"
+                  label={t("commun.threepointsscored")}
                   value={
                     type === "match"
                       ? troisptsMarqueTot / troisptsMarque.length
@@ -155,7 +157,7 @@ export const TeamLeaderBlock = ({ stats, type = "match" }: Props) => {
                   flexItem
                 />
                 <CardStatsLF
-                  label="%LF"
+                  label={t("commun.ftpercent")}
                   value={
                     type === "match"
                       ? {

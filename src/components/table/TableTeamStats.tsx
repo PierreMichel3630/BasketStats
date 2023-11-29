@@ -10,6 +10,7 @@ import {
   getPourcentageLFNumber,
 } from "src/utils/calcul";
 import { LineCompareTable } from "../LineCompareTable";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: StatsTeam;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const TableTeamStats = ({ game, stats }: Props) => {
+  const { t } = useTranslation();
   const nbreLfTeam = getNbreLf(stats);
 
   const nbreLfOpponent = getNbreLfOpponent(stats);
@@ -27,43 +29,43 @@ export const TableTeamStats = ({ game, stats }: Props) => {
 
   const data = [
     {
-      label: "PTS",
+      label: t("commun.pointsabbreviation"),
       value1: stats.game.team_score ?? 0,
       value2: stats.game.opponent_score ?? 0,
     },
     {
-      label: "3PTS",
+      label: t("commun.threepointsabbreviation"),
       value1: stats.threeptsteam ?? 0,
       value2: stats.threeptsopponent ?? 0,
     },
     {
-      label: "2PTS Int.",
+      label: t("commun.twopointsintabbreviation"),
       value1: stats.twoptsintteam ?? 0,
       value2: stats.twoptsintopponent ?? 0,
     },
     {
-      label: "2PTS Ext.",
+      label: t("commun.twopointsextabbreviation"),
       value1: stats.twoptsextteam ?? 0,
       value2: stats.twoptsextopponent ?? 0,
     },
     {
-      label: "LFR",
+      label: t("commun.ftscoredabbreviation"),
       value1: stats.lfteam ?? 0,
       value2: stats.lfopponent ?? 0,
     },
     {
-      label: "LFT",
+      label: t("commun.ftattemptedabbreviation"),
       value1: nbreLfTeam,
       value2: nbreLfOpponent,
     },
     {
-      label: "%LF",
+      label: t("commun.ftpercentabbreviation"),
       value1: getPourcentageLFNumber(stats.lfteam ?? 0, nbreLfTeam),
       value2: getPourcentageLFNumber(stats.lfopponent ?? 0, nbreLfOpponent),
       fixed: 1,
     },
     {
-      label: "PF",
+      label: t("commun.foulsabbreviation"),
       value1: foulsTeam,
       value2: foulsOpponent,
     },

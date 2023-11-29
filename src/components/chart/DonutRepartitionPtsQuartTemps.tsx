@@ -1,6 +1,7 @@
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
@@ -10,6 +11,7 @@ export const DonutRepartitionPtsQuartTempsMarques = ({
   type,
   stats,
 }: Props) => {
+  const { t } = useTranslation();
   const q1 = stats.reduce((acc, el) => acc + (el.q1team ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2team ?? 0), 0);
   const q3 = stats.reduce((acc, el) => acc + (el.q3team ?? 0), 0);
@@ -65,7 +67,7 @@ export const DonutRepartitionPtsQuartTempsMarques = ({
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Points Marqués"
+      title={t("commun.scoredpointsdistribution")}
     />
   );
 };
@@ -74,6 +76,7 @@ export const DonutRepartitionPtsQuartTempsEncaisses = ({
   type,
   stats,
 }: Props) => {
+  const { t } = useTranslation();
   const q1 = stats.reduce((acc, el) => acc + (el.q1opponent ?? 0), 0);
   const q2 = stats.reduce((acc, el) => acc + (el.q2opponent ?? 0), 0);
   const q3 = stats.reduce((acc, el) => acc + (el.q3opponent ?? 0), 0);
@@ -129,7 +132,7 @@ export const DonutRepartitionPtsQuartTempsEncaisses = ({
   return (
     <DonutChart
       data={data.filter((el) => el.value !== 0)}
-      title="Répartition Points Encaissés"
+      title={t("commun.concededpointsdistribution")}
     />
   );
 };

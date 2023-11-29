@@ -11,12 +11,14 @@ import {
 } from "src/utils/calcul";
 import { LineCompareTable } from "../LineCompareTable";
 import { SelectStatsTeam } from "../input/Select";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   stats: Array<StatsTeam>;
 }
 
 export const CompareTeamBlock = ({ stats }: Props) => {
+  const { t } = useTranslation();
   const getStatsMatchVictoire = () =>
     stats.filter(
       (el) =>
@@ -37,27 +39,27 @@ export const CompareTeamBlock = ({ stats }: Props) => {
 
   const VALUES = [
     {
-      label: "Victoires",
+      label: t("commun.victories"),
       value: "victoires",
       stats: getStatsMatchVictoire(),
     },
     {
-      label: "Défaites",
+      label: t("commun.defeats"),
       value: "defaites",
       stats: getStatsMatchDefaite(),
     },
     {
-      label: "Domicile",
+      label: t("commun.home"),
       value: "domicile",
       stats: getStatsMatchDomicile(),
     },
     {
-      label: "Extérieur",
+      label: t("commun.exterior"),
       value: "exterieur",
       stats: getStatsMatchExterieur(),
     },
     {
-      label: "Moyenne Match",
+      label: t("commun.gameaverage"),
       value: "moyenne",
       stats: stats,
     },
@@ -98,7 +100,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
 
   const datas = [
     {
-      label: "PTS MARQUES",
+      label: t("commun.pointsscoredabbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + getPoints(value), 0) /
         value1.stats.length,
@@ -108,7 +110,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q1",
+      label: t("commun.q1abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q1team ?? 0), 0) /
         value1.stats.length,
@@ -118,7 +120,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q2",
+      label: t("commun.q2abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q2team ?? 0), 0) /
         value1.stats.length,
@@ -128,7 +130,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q3",
+      label: t("commun.q3abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q3team ?? 0), 0) /
         value1.stats.length,
@@ -138,7 +140,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q4",
+      label: t("commun.q4abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q4team ?? 0), 0) /
         value1.stats.length,
@@ -148,7 +150,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "PTS ENCAISSES",
+      label: t("commun.pointsconcededabbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + getPointsOpponent(value), 0) /
         value1.stats.length,
@@ -158,7 +160,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q1",
+      label: t("commun.q1abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q1opponent ?? 0), 0) /
         value1.stats.length,
@@ -168,7 +170,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q2",
+      label: t("commun.q2abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q2opponent ?? 0), 0) /
         value1.stats.length,
@@ -178,7 +180,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q3",
+      label: t("commun.q3abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q3opponent ?? 0), 0) /
         value1.stats.length,
@@ -188,7 +190,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "Q4",
+      label: t("commun.q4abbreviation"),
       value1:
         value1.stats.reduce((acc, value) => acc + (value.q4opponent ?? 0), 0) /
         value1.stats.length,
@@ -198,7 +200,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "3PTS MARQUES",
+      label: t("commun.threepointsscoredabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.threeptsteam ?? 0),
@@ -212,7 +214,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "3PTS ENCAISSES",
+      label: t("commun.threepointsconcededabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.threeptsopponent ?? 0),
@@ -226,7 +228,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "2PTS INT MARQUES",
+      label: t("commun.twopointsintscoredabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsintteam ?? 0),
@@ -240,7 +242,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "2PTS INT ENCAISSES",
+      label: t("commun.twopointsintconcededabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsintopponent ?? 0),
@@ -254,7 +256,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "2PTS EXT MARQUES",
+      label: t("commun.twopointsextscoredabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsextteam ?? 0),
@@ -268,7 +270,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "2PTS EXT ENCAISSES",
+      label: t("commun.twopointsextconcededabbreviation"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsextopponent ?? 0),
@@ -282,37 +284,37 @@ export const CompareTeamBlock = ({ stats }: Props) => {
       fixed: 1,
     },
     {
-      label: "LFR",
+      label: t("commun.ftscoredabbreviation"),
       value1: lfR1,
       value2: lfR2,
       fixed: 1,
     },
     {
-      label: "LFT",
+      label: t("commun.ftattemptedabbreviation"),
       value1: lfT1,
       value2: lfT2,
       fixed: 1,
     },
     {
-      label: "%LF",
+      label: t("commun.ftpercentabbreviation"),
       value1: getPourcentageLFNumber(lfR1, lfT1),
       value2: getPourcentageLFNumber(lfR2, lfT2),
       fixed: 1,
     },
     {
-      label: "LFR ADV",
+      label: t("commun.ftscoredopponentabbreviation"),
       value1: lfRAdv1,
       value2: lfRAdv2,
       fixed: 1,
     },
     {
-      label: "LFT ADV",
+      label: t("commun.ftattemptedopponentabbreviation"),
       value1: lfTAdv1,
       value2: lfTAdv2,
       fixed: 1,
     },
     {
-      label: "%LF ADV",
+      label: t("commun.ftpercentopponentabbreviation"),
       value1: getPourcentageLFNumber(lfRAdv1, lfTAdv1),
       value2: getPourcentageLFNumber(lfRAdv2, lfTAdv2),
       fixed: 1,
