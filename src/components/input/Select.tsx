@@ -150,7 +150,7 @@ export const SelectStatsPlayer = ({
         onClick={onFocus}
       >
         <Box>
-          <Typography variant="h2" color="white">
+          <Typography variant="h4" color="white">
             {value.label}
           </Typography>
           <Typography variant="h6" color="white">

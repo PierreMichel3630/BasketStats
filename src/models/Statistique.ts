@@ -24,6 +24,10 @@ export interface StatsPlayerAvg {
   twoptsintpassed: null | number;
   twoptsextpassed: null | number;
   lfpassed: null | number;
+  fouls_0lf: null | number;
+  fouls_1lf: null | number;
+  fouls_2lf: null | number;
+  fouls_3lf: null | number;
   fouls: null | number;
   games: number;
   startingfive: number;

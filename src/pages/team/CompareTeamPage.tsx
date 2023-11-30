@@ -50,7 +50,7 @@ export const CompareTeamPage = () => {
             {tab === "game" ? (
               <CompareTeamBlock stats={statsTeam} />
             ) : (
-              <ComparePlayerBlock stats={statsPlayer} />
+              <ComparePlayerBlock statsAvg={statsPlayer} />
             )}
           </Grid>
         </>

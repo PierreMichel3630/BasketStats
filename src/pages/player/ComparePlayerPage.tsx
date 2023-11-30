@@ -9,7 +9,7 @@ export const ComparePlayerPage = () => {
   const { teams, player } = useContext(PlayerContext);
   const [stats, setStats] = useState<Array<StatsPlayerAvg>>([]);
 
-  const getStatsPlayer = () => {
+  const getStatsAvg = () => {
     if (teams.length > 0) {
       const ids = teams.map((el) => el.id);
       getStatsPlayerAvgByTeamIdIn(ids).then((res) => {
@@ -19,14 +19,14 @@ export const ComparePlayerPage = () => {
   };
 
   useEffect(() => {
-    getStatsPlayer();
+    getStatsAvg();
   }, [teams]);
 
   return (
     <Grid container spacing={1}>
       {player && stats.length > 1 && (
         <Grid item xs={12} sx={{ mt: 3 }}>
-          <ComparePlayerBlock player={player} stats={stats} />
+          <ComparePlayerBlock player={player} statsAvg={stats} />
         </Grid>
       )}
     </Grid>
