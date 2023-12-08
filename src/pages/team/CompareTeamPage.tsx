@@ -6,7 +6,7 @@ import { TeamContext } from "./TeamPage";
 import { useTranslation } from "react-i18next";
 
 export const CompareTeamPage = () => {
-  const { statsTeam, statsPlayer } = useContext(TeamContext);
+  const { statsTeam, statsPlayer, shoots } = useContext(TeamContext);
   const { t } = useTranslation();
   const [tab, setTab] = useState<string>("game");
 
@@ -50,7 +50,7 @@ export const CompareTeamPage = () => {
             {tab === "game" ? (
               <CompareTeamBlock stats={statsTeam} />
             ) : (
-              <ComparePlayerBlock statsAvg={statsPlayer} />
+              <ComparePlayerBlock statsAvg={statsPlayer} shoots={shoots} />
             )}
           </Grid>
         </>

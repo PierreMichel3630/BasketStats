@@ -2,6 +2,7 @@ import { Grid, Paper, Tab, Tabs } from "@mui/material";
 import { createContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { getPlayerById } from "src/api/player";
+import { getShootByPlayer } from "src/api/shoot";
 import {
   getAvgPlayerByTeamId,
   getStatsPlayerAvgByPlayerId,
@@ -11,6 +12,7 @@ import { getTeamByPlayerId } from "src/api/team";
 import { HeaderPlayer } from "src/components/header/HeaderPlayer";
 import { GoBackButton } from "src/components/navigation/GoBackButton";
 import { Player } from "src/models/Player";
+import { Shoot } from "src/models/Shoot";
 import { PlayerAvg, StatsPlayer, StatsPlayerAvg } from "src/models/Statistique";
 import { Team } from "src/models/Team";
 
@@ -20,12 +22,14 @@ export const PlayerContext = createContext<{
   avg: Array<StatsPlayerAvg>;
   teams: Array<Team>;
   playerAvg: Array<PlayerAvg>;
+  shoots: Array<Shoot>;
 }>({
   player: undefined,
   games: [],
   avg: [],
   teams: [],
   playerAvg: [],
+  shoots: [],
 });
 
 export const PlayerPage = () => {
@@ -35,6 +39,7 @@ export const PlayerPage = () => {
   const [statsGame, setStatsGame] = useState<Array<StatsPlayer>>([]);
   const [statsAvg, setStatsAvg] = useState<Array<StatsPlayerAvg>>([]);
   const [playerAvg, setPlayerAvg] = useState<Array<PlayerAvg>>([]);
+  const [shoots, setShoots] = useState<Array<Shoot>>([]);
   const [teams, setTeams] = useState<Array<Team>>([]);
   const [tab, setTab] = useState<string>(location.pathname.split("/").pop()!);
 
@@ -42,6 +47,7 @@ export const PlayerPage = () => {
     { label: "Profil", value: "profil", url: "profil" },
     { label: "Matchs", value: "games", url: "games" },
     { label: "Statistiques", value: "stats", url: "stats" },
+    { label: "Tirs", value: "shoots", url: "shoots" },
     { label: "Comparer", value: "compare", url: "compare" },
   ];
 
@@ -96,11 +102,22 @@ export const PlayerPage = () => {
     }
   };
 
+  const getShoots = () => {
+    if (id) {
+      getShootByPlayer(Number(id)).then((res) => {
+        setShoots(res.data as Array<Shoot>);
+      });
+    } else {
+      setShoots([]);
+    }
+  };
+
   useEffect(() => {
     getPlayer();
     getStats();
     getStatsAvg();
     getTeams();
+    getShoots();
   }, [id]);
 
   const handleChangeTab = (_: React.SyntheticEvent, newValue: string) => {
@@ -109,7 +126,14 @@ export const PlayerPage = () => {
 
   return (
     <PlayerContext.Provider
-      value={{ teams, player, games: statsGame, avg: statsAvg, playerAvg }}
+      value={{
+        shoots,
+        teams,
+        player,
+        games: statsGame,
+        avg: statsAvg,
+        playerAvg,
+      }}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

@@ -1,4 +1,5 @@
 import moment from "moment";
+export const sortByNumber = (a: any, b: any) => a.number - b.number;
 export const sortByValue = (a: any, b: any) => b.value - a.value;
 export const sortByPlayerName = (a: any, b: any) =>
   `${a.player.firstname} ${a.player.lastname.toUpperCase()}`.localeCompare(

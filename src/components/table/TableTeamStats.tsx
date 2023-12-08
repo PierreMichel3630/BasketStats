@@ -3,10 +3,14 @@ import { Game } from "src/models/Game";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import {
+  getLfR,
+  getLfROpponent,
   getNbreFouls,
   getNbreFoulsOpponent,
   getNbreLf,
   getNbreLfOpponent,
+  getPoints,
+  getPointsOpponent,
   getPourcentageLFNumber,
 } from "src/utils/calcul";
 import { LineCompareTable } from "../LineCompareTable";
@@ -19,19 +23,23 @@ interface Props {
 
 export const TableTeamStats = ({ game, stats }: Props) => {
   const { t } = useTranslation();
-  const nbreLfTeam = getNbreLf(stats);
 
+  const pts = getPoints(stats);
+  const ptsOpponent = getPointsOpponent(stats);
+
+  const nbreLfTeam = getNbreLf(stats);
   const nbreLfOpponent = getNbreLfOpponent(stats);
+  const nbreLfRTeam = getLfR(stats);
+  const nbreLfROpponent = getLfROpponent(stats);
 
   const foulsTeam = getNbreFouls(stats);
-
   const foulsOpponent = getNbreFoulsOpponent(stats);
 
   const data = [
     {
       label: t("commun.pointsabbreviation"),
-      value1: stats.game.team_score ?? 0,
-      value2: stats.game.opponent_score ?? 0,
+      value1: pts,
+      value2: ptsOpponent,
     },
     {
       label: t("commun.threepointsabbreviation"),
@@ -50,8 +58,8 @@ export const TableTeamStats = ({ game, stats }: Props) => {
     },
     {
       label: t("commun.ftscoredabbreviation"),
-      value1: stats.lfteam ?? 0,
-      value2: stats.lfopponent ?? 0,
+      value1: nbreLfRTeam,
+      value2: nbreLfROpponent,
     },
     {
       label: t("commun.ftattemptedabbreviation"),
@@ -60,8 +68,8 @@ export const TableTeamStats = ({ game, stats }: Props) => {
     },
     {
       label: t("commun.ftpercentabbreviation"),
-      value1: getPourcentageLFNumber(stats.lfteam ?? 0, nbreLfTeam),
-      value2: getPourcentageLFNumber(stats.lfopponent ?? 0, nbreLfOpponent),
+      value1: getPourcentageLFNumber(nbreLfRTeam, nbreLfTeam),
+      value2: getPourcentageLFNumber(nbreLfROpponent, nbreLfOpponent),
       fixed: 1,
     },
     {

@@ -6,7 +6,7 @@ import { StatsPlayerAvg } from "src/models/Statistique";
 import { PlayerContext } from "./PlayerPage";
 
 export const ComparePlayerPage = () => {
-  const { teams, player } = useContext(PlayerContext);
+  const { teams, player, shoots } = useContext(PlayerContext);
   const [stats, setStats] = useState<Array<StatsPlayerAvg>>([]);
 
   const getStatsAvg = () => {
@@ -26,7 +26,11 @@ export const ComparePlayerPage = () => {
     <Grid container spacing={1}>
       {player && stats.length > 1 && (
         <Grid item xs={12} sx={{ mt: 3 }}>
-          <ComparePlayerBlock player={player} statsAvg={stats} />
+          <ComparePlayerBlock
+            player={player}
+            statsAvg={stats}
+            shoots={shoots}
+          />
         </Grid>
       )}
     </Grid>

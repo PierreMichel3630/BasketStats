@@ -48,7 +48,7 @@ export const TableGame = ({ games, isRight = false }: Props) => {
   const addStat = (id: number) => {
     if (user) {
       if (isRight) {
-        navigate(`/game/${id}/addstats`);
+        navigate(`/game/${id}/addstatsV2`);
       } else {
         setMessage(t("commun.errorrightteam"));
       }
@@ -198,7 +198,7 @@ export const TableGameEdit = ({ games }: Props) => {
         <GridActionsCellItem
           icon={<AddchartIcon />}
           label="AddchartIcon"
-          onClick={() => navigate(`/game/${params.id}/addstats`)}
+          onClick={() => navigate(`/game/${params.id}/addstatsV2`)}
         />,
       ],
     },

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import {
+  getLfR,
+  getLfROpponent,
   getNbreLf,
   getNbreLfOpponent,
   getPoints,
@@ -73,10 +75,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
   }, [stats]);
 
   const lfR1 =
-    value1.stats.reduce((acc, value) => acc + (value.lfteam ?? 0), 0) /
+    value1.stats.reduce((acc, value) => acc + getLfR(value), 0) /
     value1.stats.length;
   const lfR2 =
-    value2.stats.reduce((acc, value) => acc + (value.lfteam ?? 0), 0) /
+    value2.stats.reduce((acc, value) => acc + getLfR(value), 0) /
     value2.stats.length;
   const lfT1 =
     value1.stats.reduce((acc, value) => acc + getNbreLf(value), 0) /
@@ -86,10 +88,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
     value2.stats.length;
 
   const lfRAdv1 =
-    value1.stats.reduce((acc, value) => acc + (value.lfopponent ?? 0), 0) /
+    value1.stats.reduce((acc, value) => acc + getLfROpponent(value), 0) /
     value1.stats.length;
   const lfRAdv2 =
-    value2.stats.reduce((acc, value) => acc + (value.lfopponent ?? 0), 0) /
+    value2.stats.reduce((acc, value) => acc + getLfROpponent(value), 0) /
     value2.stats.length;
   const lfTAdv1 =
     value1.stats.reduce((acc, value) => acc + getNbreLfOpponent(value), 0) /

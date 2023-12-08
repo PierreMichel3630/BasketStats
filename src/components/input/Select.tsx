@@ -171,6 +171,7 @@ export const SelectStatsPlayer = ({
             position: "absolute",
             maxHeight: px(200),
             overflow: "scroll",
+            overflowY: "inherit",
           }}
         >
           {results.map((el) => (

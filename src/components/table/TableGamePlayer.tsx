@@ -14,7 +14,14 @@ import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
-import { getFouls } from "src/utils/calcul";
+import {
+  getFouls,
+  getLfPlayer,
+  getPointsPlayer,
+  getThreePointsPlayer,
+  getTwoPointsExtPlayer,
+  getTwoPointsIntPlayer,
+} from "src/utils/calcul";
 import { sortByGameDateDesc } from "src/utils/sort";
 
 interface Props {
@@ -107,11 +114,11 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
     date: moment(stat.game.date).toDate(),
     opponent: stat.game.opponent,
     min: getValue(stat.minutes),
-    pts: getValue(stat.points),
-    threepts: getValue(stat.threeptspassed),
-    twoptsint: getValue(stat.twoptsintpassed),
-    twoptsext: getValue(stat.twoptsextpassed),
-    lf: getValue(stat.lfpassed),
+    pts: getPointsPlayer(stat),
+    threepts: getThreePointsPlayer(stat),
+    twoptsint: getTwoPointsIntPlayer(stat),
+    twoptsext: getTwoPointsExtPlayer(stat),
+    lf: getLfPlayer(stat),
     pf: getFouls(stat),
   }));
 
@@ -197,11 +204,11 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
       date: moment(stat.game.date).format("DD/MM/YYYY"),
       opponent: stat.game.opponent,
       min: stat.minutes,
-      pts: stat.points,
-      threepts: stat.threeptspassed,
-      twoptsint: stat.twoptsintpassed,
-      twoptsext: stat.twoptsextpassed,
-      lf: stat.lfpassed,
+      pts: getPointsPlayer(stat),
+      threepts: getThreePointsPlayer(stat),
+      twoptsint: getTwoPointsIntPlayer(stat),
+      twoptsext: getTwoPointsExtPlayer(stat),
+      lf: getLfPlayer(stat),
       pf: getFouls(stat),
     }));
 

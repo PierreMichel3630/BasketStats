@@ -2,6 +2,11 @@ import { StatsPlayer, StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { DonutChart } from "./DonutChart";
 import { useTranslation } from "react-i18next";
+import {
+  getThreePointsPlayer,
+  getTwoPointsExtPlayer,
+  getTwoPointsIntPlayer,
+} from "src/utils/calcul";
 
 interface PropsPlayer {
   stats: Array<StatsPlayer>;
@@ -9,16 +14,16 @@ interface PropsPlayer {
 export const DonutRepartitionShootPlayer = ({ stats }: PropsPlayer) => {
   const { t } = useTranslation();
   const troisPoints = stats.reduce(
-    (acc, el) => acc + (el.threeptspassed ?? 0),
+    (acc, el) => acc + getThreePointsPlayer(el),
     0
   );
   const lfs = stats.reduce((acc, el) => acc + (el.lfpassed ?? 0), 0);
   const deuxPtsExtTeam = stats.reduce(
-    (acc, el) => acc + (el.twoptsextpassed ?? 0),
+    (acc, el) => acc + getTwoPointsExtPlayer(el),
     0
   );
   const deuxPtsIntTeam = stats.reduce(
-    (acc, el) => acc + (el.twoptsintpassed ?? 0),
+    (acc, el) => acc + getTwoPointsIntPlayer(el),
     0
   );
   const dataMatch = [
@@ -82,10 +87,10 @@ interface PropsPlayer2 {
 export const DonutRepartitionShootPlayer2 = ({ stat }: PropsPlayer2) => {
   const { t } = useTranslation();
   const games = stat.games ?? 0;
-  const troisPoints = (stat.threeptspassed ?? 0) * 3;
-  const lfs = (stat.lfpassed ?? 0) * 1;
-  const deuxPtsExtTeam = (stat.twoptsextpassed ?? 0) * 2;
-  const deuxPtsIntTeam = (stat.twoptsintpassed ?? 0) * 2;
+  const troisPoints = stat.threeptspassed ?? 0;
+  const lfs = stat.lfpassed ?? 0;
+  const deuxPtsExtTeam = stat.twoptsextpassed ?? 0;
+  const deuxPtsIntTeam = stat.twoptsintpassed ?? 0;
   const dataMatch = [
     {
       name: "LFs",

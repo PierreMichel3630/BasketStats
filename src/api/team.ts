@@ -1,4 +1,4 @@
-import { TeamInsert } from "src/models/Team";
+import { TeamInsert, TypeTeam } from "src/models/Team";
 import { BASEDATABASE, supabase } from "./supabaseClient";
 import { SUPABASE_TEAMPLAYER_TABLE } from "./player";
 
@@ -11,7 +11,11 @@ export const getTeamById = (id: string) =>
   supabase.from(SUPABASE_TEAM_TABLE).select().eq("id", id).maybeSingle();
 
 export const getTeamByName = (search: string) =>
-  supabase.from(SUPABASE_TEAM_TABLE).select().ilike(`name`, `%${search}%`);
+  supabase
+    .from(SUPABASE_TEAM_TABLE)
+    .select()
+    .ilike(`name`, `%${search}%`)
+    .eq("type", TypeTeam.TEAM);
 
 export const getTeamByPlayerId = (id: number) =>
   supabase

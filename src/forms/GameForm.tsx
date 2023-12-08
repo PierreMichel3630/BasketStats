@@ -14,7 +14,9 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { insertGame } from "src/api/game";
+import { insertTeam } from "src/api/team";
 import { MessageSnackbar } from "src/components/Snackbar";
+import { TypeTeam } from "src/models/Team";
 import * as Yup from "yup";
 
 interface Props {
@@ -53,10 +55,17 @@ export const GameForm = ({ teamId, onValid }: Props) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        const { data } = await insertTeam({
+          name: values.opponent,
+          club: null,
+          image: null,
+          type: TypeTeam.OPPONENT,
+        });
         const { status, error } = await insertGame({
           ...values,
           date: values.date !== null ? values.date : new Date(),
           team: teamId,
+          teamopponent: data.id,
         });
         if (error) {
           setMessage(

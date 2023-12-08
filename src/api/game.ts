@@ -9,14 +9,14 @@ export const insertGame = (value: GameInsert) =>
 export const getGamesByTeamId = (id: string) =>
   supabase
     .from(SUPABASE_GAME_TABLE)
-    .select("*, team(*)")
+    .select("*, team(*), teamopponent(*)")
     .not("team", "is", null)
     .eq("team.id", id);
 
 export const getGamesById = (id: string) =>
   supabase
     .from(SUPABASE_GAME_TABLE)
-    .select("*, team(*)")
+    .select("*, team(*), teamopponent(*)")
     .eq("id", id)
     .maybeSingle();
 

@@ -12,6 +12,14 @@ import { useTranslation } from "react-i18next";
 
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
+import {
+  getFouls,
+  getLfPlayer,
+  getPointsPlayer,
+  getThreePointsPlayer,
+  getTwoPointsExtPlayer,
+  getTwoPointsIntPlayer,
+} from "src/utils/calcul";
 
 interface PropsStats {
   stats: Array<StatsPlayer>;
@@ -49,13 +57,13 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
           </TableCell>
           <TableCell>
             <Typography variant="h4" align="center">
-              {stats.reduce((acc, value) => acc + (value.points ?? 0), 0)}
+              {stats.reduce((acc, value) => acc + getPointsPlayer(value), 0)}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h4" align="center">
               {stats.reduce(
-                (acc, value) => acc + (value.threeptspassed ?? 0),
+                (acc, value) => acc + getThreePointsPlayer(value),
                 0
               )}
             </Typography>
@@ -63,7 +71,7 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
           <TableCell>
             <Typography variant="h4" align="center">
               {stats.reduce(
-                (acc, value) => acc + (value.twoptsintpassed ?? 0),
+                (acc, value) => acc + getTwoPointsIntPlayer(value),
                 0
               )}
             </Typography>
@@ -71,14 +79,14 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
           <TableCell>
             <Typography variant="h4" align="center">
               {stats.reduce(
-                (acc, value) => acc + (value.twoptsextpassed ?? 0),
+                (acc, value) => acc + getTwoPointsExtPlayer(value),
                 0
               )}
             </Typography>
           </TableCell>
           <TableCell>
             <Typography variant="h4" align="center">
-              {stats.reduce((acc, value) => acc + (value.lfpassed ?? 0), 0)}
+              {stats.reduce((acc, value) => acc + getLfPlayer(value), 0)}
             </Typography>
           </TableCell>
           <TableCell align="center">
@@ -165,11 +173,7 @@ const TableBoxscoreStaterOrBench = ({
             stat.fouls_1lf !== null ||
             stat.fouls_2lf !== null ||
             stat.fouls_3lf !== null;
-          const fouls =
-            (stat.fouls_0lf ?? 0) +
-            (stat.fouls_1lf ?? 0) +
-            (stat.fouls_2lf ?? 0) +
-            (stat.fouls_3lf ?? 0);
+          const fouls = getFouls(stat);
           return (
             <TableRow key={stat.id}>
               <TableCell
@@ -186,27 +190,27 @@ const TableBoxscoreStaterOrBench = ({
               </TableCell>
               <TableCell>
                 <Typography variant="body1" align="center">
-                  {stat.points ?? "-"}
+                  {getPointsPlayer(stat)}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="body1" align="center">
-                  {stat.threeptspassed ?? "-"}
+                  {getThreePointsPlayer(stat)}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="body1" align="center">
-                  {stat.twoptsintpassed ?? "-"}
+                  {getTwoPointsIntPlayer(stat)}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="body1" align="center">
-                  {stat.twoptsextpassed ?? "-"}
+                  {getTwoPointsExtPlayer(stat)}
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography variant="body1" align="center">
-                  {stat.lfpassed ?? "-"}
+                  {getLfPlayer(stat)}
                 </Typography>
               </TableCell>
               <TableCell align="center">

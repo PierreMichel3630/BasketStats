@@ -51,6 +51,26 @@ export interface StatsPlayer {
   fouls_1lf: null | number;
   fouls_2lf: null | number;
   fouls_3lf: null | number;
+  q1lf: number;
+  q2lf: number;
+  q3lf: number;
+  q4lf: number;
+  plf: number;
+  threeptsq1: number;
+  threeptsq2: number;
+  threeptsq3: number;
+  threeptsq4: number;
+  threeptsp: number;
+  twoptsextq1: number;
+  twoptsextq2: number;
+  twoptsextq3: number;
+  twoptsextq4: number;
+  twoptsextp: number;
+  twoptsintq1: number;
+  twoptsintq2: number;
+  twoptsintq3: number;
+  twoptsintq4: number;
+  twoptsintp: number;
 }
 
 export interface StatsPlayerInsert {
@@ -58,17 +78,20 @@ export interface StatsPlayerInsert {
   game: number;
   is_play: boolean;
   startingfive: boolean;
-  minutes: null | number;
-  points: null | number;
+  minutes?: null | number;
+  points?: null | number;
   number: null | number;
-  threeptspassed: null | number;
-  twoptsintpassed: null | number;
-  twoptsextpassed: null | number;
-  lfpassed: null | number;
+  threeptspassed?: null | number;
+  twoptsintpassed?: null | number;
+  twoptsextpassed?: null | number;
   fouls_0lf: null | number;
   fouls_1lf: null | number;
   fouls_2lf: null | number;
   fouls_3lf: null | number;
+  q1lf: number;
+  q2lf: number;
+  q3lf: number;
+  q4lf: number;
 }
 
 export interface StatsPlayerUpdate {
@@ -77,17 +100,33 @@ export interface StatsPlayerUpdate {
   game: number;
   is_play: boolean;
   startingfive: boolean;
-  minutes: null | number;
-  points: null | number;
+  minutes?: null | number;
+  points?: null | number;
   number: null | number;
-  threeptspassed: null | number;
-  twoptsintpassed: null | number;
-  twoptsextpassed: null | number;
-  lfpassed: null | number;
   fouls_0lf: null | number;
   fouls_1lf: null | number;
   fouls_2lf: null | number;
   fouls_3lf: null | number;
+  q1lf: number;
+  q2lf: number;
+  q3lf: number;
+  q4lf: number;
+  plf: number;
+  threeptsq1?: number;
+  threeptsq2?: number;
+  threeptsq3?: number;
+  threeptsq4?: number;
+  threeptsp?: number;
+  twoptsextq1?: number;
+  twoptsextq2?: number;
+  twoptsextq3?: number;
+  twoptsextq4?: number;
+  twoptsextp?: number;
+  twoptsintq1?: number;
+  twoptsintq2?: number;
+  twoptsintq3?: number;
+  twoptsintq4?: number;
+  twoptsintp?: number;
 }
 
 export interface StatsTeam {
@@ -114,40 +153,60 @@ export interface StatsTeam {
   twoptsextteam: null | number;
   twoptsintteam: null | number;
   lfteam: null | number;
+  lfq1team: null | number;
+  lfq2team: null | number;
+  lfq3team: null | number;
+  lfq4team: null | number;
+  lfpteam: null | number;
   threeptsopponent: null | number;
   twoptsextopponent: null | number;
   twoptsintopponent: null | number;
   lfopponent: null | number;
+  lfq1opponent: null | number;
+  lfq2opponent: null | number;
+  lfq3opponent: null | number;
+  lfq4opponent: null | number;
+  lfpopponent: null | number;
 }
 
 export interface StatsTeamUpdate {
   id: number;
   team: number;
   game: number;
-  q1opponent: null | number;
-  q2opponent: null | number;
-  q3opponent: null | number;
-  q4opponent: null | number;
-  q1team: null | number;
-  q2team: null | number;
-  q3team: null | number;
-  q4team: null | number;
-  foul0lfopponent: null | number;
-  foul1lfopponent: null | number;
-  foul2lfopponent: null | number;
-  foul3lfopponent: null | number;
-  foul0lfteam: null | number;
-  foul1lfteam: null | number;
-  foul2lfteam: null | number;
-  foul3lfteam: null | number;
-  threeptsteam: null | number;
-  twoptsextteam: null | number;
-  twoptsintteam: null | number;
-  lfteam: null | number;
-  threeptsopponent: null | number;
-  twoptsextopponent: null | number;
-  twoptsintopponent: null | number;
-  lfopponent: null | number;
+  q1opponent?: null | number;
+  q2opponent?: null | number;
+  q3opponent?: null | number;
+  q4opponent?: null | number;
+  q1team?: null | number;
+  q2team?: null | number;
+  q3team?: null | number;
+  q4team?: null | number;
+  foul0lfopponent?: null | number;
+  foul1lfopponent?: null | number;
+  foul2lfopponent?: null | number;
+  foul3lfopponent?: null | number;
+  foul0lfteam?: null | number;
+  foul1lfteam?: null | number;
+  foul2lfteam?: null | number;
+  foul3lfteam?: null | number;
+  threeptsteam?: null | number;
+  twoptsextteam?: null | number;
+  twoptsintteam?: null | number;
+  lfteam?: null | number;
+  lfq1team?: null | number;
+  lfq2team?: null | number;
+  lfq3team?: null | number;
+  lfq4team?: null | number;
+  lfpteam?: null | number;
+  threeptsopponent?: null | number;
+  twoptsextopponent?: null | number;
+  twoptsintopponent?: null | number;
+  lfopponent?: null | number;
+  lfq1opponent?: null | number;
+  lfq2opponent?: null | number;
+  lfq3opponent?: null | number;
+  lfq4opponent?: null | number;
+  lfpopponent?: null | number;
 }
 
 export interface StatsTeamInsert {
@@ -177,4 +236,9 @@ export interface StatsTeamInsert {
   twoptsextopponent: null | number;
   twoptsintopponent: null | number;
   lfopponent: null | number;
+  lfq1opponent: null | number;
+  lfq2opponent: null | number;
+  lfq3opponent: null | number;
+  lfq4opponent: null | number;
+  lfpopponent: null | number;
 }

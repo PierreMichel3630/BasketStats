@@ -12,7 +12,7 @@ export const HeaderGame = ({ game, stats }: Props) => {
   const isWin = (game.team_score ?? 0) > (game.opponent_score ?? 0);
   return (
     <Grid container spacing={1} alignItems="center" justifyContent="center">
-      <Grid item sm={6} md={4} display={{ xs: "none", sm: "block" }}>
+      <Grid item sm={6} md={4} display={{ xs: "none", md: "block" }}>
         <Box
           sx={{
             display: "flex",
@@ -29,22 +29,22 @@ export const HeaderGame = ({ game, stats }: Props) => {
         </Box>
       </Grid>
       <Grid item sm={4} display={{ xs: "none", md: "block" }}>
-        <TableScore stats={stats} />
+        <TableScore stats={stats} game={game} />
       </Grid>
-      <Grid item sm={6} md={4} display={{ xs: "none", sm: "block" }}>
+      <Grid item sm={6} md={4} display={{ xs: "none", md: "block" }}>
         <Box
           sx={{
             display: "flex",
             gap: 2,
             alignItems: "center",
-            justifyContent: "right",
+            justifyContent: "left",
             ml: 3,
           }}
         >
           <Typography variant="h1" sx={{ fontWeight: !isWin ? 700 : 400 }}>
             {game.opponent_score}
           </Typography>
-          <Typography variant="h2">{game.opponent}</Typography>
+          <Typography variant="h2">{game.teamopponent.name}</Typography>
         </Box>
       </Grid>
       <Grid
@@ -61,7 +61,7 @@ export const HeaderGame = ({ game, stats }: Props) => {
         display={{ xs: "block", md: "none" }}
         sx={{ textAlign: "center" }}
       >
-        <Typography variant="h2">{game.opponent}</Typography>
+        <Typography variant="h2">{game.teamopponent.name}</Typography>
       </Grid>
       <Grid
         item
@@ -84,7 +84,7 @@ export const HeaderGame = ({ game, stats }: Props) => {
         </Typography>
       </Grid>
       <Grid item xs={12} display={{ xs: "block", md: "none" }}>
-        <TableScore stats={stats} />
+        <TableScore stats={stats} game={game} />
       </Grid>
     </Grid>
   );

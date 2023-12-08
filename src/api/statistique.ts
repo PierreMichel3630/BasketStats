@@ -21,7 +21,7 @@ export const updateStatsPlayer = (value: StatsPlayerUpdate) =>
     .from(SUPABASE_STATSPLAYER_TABLE)
     .update(value)
     .eq("id", value.id)
-    .select()
+    .select("*, player(*)")
     .single();
 
 export const getAvgPlayerByTeamId = (id: Array<number>) =>
@@ -60,7 +60,7 @@ export const getStatsPlayerByGameId = (id: number) =>
 export const getStatsPlayerByPlayerId = (id: number) =>
   supabase
     .from(SUPABASE_STATSPLAYER_TABLE)
-    .select("*, player(*), game(*)")
+    .select("*, player(*), game(*, teamopponent(*))")
     .not("player", "is", null)
     .eq("player.id", id);
 
@@ -78,10 +78,9 @@ export const updateStatsTeam = (value: StatsTeamUpdate) =>
 export const getStatsTeamByGameId = (id: number) =>
   supabase
     .from(SUPABASE_STATSTEAM_TABLE)
-    .select("*, team(*), game(*)")
-    .not("game", "is", null)
-    .eq("game.id", id)
-    .single();
+    .select("*, team(*)")
+    .filter("game", "eq", id)
+    .maybeSingle();
 
 export const getStatsTeamByTeamId = (id: number) =>
   supabase

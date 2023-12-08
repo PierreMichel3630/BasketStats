@@ -17,6 +17,7 @@ import { MessageSnackbar } from "src/components/Snackbar";
 import { FileUploadInput } from "src/components/input/FileUploadInput";
 import deburr from "lodash.deburr";
 import * as Yup from "yup";
+import { TypeTeam } from "src/models/Team";
 
 export const TeamForm = () => {
   const { t } = useTranslation();
@@ -59,6 +60,7 @@ export const TeamForm = () => {
         const { data, error } = await insertTeam({
           ...values,
           image: URL_STORAGE + BUCKET_TEAM + "/" + image,
+          type: TypeTeam.TEAM,
         });
         if (error) {
           setMessage(t("commun.error"));

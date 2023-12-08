@@ -10,28 +10,23 @@ import {
 } from "@mui/material";
 import { px } from "csx";
 import { useTranslation } from "react-i18next";
+import { Game } from "src/models/Game";
 import { StatsTeam } from "src/models/Statistique";
+import { getPoints, getPointsOpponent } from "src/utils/calcul";
 
 interface Props {
   stats: StatsTeam;
+  game: Game;
 }
 
-export const TableScore = ({ stats }: Props) => {
+export const TableScore = ({ game, stats }: Props) => {
   const { t } = useTranslation();
   const isWin = (value1: number | null, value2: number | null) =>
     (value1 ?? 0) > (value2 ?? 0);
 
-  const totTeam =
-    (stats.q1team ?? 0) +
-    (stats.q2team ?? 0) +
-    (stats.q3team ?? 0) +
-    (stats.q4team ?? 0);
+  const totTeam = getPoints(stats);
 
-  const totOpponent =
-    (stats.q1opponent ?? 0) +
-    (stats.q2opponent ?? 0) +
-    (stats.q3opponent ?? 0) +
-    (stats.q4opponent ?? 0);
+  const totOpponent = getPointsOpponent(stats);
 
   return (
     <TableContainer component={Paper}>
@@ -50,11 +45,6 @@ export const TableScore = ({ stats }: Props) => {
             </TableCell>
             <TableCell align="center">
               <Typography variant="h6">{t("commun.q4abbreviation")}</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant="h4">
-                {t("commun.totalabbreviation")}
-              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -93,11 +83,6 @@ export const TableScore = ({ stats }: Props) => {
                 {stats.q4team}
               </Typography>
             </TableCell>
-            <TableCell align="center">
-              <Typography variant={totTeam > totOpponent ? "h4" : "body1"}>
-                {totTeam}
-              </Typography>
-            </TableCell>
           </TableRow>
           <TableRow>
             <TableCell sx={{ maxWidth: px(80) }}>
@@ -105,7 +90,7 @@ export const TableScore = ({ stats }: Props) => {
                 variant={totOpponent > totTeam ? "h4" : "body1"}
                 noWrap
               >
-                {stats.game.opponent}
+                {game.teamopponent.name}
               </Typography>
             </TableCell>
             <TableCell align="center">
@@ -134,11 +119,6 @@ export const TableScore = ({ stats }: Props) => {
                 variant={isWin(stats.q4opponent, stats.q4team) ? "h4" : "body1"}
               >
                 {stats.q4opponent}
-              </Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant={totOpponent > totTeam ? "h4" : "body1"}>
-                {totOpponent}
               </Typography>
             </TableCell>
           </TableRow>

@@ -1,16 +1,18 @@
 import { Navigate } from "react-router-dom";
-import { PageAddStatsGame } from "src/pages/PageAddStatsGame";
+import { PageAddStatsGameV3 } from "src/pages/PageAddStatsGameV3";
 import { PageStatsGame } from "src/pages/PageStatsGame";
 import { ComparePlayerPage } from "src/pages/player/ComparePlayerPage";
 import { GamesPlayerPage } from "src/pages/player/GamesPlayerPage";
 import { PlayerPage } from "src/pages/player/PlayerPage";
 import { ProfilPlayerPage } from "src/pages/player/ProfilPlayerPage";
+import { ShootsPlayerPage } from "src/pages/player/ShootsPlayerPage";
 import { StatsPlayerPage } from "src/pages/player/StatsPlayerPage";
 import { SearchPage } from "src/pages/SearchPage";
 import { CompareTeamPage } from "src/pages/team/CompareTeamPage";
 import { GameTeamPage } from "src/pages/team/GameTeamPage";
 import { HomeTeamPage } from "src/pages/team/HomeTeamPage";
 import { PlayersTeamPage } from "src/pages/team/PlayersTeamPage";
+import { ShootsTeamPage } from "src/pages/team/ShootsTeamPage";
 import { StatsTeamPage } from "src/pages/team/StatsTeamPage";
 import { TeamPage } from "src/pages/team/TeamPage";
 
@@ -32,6 +34,10 @@ export const CommunRoutes = [
         element: <HomeTeamPage />,
       },
       {
+        path: "/team/:id/shoots",
+        element: <ShootsTeamPage />,
+      },
+      {
         path: "/team/:id/games",
         element: <GameTeamPage />,
       },
@@ -50,8 +56,8 @@ export const CommunRoutes = [
     ],
   },
   {
-    path: "/game/:id/addstats",
-    element: <PageAddStatsGame />,
+    path: "/game/:id/addstatsv2",
+    element: <PageAddStatsGameV3 />,
   },
   {
     path: "/game/:id/stats",
@@ -68,6 +74,10 @@ export const CommunRoutes = [
       {
         path: "/player/:id/profil",
         element: <ProfilPlayerPage />,
+      },
+      {
+        path: "/player/:id/shoots",
+        element: <ShootsPlayerPage />,
       },
       {
         path: "/player/:id/stats",
