@@ -21,17 +21,17 @@ import { ToogleButtonTotal } from "../ToogleButton";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
+  matchMin: number;
 }
 
-export const PlayerLeaderBlock = ({ stats }: Props) => {
+export const PlayerLeaderBlock = ({ stats, matchMin }: Props) => {
   const { t } = useTranslation();
-  const GAME_MIN = 3;
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
   const [type, setType] = useState("pergame");
 
-  const statsFilter = stats.filter((el) => el.games >= GAME_MIN);
+  const statsFilter = stats.filter((el) => el.games >= matchMin);
 
   const fautesMoy: Array<Value> = statsFilter.sort(sortByFouls).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,

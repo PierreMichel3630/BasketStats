@@ -55,7 +55,7 @@ export const PerformanceLeaderBlock = ({ team }: Props) => {
       "DD/MM"
     )})`,
     to: `/player/${el.player.id}`,
-    toSub: `/game/${el.game.id}`,
+    toSub: `/game/${el.game.id}/stats`,
     value: el.fouls,
   }));
 
@@ -65,7 +65,7 @@ export const PerformanceLeaderBlock = ({ team }: Props) => {
       "DD/MM"
     )})`,
     to: `/player/${el.player.id}`,
-    toSub: `/game/${el.game.id}`,
+    toSub: `/game/${el.game.id}/stats`,
     value: el.points,
   }));
 
@@ -75,7 +75,7 @@ export const PerformanceLeaderBlock = ({ team }: Props) => {
       "DD/MM"
     )})`,
     to: `/player/${el.player.id}`,
-    toSub: `/game/${el.game.id}`,
+    toSub: `/game/${el.game.id}/stats`,
     value: el.threeptspassed,
   }));
 
@@ -85,7 +85,7 @@ export const PerformanceLeaderBlock = ({ team }: Props) => {
       "DD/MM"
     )})`,
     to: `/player/${el.player.id}`,
-    toSub: `/game/${el.game.id}`,
+    toSub: `/game/${el.game.id}/stats`,
     value: el.lfpassed,
   }));
 

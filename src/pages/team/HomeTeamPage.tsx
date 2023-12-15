@@ -9,7 +9,8 @@ import { PerformanceLeaderBlock } from "src/components/statistique/PerformanceLe
 
 export const HomeTeamPage = () => {
   const { t } = useTranslation();
-  const { team, players, statsTeam, statsPlayer } = useContext(TeamContext);
+  const { team, players, statsTeam, statsPlayer, games } =
+    useContext(TeamContext);
 
   return (
     <Grid container spacing={1}>
@@ -22,7 +23,10 @@ export const HomeTeamPage = () => {
             <TeamLeaderBlock stats={statsTeam} />
           </Grid>
           <Grid item xs={12}>
-            <PlayerLeaderBlock stats={statsPlayer} />
+            <PlayerLeaderBlock
+              stats={statsPlayer}
+              matchMin={games.length * 0.25}
+            />
           </Grid>
           <Grid item xs={12}>
             <PerformanceLeaderBlock team={team} />
