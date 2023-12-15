@@ -5,10 +5,11 @@ import { PlayerLeaderBlock } from "src/components/statistique/PlayerLeaderBlock"
 import { TeamLeaderBlock } from "src/components/statistique/TeamLeaderBlock";
 import { TeamContext } from "./TeamPage";
 import { useTranslation } from "react-i18next";
+import { PerformanceLeaderBlock } from "src/components/statistique/PerformanceLeaderBlock";
 
 export const HomeTeamPage = () => {
   const { t } = useTranslation();
-  const { players, statsTeam, statsPlayer } = useContext(TeamContext);
+  const { team, players, statsTeam, statsPlayer } = useContext(TeamContext);
 
   return (
     <Grid container spacing={1}>
@@ -18,10 +19,13 @@ export const HomeTeamPage = () => {
             <StartingFiveBlock stats={statsPlayer} />
           </Grid>
           <Grid item xs={12}>
+            <TeamLeaderBlock stats={statsTeam} />
+          </Grid>
+          <Grid item xs={12}>
             <PlayerLeaderBlock stats={statsPlayer} />
           </Grid>
           <Grid item xs={12}>
-            <TeamLeaderBlock stats={statsTeam} />
+            <PerformanceLeaderBlock team={team} />
           </Grid>
         </>
       ) : (

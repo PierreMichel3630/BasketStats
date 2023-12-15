@@ -57,6 +57,20 @@ export const getStatsPlayerByGameId = (id: number) =>
     .select("*, player(*)")
     .eq("game", id);
 
+export const getStatsPlayerByTeamId = (
+  id: number,
+  order: string,
+  limit: number
+) =>
+  supabase
+    .from(SUPABASE_STATSPLAYER_TABLE)
+    .select("*, player(*), game(*)")
+    .not("game", "is", null)
+    .eq("game.team", id)
+    .eq("is_play", true)
+    .order(order, { ascending: false })
+    .limit(limit);
+
 export const getStatsPlayerByPlayerId = (id: number) =>
   supabase
     .from(SUPABASE_STATSPLAYER_TABLE)

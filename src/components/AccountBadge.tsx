@@ -33,7 +33,7 @@ export const AccountBadge = ({ user, onClick }: Props) => {
     <div onClick={onClick} className={divCss}>
       <Typography
         component="small"
-        variant="caption"
+        variant="body1"
         color="secondary"
         ml={1}
         sx={{ display: { xs: "none", md: "flex" } }}
@@ -43,7 +43,7 @@ export const AccountBadge = ({ user, onClick }: Props) => {
       {profile && (
         <Typography
           component="small"
-          variant="caption"
+          variant="body1"
           sx={{ display: { xs: "none", md: "flex" }, fontWeight: 700 }}
           ml={0.5}
           mr={1}

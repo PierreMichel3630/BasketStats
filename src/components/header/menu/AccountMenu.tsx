@@ -94,7 +94,7 @@ export const AccountMenu = ({ user }: Props) => {
             {profile && (
               <Typography variant="h6">{profile.username}</Typography>
             )}
-            <Typography variant="caption" color="secondary">
+            <Typography variant="body1" color="secondary">
               {user.email}
             </Typography>
           </div>

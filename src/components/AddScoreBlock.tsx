@@ -17,7 +17,7 @@ export const AddScoreBlock = ({ team, opponent, label }: Props) => {
       <Grid item xs={2}>
         {label && (
           <Box sx={{ textAlign: "center" }}>
-            <Typography variant="caption">{label}</Typography>
+            <Typography variant="body1">{label}</Typography>
           </Box>
         )}
       </Grid>

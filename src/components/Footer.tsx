@@ -24,16 +24,21 @@ export const Footer = () => {
         <Grid
           item
           onClick={() => openInNewTab(URLGITHUB)}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            display: "flex",
+            gap: 1,
+            flexDirection: "row",
+          }}
         >
           <GitHubIcon sx={{ marginRight: 1, verticalAlign: "middle" }} />
-          <Typography variant="caption">Github</Typography>
+          <Typography variant="body1">Github</Typography>
         </Grid>
         <Grid item>
           <Divider orientation="vertical" sx={{ height: px(20) }} />
         </Grid>
         <Grid item>
-          <Typography variant="caption">Développé par Pierre</Typography>
+          <Typography variant="body1">Développé par Pierre</Typography>
         </Grid>
       </Grid>
     </Paper>

@@ -6,6 +6,7 @@ import { DonutRepartitionShootPlayer } from "src/components/chart/DonutRepartiti
 import { TableSeasonPlayer } from "src/components/table/TableSeasonPlayer";
 import { PlayerContext } from "./PlayerPage";
 import { DonutRepartitionPtsQuartTempsPlayer } from "src/components/chart/DonutRepartitionPtsQuartTemps";
+import { PlayerPerformanceBlock } from "src/components/statistique/PlayerPerformanceBlock";
 
 export const StatsPlayerPage = () => {
   const { avg, games } = useContext(PlayerContext);
@@ -14,6 +15,9 @@ export const StatsPlayerPage = () => {
     <Grid container spacing={1} justifyContent="center">
       <Grid item xs={12}>
         <TableSeasonPlayer stats={avg} />
+      </Grid>
+      <Grid item xs={12}>
+        <PlayerPerformanceBlock stats={games} stat={avg[0]} />
       </Grid>
       <Grid item xs={12} md={6}>
         <DonutRepartitionPtsMarquesPlayer stats={games} />
