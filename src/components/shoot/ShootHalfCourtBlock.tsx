@@ -282,7 +282,11 @@ const ZoneBlock = ({ shoots }: PropsZone) => {
         >
           <Typography variant="h6">{shootExtRight}</Typography>
           <Typography variant="h6">
-            {((shootExtRight * 100) / shoots.length).toFixed(1)}%
+            {(
+              (shootExtRight * 100) /
+              (shoots.length > 0 ? shoots.length : 0)
+            ).toFixed(1)}
+            %
           </Typography>
         </Box>
       </Box>
