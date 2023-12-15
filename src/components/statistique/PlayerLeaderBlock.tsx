@@ -25,17 +25,20 @@ interface Props {
 
 export const PlayerLeaderBlock = ({ stats }: Props) => {
   const { t } = useTranslation();
+  const GAME_MIN = 3;
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
   const [type, setType] = useState("pergame");
 
-  const fautesMoy: Array<Value> = stats.sort(sortByFouls).map((el) => ({
+  const statsFilter = stats.filter((el) => el.games >= GAME_MIN);
+
+  const fautesMoy: Array<Value> = statsFilter.sort(sortByFouls).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.fouls ? el.fouls.toFixed(1) : "-",
   }));
-  const fautesTot: Array<Value> = stats
+  const fautesTot: Array<Value> = statsFilter
     .map((el) => ({
       label: `${el.player.firstname} ${el.player.lastname}`,
       to: `/player/${el.player.id}`,
@@ -43,12 +46,12 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
     }))
     .sort(sortByValue);
 
-  const pointsMoy: Array<Value> = stats.sort(sortByPoints).map((el) => ({
+  const pointsMoy: Array<Value> = statsFilter.sort(sortByPoints).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.points ? el.points.toFixed(1) : "-",
   }));
-  const pointsTot: Array<Value> = stats
+  const pointsTot: Array<Value> = statsFilter
     .map((el) => ({
       label: `${el.player.firstname} ${el.player.lastname}`,
       to: `/player/${el.player.id}`,
@@ -56,12 +59,14 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
     }))
     .sort(sortByValue);
 
-  const troisPointsMoy: Array<Value> = stats.sort(sortBy3Pts).map((el) => ({
-    label: `${el.player.firstname} ${el.player.lastname}`,
-    to: `/player/${el.player.id}`,
-    value: el.threeptspassed ? el.threeptspassed.toFixed(1) : "-",
-  }));
-  const troisPointsTot: Array<Value> = stats
+  const troisPointsMoy: Array<Value> = statsFilter
+    .sort(sortBy3Pts)
+    .map((el) => ({
+      label: `${el.player.firstname} ${el.player.lastname}`,
+      to: `/player/${el.player.id}`,
+      value: el.threeptspassed ? el.threeptspassed.toFixed(1) : "-",
+    }));
+  const troisPointsTot: Array<Value> = statsFilter
     .map((el) => ({
       label: `${el.player.firstname} ${el.player.lastname}`,
       to: `/player/${el.player.id}`,
@@ -69,12 +74,12 @@ export const PlayerLeaderBlock = ({ stats }: Props) => {
     }))
     .sort(sortByValue);
 
-  const lfsMoy: Array<Value> = stats.sort(sortByLf).map((el) => ({
+  const lfsMoy: Array<Value> = statsFilter.sort(sortByLf).map((el) => ({
     label: `${el.player.firstname} ${el.player.lastname}`,
     to: `/player/${el.player.id}`,
     value: el.lfpassed ? el.lfpassed.toFixed(1) : "-",
   }));
-  const lfsTot: Array<Value> = stats
+  const lfsTot: Array<Value> = statsFilter
     .map((el) => ({
       label: `${el.player.firstname} ${el.player.lastname}`,
       to: `/player/${el.player.id}`,
