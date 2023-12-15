@@ -139,7 +139,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
         <DataGrid
           sx={{
             ".MuiButtonBase-root": {
-              color: "white",
+              display: "none",
             },
             ".MuiDataGrid-columnSeparator": {
               display: "none",
