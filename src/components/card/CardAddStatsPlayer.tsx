@@ -54,11 +54,11 @@ export const CardAddStatsPlayer = ({
   const [time, setTime] = useState(1);
 
   const onClickCourt = async (event: React.MouseEvent<HTMLDivElement>) => {
-    var dim = event.currentTarget.getBoundingClientRect();
+    const dim = event.currentTarget.getBoundingClientRect();
     const xSize = dim.right - dim.left;
-    var x = event.clientX - dim.left;
+    const x = event.clientX - dim.left;
     const ySize = dim.bottom - dim.top;
-    var y = event.clientY - dim.top;
+    const y = event.clientY - dim.top;
 
     const xPercent = (x * 100) / xSize;
     const yPercent = (y * 100) / ySize;

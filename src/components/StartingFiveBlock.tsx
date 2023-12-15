@@ -87,28 +87,28 @@ interface PropsCard {
 const Card = ({ stat }: PropsCard) => {
   const { t } = useTranslation();
   return (
-    <Grid container spacing={1} sx={{ textAlign: "center" }}>
-      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        <Avatar sx={{ width: 70, height: 70 }}>
-          <PersonIcon sx={{ width: 70, height: 70 }} />
-        </Avatar>
-      </Grid>
-      <Grid item xs={12}>
-        <Link to={`/player/${stat.player.id}`}>
+    <Link to={`/player/${stat.player.id}`}>
+      <Grid container spacing={1} sx={{ textAlign: "center" }}>
+        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+          <Avatar sx={{ width: 70, height: 70 }}>
+            <PersonIcon sx={{ width: 70, height: 70 }} />
+          </Avatar>
+        </Grid>
+        <Grid item xs={12}>
           <Typography
             variant="h6"
             sx={{ "&:hover": { color: "secondary.main" } }}
           >
             {stat.player.firstname} {stat.player.lastname.toUpperCase()}
           </Typography>
-        </Link>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body1">
+            {stat.startingfive} {t("commun.inclusionsteam")} (
+            {((stat.startingfive / stat.games) * 100).toFixed(0)}%)
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="body1">
-          {stat.startingfive} {t("commun.inclusionsteam")} (
-          {((stat.startingfive / stat.games) * 100).toFixed(0)}%)
-        </Typography>
-      </Grid>
-    </Grid>
+    </Link>
   );
 };

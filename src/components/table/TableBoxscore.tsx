@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { StatsPlayer } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
@@ -42,9 +43,9 @@ export const TableBoxscore = ({ stats }: PropsStats) => {
           title={t("commun.bench")}
           stats={statsFilter.filter((el) => !el.startingfive)}
         />
-        <TableRow sx={{ bgcolor: Colors.subprimary }}>
+        <TableRow sx={{ bgcolor: "primary.main" }}>
           <TableCell
-            sx={{ position: "sticky", left: 0, bgcolor: Colors.subprimary }}
+            sx={{ position: "sticky", left: 0, bgcolor: "primary.main" }}
           >
             <Typography variant="h4" textTransform="uppercase">
               {t("commun.team")}
@@ -118,6 +119,7 @@ const TableBoxscoreStaterOrBench = ({
   title,
 }: PropsTableBoxscoreStaterOrBench) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <>
       <TableHead sx={{ bgcolor: "primary.main" }}>
@@ -175,7 +177,16 @@ const TableBoxscoreStaterOrBench = ({
             stat.fouls_3lf !== null;
           const fouls = getFouls(stat);
           return (
-            <TableRow key={stat.id}>
+            <TableRow
+              key={stat.id}
+              sx={{
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: Colors.subprimary,
+                },
+              }}
+              onClick={() => navigate(`/player/${stat.player.id}`)}
+            >
               <TableCell
                 sx={{ position: "sticky", left: 0, bgcolor: Colors.subprimary }}
               >

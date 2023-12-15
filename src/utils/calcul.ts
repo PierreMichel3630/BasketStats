@@ -73,6 +73,28 @@ export const getPointsPlayer = (stats: StatsPlayer) =>
 export const getLfPlayer = (stats: StatsPlayer) =>
   stats.q1lf + stats.q2lf + stats.q3lf + stats.q4lf + stats.plf;
 
+export const getPointsQ1Player = (stats: StatsPlayer) =>
+  (stats.threeptsq1 ?? 0) * 3 +
+  (stats.twoptsextq1 ?? 0) * 2 +
+  (stats.twoptsintq1 ?? 0) +
+  (stats.q1lf ?? 0);
+
+export const getPointsQ2Player = (stats: StatsPlayer) =>
+  (stats.threeptsq2 ?? 0) * 3 +
+  (stats.twoptsextq2 ?? 0) * 2 +
+  (stats.twoptsintq2 ?? 0) +
+  (stats.q2lf ?? 0);
+export const getPointsQ3Player = (stats: StatsPlayer) =>
+  (stats.threeptsq3 ?? 0) * 3 +
+  (stats.twoptsextq3 ?? 0) * 2 +
+  (stats.twoptsintq3 ?? 0) +
+  (stats.q3lf ?? 0);
+export const getPointsQ4Player = (stats: StatsPlayer) =>
+  (stats.threeptsq4 ?? 0) * 3 +
+  (stats.twoptsextq4 ?? 0) * 2 +
+  (stats.twoptsintq4 ?? 0) +
+  (stats.q4lf ?? 0);
+
 export const getThreePointsPlayer = (stats: StatsPlayer) =>
   (stats.threeptsq1 ?? 0) +
   (stats.threeptsq2 ?? 0) +
@@ -118,10 +140,10 @@ interface Position {
   y: number;
 }
 export const findCircleCenter = (p1: Position, p2: Position, p3: Position) => {
-  var d2 = p2.x * p2.x + p2.y * p2.y;
-  var bc = (p1.x * p1.x + p1.y * p1.y - d2) / 2;
-  var cd = (d2 - p3.x * p3.x - p3.y * p3.y) / 2;
-  var det = (p1.x - p2.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p2.y);
+  const d2 = p2.x * p2.x + p2.y * p2.y;
+  const bc = (p1.x * p1.x + p1.y * p1.y - d2) / 2;
+  const cd = (d2 - p3.x * p3.x - p3.y * p3.y) / 2;
+  const det = (p1.x - p2.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p2.y);
   const x = (bc * (p2.y - p3.y) - cd * (p1.y - p2.y)) / det;
   const y = ((p1.x - p2.x) * cd - (p2.x - p3.x) * bc) / det;
 
@@ -224,4 +246,28 @@ export const getPointPlayer = (time: TimeShoot, stats: StatsPlayer) => {
   }
 
   return points;
+};
+
+export interface Zone {
+  type: "rectangular";
+  positions: Array<Position>;
+}
+
+interface Position {
+  x: number;
+  y: number;
+}
+export const getShootsZone = (shoots: Array<Shoot>, zone: Zone) => {
+  const x = zone.positions.map((el) => el.x);
+  const y = zone.positions.map((el) => el.y);
+  const xMax = Math.max(...x);
+  const xMin = Math.min(...x);
+  const yMax = Math.max(...y);
+  const yMin = Math.min(...y);
+  const value = shoots.filter(
+    (shoot) =>
+      shoot.x >= xMin && shoot.x < xMax && shoot.y >= yMin && shoot.y < yMax
+  ).length;
+
+  return value;
 };

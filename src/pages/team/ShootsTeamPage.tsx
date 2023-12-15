@@ -2,27 +2,42 @@ import {
   Box,
   Grid,
   MenuItem,
+  Paper,
   Select,
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { Fragment, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ShootHeaderQTBlock } from "src/components/shoot/ShootHeaderQTBlock";
-import { ShootPoint } from "src/components/shoot/ShootPoint";
 import { TeamContext } from "./TeamPage";
 
 import { Shoot, TimeShoot } from "src/models/Shoot";
 import { sortByDateAsc, sortByName } from "src/utils/sort";
 
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { padding, px } from "csx";
 import moment from "moment";
-import halfCourtLeft from "src/assets/halfCourtLeft.png";
-import halfCourtRight from "src/assets/halfCourtRight.png";
+import {
+  ToogleButtonBase,
+  ToogleButtonCard,
+} from "src/components/ToogleButton";
+import { ShootHalfCourtBlock } from "src/components/shoot/ShootHalfCourtBlock";
 
 export const ShootsTeamPage = () => {
   const { shoots, players, games, team } = useContext(TeamContext);
+
   const { t } = useTranslation();
+  const [type, setType] = useState("all");
+  const types = [
+    { label: t("commun.all"), value: "all" },
+    { label: t("commun.shoots"), value: "shoot" },
+    { label: t("commun.zone"), value: "zone" },
+  ];
+  const [shootTeam, setShootTeam] = useState("team");
+  const shootTeams = [
+    { label: team ? team.name : "", value: "team" },
+    { label: t("commun.opponent"), value: "opponent" },
+  ];
   const qt = [
     { value: 0, label: t("filter.qt.all") },
     { value: 1, label: t("filter.qt.q1") },
@@ -114,127 +129,129 @@ export const ShootsTeamPage = () => {
     .filter(filterGame);
 
   return (
-    <Grid container spacing={1} justifyContent="center">
-      <Grid item xs={12} sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <FilterAltIcon fontSize="large" />
-        <Typography variant="h2">{t("commun.filter")}</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Select
-          value={filter.player.toString()}
-          onChange={(event: SelectChangeEvent) =>
-            setFilter((prev) => ({
-              ...prev,
-              player: Number(event.target.value),
-            }))
-          }
-          fullWidth
-          size="small"
-          displayEmpty
-        >
-          {playersValue.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Select
-          value={filter.qt.toString()}
-          onChange={(event: SelectChangeEvent) =>
-            setFilter((prev) => ({
-              ...prev,
-              qt: Number(event.target.value),
-            }))
-          }
-          fullWidth
-          size="small"
-          displayEmpty
-        >
-          {qt.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
-      </Grid>
-      <Grid item xs={12}>
-        <Select
-          value={filter.game.toString()}
-          onChange={(event: SelectChangeEvent) =>
-            setFilter((prev) => ({
-              ...prev,
-              game: Number(event.target.value),
-            }))
-          }
-          fullWidth
-          size="small"
-          displayEmpty
-        >
-          {gamesValue.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
-      </Grid>
-      <Grid
-        item
-        xs={6}
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h2">{team?.name}</Typography>
-      </Grid>
-      <Grid
-        item
-        xs={6}
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h2">{t("commun.opponent")}</Typography>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          display: "flex",
-        }}
-      >
-        <Box
+    <Paper
+      variant="outlined"
+      sx={{ width: "100%", bgcolor: "background.paper" }}
+    >
+      <Grid container>
+        <Grid
+          item
+          xs={12}
           sx={{
-            position: "relative",
-            width: "50%",
+            bgcolor: "primary.main",
+            p: padding(px(2), px(8)),
+            mb: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <img src={halfCourtLeft} width="100%" />
-          {shootsFilter.map((shoot, index) => (
-            <Fragment key={index}>
-              <ShootPoint shoot={shoot} rotate="left" />
-            </Fragment>
-          ))}
-        </Box>
-        <Box
-          sx={{
-            position: "relative",
-            width: "50%",
-          }}
-        >
-          <img src={halfCourtRight} width="100%" />
-          {shootsOpponentFilter.map((shoot, index) => (
-            <Fragment key={index}>
-              <ShootPoint shoot={shoot} rotate="right" />
-            </Fragment>
-          ))}
-        </Box>
+          <Typography variant="h4" color="white" textTransform="uppercase">
+            {t("commun.shootposition")}
+          </Typography>
+          <ToogleButtonCard
+            select={type}
+            onChange={(value) => setType(value)}
+            values={types}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ p: 1 }}>
+            <Grid container spacing={1} justifyContent="center">
+              <Grid item xs={12}>
+                <ToogleButtonBase
+                  select={shootTeam}
+                  onChange={(value) => setShootTeam(value)}
+                  values={shootTeams}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Select
+                  value={filter.game.toString()}
+                  onChange={(event: SelectChangeEvent) =>
+                    setFilter((prev) => ({
+                      ...prev,
+                      game: Number(event.target.value),
+                    }))
+                  }
+                  fullWidth
+                  size="small"
+                  displayEmpty
+                >
+                  {gamesValue.map((item) => (
+                    <MenuItem value={item.value}>{item.label}</MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Select
+                  value={filter.qt.toString()}
+                  onChange={(event: SelectChangeEvent) =>
+                    setFilter((prev) => ({
+                      ...prev,
+                      qt: Number(event.target.value),
+                    }))
+                  }
+                  fullWidth
+                  size="small"
+                  displayEmpty
+                >
+                  {qt.map((item) => (
+                    <MenuItem value={item.value}>{item.label}</MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+
+              {shootTeam === "team" && (
+                <Grid item xs={12}>
+                  <Select
+                    value={filter.player.toString()}
+                    onChange={(event: SelectChangeEvent) =>
+                      setFilter((prev) => ({
+                        ...prev,
+                        player: Number(event.target.value),
+                      }))
+                    }
+                    fullWidth
+                    size="small"
+                    displayEmpty
+                  >
+                    {playersValue.map((item) => (
+                      <MenuItem value={item.value}>{item.label}</MenuItem>
+                    ))}
+                  </Select>
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <ShootHalfCourtBlock
+                  shoots={
+                    shootTeam === "team" ? shootsFilter : shootsOpponentFilter
+                  }
+                  type={type}
+                />
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  justifyContent: "center",
+                  display: "flex",
+                }}
+              >
+                <ShootHeaderQTBlock />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          justifyContent: "center",
-          display: "flex",
-        }}
-      >
-        <ShootHeaderQTBlock />
-      </Grid>
-    </Grid>
+    </Paper>
   );
 };

@@ -101,6 +101,42 @@ export const ShootGameBlock = ({ game, shoots, players }: Props) => {
     .filter(filterQt);
   return (
     <Grid container spacing={1}>
+      <Grid item xs={12} sm={6}>
+        <Select
+          value={filter.player.toString()}
+          onChange={(event: SelectChangeEvent) =>
+            setFilter((prev) => ({
+              ...prev,
+              player: Number(event.target.value),
+            }))
+          }
+          size="small"
+          fullWidth
+          displayEmpty
+        >
+          {playersValue.map((item) => (
+            <MenuItem value={item.value}>{item.label}</MenuItem>
+          ))}
+        </Select>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Select
+          value={filter.qt.toString()}
+          onChange={(event: SelectChangeEvent) =>
+            setFilter((prev) => ({
+              ...prev,
+              qt: Number(event.target.value),
+            }))
+          }
+          size="small"
+          fullWidth
+          displayEmpty
+        >
+          {qt.map((item) => (
+            <MenuItem value={item.value}>{item.label}</MenuItem>
+          ))}
+        </Select>
+      </Grid>
       <Grid
         item
         xs={12}
@@ -138,46 +174,6 @@ export const ShootGameBlock = ({ game, shoots, players }: Props) => {
             </Fragment>
           ))}
         </Box>
-      </Grid>
-      <Grid item xs={12} sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <FilterAltIcon fontSize="large" />
-        <Typography variant="h2">{t("commun.filter")}</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Select
-          value={filter.player.toString()}
-          onChange={(event: SelectChangeEvent) =>
-            setFilter((prev) => ({
-              ...prev,
-              player: Number(event.target.value),
-            }))
-          }
-          size="small"
-          fullWidth
-          displayEmpty
-        >
-          {playersValue.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Select
-          value={filter.qt.toString()}
-          onChange={(event: SelectChangeEvent) =>
-            setFilter((prev) => ({
-              ...prev,
-              qt: Number(event.target.value),
-            }))
-          }
-          size="small"
-          fullWidth
-          displayEmpty
-        >
-          {qt.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select>
       </Grid>
     </Grid>
   );

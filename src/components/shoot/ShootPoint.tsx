@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { percent, px, rem } from "csx";
+import { percent, px } from "csx";
 import { Shoot } from "src/models/Shoot";
 import { getColorShoot } from "src/utils/calcul";
 import { getBreakpoint } from "src/utils/mediaQuery";

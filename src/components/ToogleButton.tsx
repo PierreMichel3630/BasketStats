@@ -22,11 +22,11 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
-interface Props {
+interface PropsTotal {
   value: string;
   onChange: (value: string) => void;
 }
-export const ToogleButtonTotal = ({ value, onChange }: Props) => {
+export const ToogleButtonTotal = ({ value, onChange }: PropsTotal) => {
   const { t } = useTranslation();
 
   const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
@@ -55,6 +55,63 @@ export const ToogleButtonTotal = ({ value, onChange }: Props) => {
           {t("commun.totalabbreviation2")}
         </ToggleButton>
       </StyledToggleButtonGroup>
+    </Paper>
+  );
+};
+
+interface Props {
+  select: string;
+  onChange: (value: string) => void;
+  values: Array<{
+    label: string;
+    value: string;
+  }>;
+}
+export const ToogleButtonCard = ({ select, values, onChange }: Props) => {
+  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
+    onChange(newValue);
+  };
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        display: "flex",
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        flexWrap: "wrap",
+      }}
+    >
+      <StyledToggleButtonGroup
+        size="small"
+        value={select}
+        exclusive
+        onChange={handleChange}
+      >
+        {values.map((el) => (
+          <ToggleButton value={el.value}>{el.label}</ToggleButton>
+        ))}
+      </StyledToggleButtonGroup>
+    </Paper>
+  );
+};
+
+export const ToogleButtonBase = ({ select, values, onChange }: Props) => {
+  const handleChange = (_: React.MouseEvent<HTMLElement>, newValue: string) => {
+    onChange(newValue);
+  };
+
+  return (
+    <Paper elevation={0} sx={{ display: "flex", justifyContent: "center" }}>
+      <ToggleButtonGroup
+        size="small"
+        value={select}
+        exclusive
+        onChange={handleChange}
+      >
+        {values.map((el) => (
+          <ToggleButton value={el.value}>{el.label}</ToggleButton>
+        ))}
+      </ToggleButtonGroup>
     </Paper>
   );
 };

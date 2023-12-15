@@ -2,7 +2,9 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { padding, px } from "csx";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getShootByPlayer } from "src/api/shoot";
 import { Player } from "src/models/Player";
+import { Shoot } from "src/models/Shoot";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { sortByPlayerName } from "src/utils/sort";
@@ -12,9 +14,7 @@ import { DonutRepartitionFautesPlayer2 } from "../chart/DonutRepartitionFautes";
 import { DonutRepartitionPtsMarquesPlayer2 } from "../chart/DonutRepartitionPts";
 import { DonutRepartitionShootPlayer2 } from "../chart/DonutRepartitionShoot";
 import { SelectStatsPlayer } from "../input/Select";
-import { Shoot } from "src/models/Shoot";
 import { ShootCourtBlock } from "../shoot/ShootCourtBlock";
-import { getShootByPlayer } from "src/api/shoot";
 
 interface Props {
   player?: Player;
@@ -62,7 +62,7 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
     getShoots();
   }, [value2]);
 
-  let datas = [
+  const datas = [
     {
       label: t("commun.pointsabbreviation"),
       value1: isTypeMoy
