@@ -42,7 +42,20 @@
     "pointsscored": "Points Marqués",
     "pointsconceded": "Points Encaissés",
     "threepointsscored": "3 Points Marqués",
+    "threepointsconceded": "3 Points Encaissés",
+    "twopointsintscored": "2 Points Intérieur Marqués",
+    "twopointsint": "2 Points Intérieur",
+    "twopointsintconceded": "2 Points Intérieur Encaissés",
+    "twopointsext": "2 Points Extérieur Marqués",
+    "twopointsextscored": "2 Points Extérieur Marqués",
+    "twopointsextconceded": "2 Points Extérieur Encaissés",
+    "ftscored": "Lancers Francs Marqués",
+    "ftattempted": "Lancers Francs Tirés",
+    "ftscoredopponent": "Lancers Francs Adverse Marqués",
+    "ftattemptedopponent": "Lancers Francs Adverse Tirés",
+    "ft": "Lancer Franc",
     "ftpercent": "% Lancer Franc",
+    "ftpercentopponent": "% Lancer Franc Adverse",
     "enterstatistics": "Saisir Statistique",
     "gameonagainst": "Match du {{date}} contre {{opponent}}",
     "gamesheet": "Feuille de match",
@@ -158,7 +171,8 @@
     "synthese": "Synthèse",
     "next": "Suivant",
     "previous": "Précédent",
-    "filter": "Filtre"
+    "filter": "Filtre",
+    "win": "Victoire"
   },
   "pages": {
     "login": {

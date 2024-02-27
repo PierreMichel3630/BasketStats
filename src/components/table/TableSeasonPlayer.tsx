@@ -1,8 +1,9 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { padding, px } from "csx";
-import { useState } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "src/App";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { ToogleButtonTotal } from "../ToogleButton";
@@ -13,8 +14,8 @@ interface Props {
 
 export const TableSeasonPlayer = ({ stats }: Props) => {
   const { t } = useTranslation();
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const getValue = (games: null | number, value: null | number) =>
     games !== null && value !== null
@@ -45,6 +46,14 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
       align: "center",
       flex: 1,
       minWidth: 50,
+    },
+    {
+      headerName: t("commun.win"),
+      field: "percentwin",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      minWidth: 100,
     },
     {
       headerName: t("commun.minutessabbreviation"),
@@ -109,6 +118,9 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
     club: stat.team.club,
     team: stat.team.name,
     games: stat.games,
+    percentwin: `${((stat.win / stat.games) * 100).toFixed(1)}% (${stat.win}/${
+      stat.games
+    })`,
     min: getValue(stat.games, stat.minutes),
     pts: getValue(stat.games, stat.points),
     threepts: getValue(stat.games, stat.threeptspassed),
@@ -139,8 +151,8 @@ export const TableSeasonPlayer = ({ stats }: Props) => {
             {t("commun.careerstatistics")}
           </Typography>
           <ToogleButtonTotal
-            value={type}
-            onChange={(value) => setType(value)}
+            value={total ? "total" : "pergame"}
+            onChange={(value) => setTotal(value === "total")}
           />
         </Grid>
         <Grid item xs={12}>

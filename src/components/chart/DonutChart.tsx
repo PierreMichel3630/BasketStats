@@ -1,7 +1,8 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { padding, px } from "csx";
-import { useState } from "react";
+import { useContext } from "react";
 import { Cell, LabelList, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { UserContext } from "src/App";
 import { isInt } from "src/utils/calcul";
 import { ToogleButtonTotal } from "../ToogleButton";
 
@@ -18,8 +19,8 @@ interface Props {
 }
 
 export const DonutChart = ({ dataAverage, dataTotal, title }: Props) => {
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const data = isTypeMoy ? dataAverage : dataTotal;
   return (
@@ -44,8 +45,8 @@ export const DonutChart = ({ dataAverage, dataTotal, title }: Props) => {
             {title}
           </Typography>
           <ToogleButtonTotal
-            value={type}
-            onChange={(value) => setType(value)}
+            value={total ? "total" : "pergame"}
+            onChange={(value) => setTotal(value === "total")}
           />
         </Grid>
         <Grid item xs={12}>

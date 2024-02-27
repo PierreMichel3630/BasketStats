@@ -44,7 +44,7 @@ export const PlayersTeamPage = () => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <PlayerLeaderBlock stats={statsPlayer} />
+        <PlayerLeaderBlock stats={statsPlayer} matchMin={3} />
       </Grid>
       <Grid item xs={12}>
         <TablePlayerStats players={players} stats={statsPlayer} />

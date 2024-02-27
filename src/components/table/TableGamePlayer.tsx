@@ -1,4 +1,5 @@
 import {
+  Box,
   Grid,
   Table,
   TableBody,
@@ -8,7 +9,12 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+  GridRenderCellParams,
+} from "@mui/x-data-grid";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,6 +56,40 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
       headerAlign: "left",
       align: "left",
       width: 180,
+    },
+    {
+      headerName: t("commun.result"),
+      field: "game",
+      renderCell: (params: GridRenderCellParams<any, any>) => (
+        <>
+          {params.value.opponent_score && params.value.team_score ? (
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  color:
+                    params.value.team_score > params.value.opponent_score
+                      ? Colors.green
+                      : Colors.red,
+                }}
+              >
+                {params.value.team_score > params.value.opponent_score
+                  ? t("commun.victoryabbreviation")
+                  : t("commun.defeatabbreviation")}
+              </Typography>
+              <Typography
+                variant="body1"
+                noWrap
+              >{`${params.value.team_score} - ${params.value.opponent_score}`}</Typography>
+            </Box>
+          ) : (
+            <Typography variant="body1">{t("commun.notspecified")}</Typography>
+          )}
+        </>
+      ),
+      headerAlign: "left",
+      align: "left",
+      width: 80,
     },
     {
       headerName: t("commun.minutessabbreviation"),
@@ -111,6 +151,7 @@ export const TableGamePlayer = ({ stats, number, title }: Props) => {
 
   const rows = stats.map((stat) => ({
     id: stat.game.id,
+    game: stat.game,
     date: moment(stat.game.date).toDate(),
     opponent: stat.game.opponent,
     min: getValue(stat.minutes),
@@ -194,6 +235,7 @@ interface PropsLast5 {
 }
 
 export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
+  const { t } = useTranslation();
   const getValue = (value: null | number) => (value !== null ? value : "-");
 
   const rows = [...stats]
@@ -201,6 +243,7 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
     .splice(0, 5)
     .map((stat) => ({
       id: stat.game.id,
+      game: stat.game,
       date: moment(stat.game.date).format("DD/MM/YYYY"),
       opponent: stat.game.opponent,
       min: stat.minutes,
@@ -249,6 +292,11 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
                 <TableCell>
                   <Typography variant="h6" color="white">
                     Adversaire
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="h6" color="white">
+                    {t("commun.result")}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
@@ -308,6 +356,33 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
                   <TableCell sx={hoverCell}>
                     <Typography variant="body2">{row.opponent}</Typography>
                   </TableCell>
+                  <TableCell sx={hoverCell}>
+                    {row.game.opponent_score && row.game.team_score ? (
+                      <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            color:
+                              row.game.team_score > row.game.opponent_score
+                                ? Colors.green
+                                : Colors.red,
+                          }}
+                        >
+                          {row.game.team_score > row.game.opponent_score
+                            ? t("commun.victoryabbreviation")
+                            : t("commun.defeatabbreviation")}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          noWrap
+                        >{`${row.game.team_score} - ${row.game.opponent_score}`}</Typography>
+                      </Box>
+                    ) : (
+                      <Typography variant="body1">
+                        {t("commun.notspecified")}
+                      </Typography>
+                    )}
+                  </TableCell>
                   <TableCell sx={hoverCell} align="center">
                     <Typography variant="body2">{getValue(row.min)}</Typography>
                   </TableCell>
@@ -338,13 +413,14 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
                 </TableRow>
               ))}
               <TableRow sx={{ bgcolor: Colors.subprimary2 }}>
-                <TableCell colSpan={9}>
+                <TableCell colSpan={10}>
                   <Typography variant="h6" color="white">
                     Moyenne
                   </Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
+                <TableCell sx={hoverCell} align="center"></TableCell>
                 <TableCell sx={hoverCell} align="center"></TableCell>
                 <TableCell sx={hoverCell} align="center"></TableCell>
                 <TableCell sx={hoverCell} align="center">
@@ -384,13 +460,14 @@ export const TableLast5GamePlayer = ({ stats }: PropsLast5) => {
                 </TableCell>
               </TableRow>
               <TableRow sx={{ bgcolor: Colors.subprimary2 }}>
-                <TableCell colSpan={9}>
+                <TableCell colSpan={10}>
                   <Typography variant="h6" color="white">
                     Total
                   </Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
+                <TableCell sx={hoverCell}></TableCell>
                 <TableCell sx={hoverCell}></TableCell>
                 <TableCell sx={hoverCell}></TableCell>
                 <TableCell sx={hoverCell} align="center">

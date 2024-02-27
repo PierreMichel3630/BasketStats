@@ -30,6 +30,7 @@ export interface StatsPlayerAvg {
   fouls_3lf: null | number;
   fouls: null | number;
   games: number;
+  win: number;
   startingfive: number;
 }
 

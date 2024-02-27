@@ -9,9 +9,10 @@ import {
 } from "src/utils/sort";
 
 import { padding, px } from "csx";
-import { useState } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { UserContext } from "src/App";
 import rank1 from "src/assets/rank/rank1.png";
 import rank2 from "src/assets/rank/rank2.png";
 import rank3 from "src/assets/rank/rank3.png";
@@ -28,8 +29,8 @@ export const PlayerLeaderBlock = ({ stats, matchMin }: Props) => {
   const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
-
-  const [type, setType] = useState("pergame");
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const statsFilter = stats.filter((el) => el.games >= matchMin);
 
@@ -87,7 +88,6 @@ export const PlayerLeaderBlock = ({ stats, matchMin }: Props) => {
     }))
     .sort(sortByValue);
 
-  const isTypeMoy = type === "pergame";
   return (
     stats.length > 0 && (
       <Paper variant="outlined" sx={{ bgcolor: "background.paper" }}>
@@ -108,8 +108,8 @@ export const PlayerLeaderBlock = ({ stats, matchMin }: Props) => {
               {t("commun.teamleaders")}
             </Typography>
             <ToogleButtonTotal
-              value={type}
-              onChange={(value) => setType(value)}
+              value={total ? "total" : "pergame"}
+              onChange={(value) => setTotal(value === "total")}
             />
           </Grid>
           <Grid item xs={12} sx={{ p: 1 }}>

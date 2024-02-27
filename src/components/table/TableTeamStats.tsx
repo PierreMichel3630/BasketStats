@@ -35,47 +35,57 @@ export const TableTeamStats = ({ game, stats }: Props) => {
   const foulsTeam = getNbreFouls(stats);
   const foulsOpponent = getNbreFoulsOpponent(stats);
 
+  const max = Math.max(pts, ptsOpponent);
+
   const data = [
     {
-      label: t("commun.pointsabbreviation"),
+      label: t("commun.points"),
       value1: pts,
       value2: ptsOpponent,
+      max: max,
     },
     {
-      label: t("commun.threepointsabbreviation"),
+      label: t("commun.threepoints"),
       value1: stats.threeptsteam ?? 0,
       value2: stats.threeptsopponent ?? 0,
+      max: max,
     },
     {
-      label: t("commun.twopointsintabbreviation"),
+      label: t("commun.twopointsint"),
       value1: stats.twoptsintteam ?? 0,
       value2: stats.twoptsintopponent ?? 0,
+      max: max,
     },
     {
-      label: t("commun.twopointsextabbreviation"),
+      label: t("commun.twopointsext"),
       value1: stats.twoptsextteam ?? 0,
       value2: stats.twoptsextopponent ?? 0,
+      max: max,
     },
     {
-      label: t("commun.ftscoredabbreviation"),
+      label: t("commun.ftscored"),
       value1: nbreLfRTeam,
       value2: nbreLfROpponent,
+      max: max,
     },
     {
-      label: t("commun.ftattemptedabbreviation"),
+      label: t("commun.ftattempted"),
       value1: nbreLfTeam,
       value2: nbreLfOpponent,
+      max: max,
     },
     {
-      label: t("commun.ftpercentabbreviation"),
+      label: t("commun.ftpercent"),
       value1: getPourcentageLFNumber(nbreLfRTeam, nbreLfTeam),
       value2: getPourcentageLFNumber(nbreLfROpponent, nbreLfOpponent),
       fixed: 1,
+      max: 100,
     },
     {
       label: t("commun.foulsabbreviation"),
       value1: foulsTeam,
       value2: foulsOpponent,
+      max: max,
     },
   ];
   return (
@@ -99,7 +109,7 @@ export const TableTeamStats = ({ game, stats }: Props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
           <Grid container spacing={2}>
             {data.map((el) => (
               <Grid item xs={12}>

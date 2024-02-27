@@ -11,10 +11,18 @@ export const HeaderPlayer = () => {
   const { t } = useTranslation();
   const { teams, player, avg } = useContext(PlayerContext);
 
+  const win = avg.length > 0 ? avg[0].win : undefined;
+  const games = avg.length > 0 ? avg[0].games : undefined;
   const points = avg.length > 0 ? avg[0].points : undefined;
   const troisPoints = avg.length > 0 ? avg[0].threeptspassed : undefined;
   const lf = avg.length > 0 ? avg[0].lfpassed : undefined;
   const fautes = avg.length > 0 ? avg[0].fouls : undefined;
+
+  const percentWin =
+    win && games
+      ? `${((win / games) * 100).toFixed(1)}% (${win}/${games})`
+      : "-";
+
   return (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={12} sm={4} md={2}>
@@ -70,6 +78,12 @@ export const HeaderPlayer = () => {
                 sx={{ textAlign: "center" }}
                 columnSpacing={{ xs: 3 }}
               >
+                <Grid item>
+                  <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
+                    {t("commun.win")}
+                  </Typography>
+                  <Typography variant="body1">{percentWin}</Typography>
+                </Grid>
                 <Grid item>
                   <Typography variant="h6" sx={{ textTransform: "uppercase" }}>
                     {t("commun.points")}

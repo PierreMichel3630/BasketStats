@@ -17,8 +17,6 @@ export const AddShootPlayersBlock = () => {
     statsTeam,
   } = useContext(AddStatsContext);
 
-  console.log(statsTeam);
-
   return (
     <Grid container spacing={1}>
       {statsPlayers

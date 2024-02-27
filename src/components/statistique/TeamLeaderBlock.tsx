@@ -1,12 +1,13 @@
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { padding, px } from "csx";
+import { useTranslation } from "react-i18next";
 import { StatsTeam } from "src/models/Statistique";
-import { CardStats, CardStatsLF } from "../card/CardStats";
 import { getBreakpoint } from "src/utils/mediaQuery";
 import { sortByPercent } from "src/utils/sort";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
 import { ToogleButtonTotal } from "../ToogleButton";
-import { padding, px } from "csx";
+import { CardStats, CardStatsLF } from "../card/CardStats";
+import { UserContext } from "src/App";
+import { useContext } from "react";
 
 interface Props {
   stats: Array<StatsTeam>;
@@ -16,8 +17,8 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
   const { t } = useTranslation();
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const ptsMarques = stats.map(
     (value) =>
@@ -97,8 +98,8 @@ export const TeamLeaderBlock = ({ stats }: Props) => {
             {t("commun.teamstatistics")}
           </Typography>
           <ToogleButtonTotal
-            value={type}
-            onChange={(value) => setType(value)}
+            value={total ? "total" : "pergame"}
+            onChange={(value) => setTotal(value === "total")}
           />
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>

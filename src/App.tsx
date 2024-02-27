@@ -30,6 +30,8 @@ export const UserContext = createContext<{
   language: Language;
   languages: Array<Language>;
   mode: "light" | "dark";
+  total: boolean;
+  setTotal: (value: boolean) => void;
   setLanguage: (language: Language) => void;
   setMode: (mode: "light" | "dark") => void;
 }>({
@@ -39,12 +41,15 @@ export const UserContext = createContext<{
       : DEFAULT_LANGUAGE,
   languages: [],
   mode: "light",
+  total: false,
+  setTotal: (value: boolean) => {},
   setLanguage: (language: Language) => {},
   setMode: (mode: "light" | "dark") => {},
 });
 
 function App() {
   const [languages, setLanguages] = useState<Array<Language>>([]);
+  const [total, setTotal] = useState(false);
 
   const searchAllLanguage = async () => {
     const { data } = await getLanguages();
@@ -188,7 +193,15 @@ function App() {
   return (
     <AuthProviderSupabase>
       <UserContext.Provider
-        value={{ mode, languages, language, setLanguage, setMode }}
+        value={{
+          mode,
+          languages,
+          language,
+          setLanguage,
+          setMode,
+          total,
+          setTotal,
+        }}
       >
         <ThemeProvider theme={theme}>
           <CssBaseline />

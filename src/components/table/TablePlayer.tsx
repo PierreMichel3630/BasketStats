@@ -15,13 +15,19 @@ import { Player } from "src/models/Player";
 import { StatsPlayerAvg } from "src/models/Statistique";
 import { sortByName } from "src/utils/sort";
 
-import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridComparatorFn,
+  GridEventListener,
+} from "@mui/x-data-grid";
+import { padding, px } from "csx";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "src/App";
 import { Colors } from "src/style/Colors";
-import { padding, px } from "csx";
 import { ToogleButtonTotal } from "../ToogleButton";
-import { useState } from "react";
 
 interface Props {
   players: Array<Player>;
@@ -70,8 +76,8 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const getValue = (games: null | number, value: null | number) =>
     games !== null && value !== null
@@ -79,6 +85,9 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
         ? value.toFixed(1)
         : value * games
       : "-";
+
+  const winComparator: GridComparatorFn<StatsPlayerAvg> = (v1, v2) =>
+    v1.win / v1.games - v2.win / v2.games;
 
   const columns: Array<GridColDef> = [
     {
@@ -96,6 +105,20 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       type: "number",
       flex: 1,
       minWidth: 40,
+    },
+    {
+      headerName: t("commun.win"),
+      field: "percentwin",
+      headerAlign: "center",
+      align: "center",
+      type: "number",
+      valueFormatter: ({ value }) =>
+        `${((value.win / value.games) * 100).toFixed(1)}% (${value.win}/${
+          value.games
+        })`,
+      sortComparator: winComparator,
+      flex: 1,
+      minWidth: 80,
     },
     {
       headerName: t("commun.minutessabbreviation"),
@@ -169,6 +192,7 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
       licence: player.licence,
       name: `${player.lastname.toUpperCase()} ${player.firstname}`,
       mj: stat ? stat.games ?? 0 : 0,
+      percentwin: stat,
       min: stat ? getValue(stat.games, stat.minutes) : "-",
       pts: stat ? getValue(stat.games, stat.points) : "-",
       threepts: stat ? getValue(stat.games, stat.threeptspassed) : "-",
@@ -199,7 +223,10 @@ export const TablePlayerStats = ({ players, stats }: PropsStats) => {
         <Typography variant="h4" color="white" textTransform="uppercase">
           {t("commun.teamsize")}
         </Typography>
-        <ToogleButtonTotal value={type} onChange={(value) => setType(value)} />
+        <ToogleButtonTotal
+          value={total ? "total" : "pergame"}
+          onChange={(value) => setTotal(value === "total")}
+        />
       </Grid>
       {rows.length > 0 ? (
         <Grid item xs={12}>

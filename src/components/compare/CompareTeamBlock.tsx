@@ -100,16 +100,29 @@ export const CompareTeamBlock = ({ stats }: Props) => {
     value2.stats.reduce((acc, value) => acc + getNbreLfOpponent(value), 0) /
     value2.stats.length;
 
+  const ptsscored =
+    value1.stats.reduce((acc, value) => acc + getPoints(value), 0) /
+    value1.stats.length;
+  const ptsscoredadv =
+    value2.stats.reduce((acc, value) => acc + getPoints(value), 0) /
+    value2.stats.length;
+
+  const ptsconceded =
+    value1.stats.reduce((acc, value) => acc + getPointsOpponent(value), 0) /
+    value1.stats.length;
+  const ptsconcededadv =
+    value2.stats.reduce((acc, value) => acc + getPointsOpponent(value), 0) /
+    value2.stats.length;
+
+  const maxPts = Math.max(ptsscored, ptsscoredadv, ptsconceded, ptsconcededadv);
+
   const datas = [
     {
-      label: t("commun.pointsscoredabbreviation"),
-      value1:
-        value1.stats.reduce((acc, value) => acc + getPoints(value), 0) /
-        value1.stats.length,
-      value2:
-        value2.stats.reduce((acc, value) => acc + getPoints(value), 0) /
-        value2.stats.length,
+      label: t("commun.pointsscored"),
+      value1: ptsscored,
+      value2: ptsscoredadv,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q1abbreviation"),
@@ -120,6 +133,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q1team ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q2abbreviation"),
@@ -130,6 +144,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q2team ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q3abbreviation"),
@@ -140,6 +155,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q3team ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q4abbreviation"),
@@ -150,16 +166,14 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q4team ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.pointsconcededabbreviation"),
-      value1:
-        value1.stats.reduce((acc, value) => acc + getPointsOpponent(value), 0) /
-        value1.stats.length,
-      value2:
-        value2.stats.reduce((acc, value) => acc + getPointsOpponent(value), 0) /
-        value2.stats.length,
+      label: t("commun.pointsconceded"),
+      value1: ptsconceded,
+      value2: ptsconcededadv,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q1abbreviation"),
@@ -170,6 +184,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q1opponent ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q2abbreviation"),
@@ -180,6 +195,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q2opponent ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q3abbreviation"),
@@ -190,6 +206,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q3opponent ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
       label: t("commun.q4abbreviation"),
@@ -200,9 +217,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
         value2.stats.reduce((acc, value) => acc + (value.q4opponent ?? 0), 0) /
         value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.threepointsscoredabbreviation"),
+      label: t("commun.threepointsscored"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.threeptsteam ?? 0),
@@ -214,9 +232,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.threepointsconcededabbreviation"),
+      label: t("commun.threepointsconceded"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.threeptsopponent ?? 0),
@@ -228,9 +247,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.twopointsintscoredabbreviation"),
+      label: t("commun.twopointsintscored"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsintteam ?? 0),
@@ -242,9 +262,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.twopointsintconcededabbreviation"),
+      label: t("commun.twopointsintconceded"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsintopponent ?? 0),
@@ -256,9 +277,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.twopointsextscoredabbreviation"),
+      label: t("commun.twopointsextscored"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsextteam ?? 0),
@@ -270,9 +292,10 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.twopointsextconcededabbreviation"),
+      label: t("commun.twopointsextconceded"),
       value1:
         value1.stats.reduce(
           (acc, value) => acc + (value.twoptsextopponent ?? 0),
@@ -284,42 +307,49 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           0
         ) / value2.stats.length,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.ftscoredabbreviation"),
+      label: t("commun.ftscored"),
       value1: lfR1,
       value2: lfR2,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.ftattemptedabbreviation"),
+      label: t("commun.ftattempted"),
       value1: lfT1,
       value2: lfT2,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.ftpercentabbreviation"),
+      label: t("commun.ftpercent"),
       value1: getPourcentageLFNumber(lfR1, lfT1),
       value2: getPourcentageLFNumber(lfR2, lfT2),
       fixed: 1,
+      max: 100,
     },
     {
-      label: t("commun.ftscoredopponentabbreviation"),
+      label: t("commun.ftscoredopponent"),
       value1: lfRAdv1,
       value2: lfRAdv2,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.ftattemptedopponentabbreviation"),
+      label: t("commun.ftattemptedopponent"),
       value1: lfTAdv1,
       value2: lfTAdv2,
       fixed: 1,
+      max: maxPts,
     },
     {
-      label: t("commun.ftpercentopponentabbreviation"),
+      label: t("commun.ftpercentopponent"),
       value1: getPourcentageLFNumber(lfRAdv1, lfTAdv1),
       value2: getPourcentageLFNumber(lfRAdv2, lfTAdv2),
       fixed: 1,
+      max: 100,
     },
   ];
 
@@ -349,7 +379,7 @@ export const CompareTeamBlock = ({ stats }: Props) => {
           </Grid>
         </Grid>
         {stats.length > 0 && (
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
             <Grid container spacing={2}>
               {datas.map((el) => (
                 <Grid item xs={12}>

@@ -1,6 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
+import { padding, px } from "csx";
 import moment from "moment";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Bar,
@@ -16,7 +17,6 @@ import { StatsPlayerAvg, StatsTeam } from "src/models/Statistique";
 import { Colors } from "src/style/Colors";
 import { sortByGameDateAsc } from "src/utils/sort";
 import { ToogleButtonTotal } from "../ToogleButton";
-import { padding, px } from "csx";
 
 interface Props {
   stats: Array<StatsTeam>;
@@ -126,8 +126,8 @@ interface PropsCompare {
 export const BarCharCompare = ({ stat1, stat2 }: PropsCompare) => {
   const { mode } = useContext(UserContext);
   const { t } = useTranslation();
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const games1 = stat1.games ?? 0;
   const games2 = stat2.games ?? 0;
@@ -199,8 +199,8 @@ export const BarCharCompare = ({ stat1, stat2 }: PropsCompare) => {
             {t("commun.freethrowevolution")}
           </Typography>
           <ToogleButtonTotal
-            value={type}
-            onChange={(value) => setType(value)}
+            value={total ? "total" : "pergame"}
+            onChange={(value) => setTotal(value === "total")}
           />
         </Grid>
         <Grid item xs={12}>

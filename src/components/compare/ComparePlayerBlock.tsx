@@ -1,7 +1,8 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import { padding, px } from "csx";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "src/App";
 import { getShootByPlayer } from "src/api/shoot";
 import { Player } from "src/models/Player";
 import { Shoot } from "src/models/Shoot";
@@ -25,8 +26,8 @@ interface Props {
 export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
   const { t } = useTranslation();
   const [shootsCompare, setShootCompare] = useState<Array<Shoot>>([]);
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const { total, setTotal } = useContext(UserContext);
+  const isTypeMoy = !total;
 
   const VALUES = statsAvg.sort(sortByPlayerName).map((stat) => ({
     label: `${stat.player.firstname} ${stat.player.lastname}`,
@@ -62,19 +63,24 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
     getShoots();
   }, [value2]);
 
+  const pts = isTypeMoy
+    ? value1.stats.points ?? 0
+    : (value1.stats.points ?? 0) * value1.stats.games;
+  const ptsadv = isTypeMoy
+    ? value2.stats.points ?? 0
+    : (value2.stats.points ?? 0) * value2.stats.games;
+  const MAX = Math.max(pts, ptsadv);
+
   const datas = [
     {
-      label: t("commun.pointsabbreviation"),
-      value1: isTypeMoy
-        ? value1.stats.points ?? 0
-        : (value1.stats.points ?? 0) * value1.stats.games,
-      value2: isTypeMoy
-        ? value2.stats.points ?? 0
-        : (value2.stats.points ?? 0) * value2.stats.games,
+      label: t("commun.points"),
+      value1: pts,
+      value2: ptsadv,
       fixed: 1,
+      max: MAX,
     },
     {
-      label: t("commun.threepointsabbreviation"),
+      label: t("commun.threepoints"),
       value1: isTypeMoy
         ? value1.stats.threeptspassed ?? 0
         : (value1.stats.threeptspassed ?? 0) * value1.stats.games,
@@ -82,9 +88,10 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
         ? value2.stats.threeptspassed ?? 0
         : (value2.stats.threeptspassed ?? 0) * value2.stats.games,
       fixed: 1,
+      max: MAX,
     },
     {
-      label: t("commun.twopointsintabbreviation"),
+      label: t("commun.twopointsint"),
       value1: isTypeMoy
         ? value1.stats.twoptsintpassed ?? 0
         : (value1.stats.twoptsintpassed ?? 0) * value1.stats.games,
@@ -92,9 +99,10 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
         ? value2.stats.twoptsintpassed ?? 0
         : (value2.stats.twoptsintpassed ?? 0) * value2.stats.games,
       fixed: 1,
+      max: MAX,
     },
     {
-      label: t("commun.twopointsextabbreviation"),
+      label: t("commun.twopointsext"),
       value1: isTypeMoy
         ? value1.stats.twoptsextpassed ?? 0
         : (value1.stats.twoptsextpassed ?? 0) * value1.stats.games,
@@ -102,9 +110,10 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
         ? value2.stats.twoptsextpassed ?? 0
         : (value2.stats.twoptsextpassed ?? 0) * value2.stats.games,
       fixed: 1,
+      max: MAX,
     },
     {
-      label: t("commun.ftabbreviation"),
+      label: t("commun.ft"),
       value1: isTypeMoy
         ? value1.stats.lfpassed ?? 0
         : (value1.stats.lfpassed ?? 0) * value1.stats.games,
@@ -112,9 +121,10 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
         ? value2.stats.lfpassed ?? 0
         : (value2.stats.lfpassed ?? 0) * value2.stats.games,
       fixed: 1,
+      max: MAX,
     },
     {
-      label: t("commun.foulsabbreviation"),
+      label: t("commun.fouls"),
       value1: isTypeMoy
         ? value1.stats.fouls ?? 0
         : (value1.stats.fouls ?? 0) * value1.stats.games,
@@ -122,13 +132,9 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
         ? value2.stats.fouls ?? 0
         : (value2.stats.fouls ?? 0) * value2.stats.games,
       fixed: 1,
+      max: MAX,
     },
   ];
-
-  const MAX = datas.reduce(
-    (acc, value) => Math.max(acc, value.value1, value.value2),
-    0
-  );
 
   const shootsLeft = shoots.filter(
     (el) => value1.stats.player.id === el.player
@@ -185,16 +191,16 @@ export const ComparePlayerBlock = ({ player, statsAvg, shoots }: Props) => {
               }}
             >
               <ToogleButtonTotal
-                value={type}
-                onChange={(value) => setType(value)}
+                value={total ? "total" : "pergame"}
+                onChange={(value) => setTotal(value === "total")}
               />
             </Grid>
             {statsAvg.length > 0 && (
-              <Grid item xs={12}>
-                <Grid container spacing={2}>
+              <Grid item xs={12} sx={{ pl: 1, pr: 1 }}>
+                <Grid container spacing={1}>
                   {datas.map((el, index) => (
                     <Grid item xs={12} key={index}>
-                      <LineCompareTable value={el} max={MAX + 8} />
+                      <LineCompareTable value={el} />
                     </Grid>
                   ))}
                 </Grid>

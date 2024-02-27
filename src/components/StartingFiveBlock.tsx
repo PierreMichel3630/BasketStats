@@ -1,27 +1,28 @@
+import PersonIcon from "@mui/icons-material/Person";
 import { Avatar, Box, Divider, Grid, Paper, Typography } from "@mui/material";
+import { padding, px } from "csx";
+import { useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { UserContext } from "src/App";
 import { StatsPlayerAvg } from "src/models/Statistique";
+import { getBreakpoint } from "src/utils/mediaQuery";
 import {
   sortByPourcentageStartingFive,
   sortByStartingFive,
 } from "src/utils/sort";
-import { getBreakpoint } from "src/utils/mediaQuery";
-import { Link } from "react-router-dom";
-import PersonIcon from "@mui/icons-material/Person";
-import { useTranslation } from "react-i18next";
-import { padding, px } from "csx";
 import { ToogleButtonTotal } from "./ToogleButton";
-import { useState } from "react";
 
 interface Props {
   stats: Array<StatsPlayerAvg>;
 }
 export const StartingFiveBlock = ({ stats }: Props) => {
   const { t } = useTranslation();
+  const { total, setTotal } = useContext(UserContext);
   const breakpoint = getBreakpoint();
   const isSmall = breakpoint === "xs";
 
-  const [type, setType] = useState("pergame");
-  const isTypeMoy = type === "pergame";
+  const isTypeMoy = !total;
 
   const titulaires = [...stats]
     .sort(isTypeMoy ? sortByPourcentageStartingFive : sortByStartingFive)
@@ -49,8 +50,8 @@ export const StartingFiveBlock = ({ stats }: Props) => {
             {t("commun.starter")}
           </Typography>
           <ToogleButtonTotal
-            value={type}
-            onChange={(value) => setType(value)}
+            value={total ? "total" : "pergame"}
+            onChange={(value) => setTotal(value === "total")}
           />
         </Grid>
         <Grid item xs={12} sx={{ p: 1 }}>
